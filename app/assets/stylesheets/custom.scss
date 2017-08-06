@@ -1,11 +1,15 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+/* Miscellaneous */
+
 @mixin box_sizing {
   -moz-box-string: border-box;
   -webkit-box-sizing: border-box;
   box_sizing: border-box;
 }
+
+/* Adjustments for Devise */
 
 #app_notices {
   padding-top: 10px;

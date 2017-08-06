@@ -22,5 +22,9 @@ module Workspace
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+    
+    # Filter the users account pin
+    config.filter_parameters += [:pin]
+    config.filter_parameters += [:pin_confirmation]
   end
 end
