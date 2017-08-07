@@ -1,5 +1,8 @@
 class StaticPagesController < ApplicationController
   def home
+    if !current_user.nil?
+      @profiles = current_user.profiles.all
+    end
   end
 
   def help

@@ -1,6 +1,21 @@
-<div>
-    <%= link_to "Add Video Links for Review", '#' %>
-</div>
-<div>
-    <%= link_to "Watch Videos", '#' %>
+<% provide(:title, "Profiles") %>
+<div id="profiles_wrapper">
+    <div id="profiles">
+        <% if @profiles.count == 0 %>
+            <%= "No Profiles" %>
+        <% else %>
+            <p>Current profile: <%= current_profile %></p>
+            <p>Profiles:</p>
+            <ul class="profiles">
+                <% @profiles.each do |p| %>
+                    <li>
+                    <%= link_to "#{p.name}", profiles_sessions_path(name: p.name), method: :post %>
+                    </li>
+                <% end %>
+            </ul>
+        <% end %>
+    </div>
+    <div id="profile_form">
+        <%= render 'shared/profile_form' %>
+    </div>
 </div>

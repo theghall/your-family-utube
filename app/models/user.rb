@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :profiles, dependent: :destroy
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -9,13 +10,13 @@ class User < ApplicationRecord
   
   attr_accessor :pin, :pin_confirmation
   
-  private
-  
-    def User.digest(string)
-      cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
+  def User.digest(string)
+    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
                                                   BCrypt::Engine::cost
-      BCrypt::Password.create(string, cost: cost)
-    end
+    BCrypt::Password.create(string, cost: cost)
+  end
+  
+  private
   
     def create_parent_digest
       self.parent_digest = User.digest(pin)

@@ -1,0 +1,8 @@
+<div class="col-md-3">
+  <p>Add a Profile</p>
+  <%= form_for(:profiles, url: profiles_path) do |f| %>
+    <%= f.label :name %>
+    <%= f.text_field :name, value: "", autofocus: true, class: 'form-control' %>
+    <%= f.submit "Submit", class: 'btn btn-primary' %>
+  <% end %>
+</div>
