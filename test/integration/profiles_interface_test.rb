@@ -20,13 +20,12 @@ class ProfilesInterfaceTest < ActionDispatch::IntegrationTest
     assert_difference 'Profile.count', 1 do
         post profiles_path, params: { profiles: { name: name } }
     end
-    profile = assigns(:profiles)
     assert_redirected_to root_url
     follow_redirect!
     assert_select 'li', text: name, count: 1
     # select profile
     post profiles_sessions_path(name: name)
-    assert_equal cookies[:profile_id], profile.id
+    assert_equal session[:profile_id], get_profile_id(name)
   end
   
 end
