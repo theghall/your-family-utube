@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170806234247) do
+ActiveRecord::Schema.define(version: 20170809162537) do
 
   create_table "profiles", force: :cascade do |t|
     t.text     "name"
@@ -18,6 +18,12 @@ ActiveRecord::Schema.define(version: 20170806234247) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_profiles_on_user_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.text     "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -42,6 +48,24 @@ ActiveRecord::Schema.define(version: 20170806234247) do
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "video_tags", force: :cascade do |t|
+    t.integer  "video_id"
+    t.integer  "tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tag_id"], name: "index_video_tags_on_tag_id"
+    t.index ["video_id"], name: "index_video_tags_on_video_id"
+  end
+
+  create_table "videos", force: :cascade do |t|
+    t.string   "youtube_id"
+    t.boolean  "approved"
+    t.integer  "profile_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["profile_id"], name: "index_videos_on_profile_id"
   end
 
 end

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  youtube_id: MyString
+  approved: false
+  profile: one
+
+two:
+  youtube_id: MyString
+  approved: false
+  profile: two

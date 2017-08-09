@@ -1,5 +1,6 @@
 class Profile < ApplicationRecord
   belongs_to :user
+  has_many :videos
   validates :user_id, presence: true
   validates :name, presence: true
   validate :name_not_blank
