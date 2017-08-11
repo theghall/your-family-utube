@@ -1,0 +1,7 @@
+<div id="video_list" class="col-md-6 col-md-offset-1">
+    <ol>
+    <% @videos.each do |v| %>
+        <li><%= render 'shared/video_frame', :url => get_video_url(v) %></li>
+    <% end %>
+    </ol>
+</div>

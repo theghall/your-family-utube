@@ -2,13 +2,6 @@ class Profile < ApplicationRecord
   belongs_to :user
   has_many :videos
   validates :user_id, presence: true
-  validates :name, presence: true
-  validate :name_not_blank
-  
-  private
-    def name_not_blank
-        if name && name.strip.length == 0
-            errors.add(:name, "Name cannot be blank")
-        end
-    end
+  validates :name, presence: true, allow_blank: false,
+            uniqueness: { scope: :user_id, message: "Profile name already taken" }
 end

@@ -1,11 +1,10 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  youtube_id: MyString
+aliens:
+  youtube_id: "aCbfMkh940Q"
+  approved: true
+  profile: john_1
+  
+topgun:
+  youtube_id: "VIliZvuvirs"
   approved: false
-  profile: one
-
-two:
-  youtube_id: MyString
-  approved: false
-  profile: two
+  profile: john_1

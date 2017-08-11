@@ -1,0 +1,15 @@
+<div id="profiles">
+    <% if @profiles.count == 0 %>
+        <%= "No Profiles" %>
+    <% else %>
+        <p>Current profile: <%= current_profile %></p>
+        <p>Profiles:</p>
+        <ul class="profiles">
+            <% @profiles.each do |p| %>
+                <li>
+                <%= link_to "#{p.name}", profiles_sessions_path(name: p.name), method: :post %>
+                </li>
+            <% end %>
+        </ul>
+    <% end %>
+</div>

@@ -3,7 +3,8 @@ require 'test_helper'
 class ProfileTest < ActiveSupport::TestCase
   def setup
     @user = users(:noprofiles)
-    @profile = @user.profiles.build(name: "Junior")
+    @other_user = users(:john)
+    @profile = @user.profiles.create(name: "Junior")
   end
   
   test "should be valid" do
@@ -25,4 +26,15 @@ class ProfileTest < ActiveSupport::TestCase
     assert_not @profile.valid?
   end
   
+  test "Duplicate profile name per user disallowed" do
+    assert_no_difference 'Profile.count' do
+      @user.profiles.create(name: "Junior")
+    end
+  end
+  
+  test "Existing profile name under one user allowed under other user" do
+    assert_difference 'Profile.count', 1 do
+      @other_user.profiles.create(name: "Junior")
+    end
+  end
 end

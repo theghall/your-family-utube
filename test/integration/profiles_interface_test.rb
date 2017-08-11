@@ -5,6 +5,8 @@ class ProfilesInterfaceTest < ActionDispatch::IntegrationTest
 
   def setup
     @user_no_profiles = users(:noprofiles)
+    @user_no_videos = users(:novideos)
+    @user_with_videos = users(:john)
   end
   
   test "profile interface with user with no profiles" do
@@ -27,5 +29,25 @@ class ProfilesInterfaceTest < ActionDispatch::IntegrationTest
     post profiles_sessions_path(name: name)
     assert_equal session[:profile_id], get_profile_id(name)
   end
+  
+  test "profile with no videos" do
+    sign_in @user_no_videos
+     get root_path
+     # Choose profile
+     profile = profiles(:novideos_1)
+     post profiles_sessions_path(name: profile.name)
+     follow_redirect!
+     assert_select 'div#video_list>ol>li>iframe', count: 0
+    end
+    
+    test "profile with videos" do
+     sign_in @user_with_videos
+     get root_path
+     # Choose profile
+     profile = profiles(:john_1)
+     post profiles_sessions_path(name: profile.name)
+     follow_redirect!
+     assert_select 'div#video_list>ol>li>iframe', count: num_approved_videos(profile)
+    end
   
 end

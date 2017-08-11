@@ -1,9 +1,8 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+alien_tag:
+  video_id: aliens
+  tag_id: clip
+  
+topgun_tag:
+  video_id: topgun
+  tag_id: clip
 
-one:
-  video: one
-  tag: one
-
-two:
-  video: two
-  tag: two

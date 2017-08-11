@@ -11,4 +11,8 @@ class ActiveSupport::TestCase
   def get_profile_id(name)
     Profile.find_by(name: name).id
   end
+  
+  def num_approved_videos(profile)
+    profile.videos.where(approved: true).count
+  end
 end
