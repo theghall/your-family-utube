@@ -13,15 +13,16 @@
 ActiveRecord::Schema.define(version: 20170809162537) do
 
   create_table "profiles", force: :cascade do |t|
-    t.text     "name"
+    t.text     "name",       null: false
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id", "name"], name: "index_profiles_on_user_id_and_name", unique: true
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
   create_table "tags", force: :cascade do |t|
-    t.text     "name"
+    t.text     "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -60,11 +61,11 @@ ActiveRecord::Schema.define(version: 20170809162537) do
   end
 
   create_table "videos", force: :cascade do |t|
-    t.string   "youtube_id"
-    t.boolean  "approved"
+    t.string   "youtube_id",                 null: false
+    t.boolean  "approved",   default: false, null: false
     t.integer  "profile_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.index ["profile_id"], name: "index_videos_on_profile_id"
   end
 
