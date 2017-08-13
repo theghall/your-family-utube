@@ -7,12 +7,10 @@
             <%= link_to 'Add Video', new_parentmode_session_path, class: 'btn btn-primary' %>
         <% end %>
         <p>Profiles:</p>
-        <ul class="profiles">
+            <div id="profiles" class="btn-group-vertical">
             <% @profiles.each do |p| %>
-                <li>
-                <%= link_to "#{p.name}", profiles_sessions_path(name: p.name), method: :post %>
-                </li>
+                <%= button_to "#{p.name}", profiles_sessions_path(name: p.name), method: :post, class: 'btn' %>
             <% end %>
-        </ul>
+            </div>
     <% end %>
 </div>
