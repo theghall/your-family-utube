@@ -17,9 +17,17 @@ class User < ApplicationRecord
     BCrypt::Password.create(string, cost: cost)
   end
   
+  def User.authenticate?(digest, password)
+    BCrypt::Password.new(digest).is_password?(password)
+  end
+  
+  def parent_authenticated?(pin)
+    Devise::Encryptor.compare(self.class, parent_digest, pin) # User.authenticate?(parent_digest, pin)
+  end
+    
   private
   
     def create_parent_digest
-      self.parent_digest = User.digest(pin)
+      self.parent_digest = Devise::Encryptor.digest(self.class, pin) # User.digest(pin)
     end
 end

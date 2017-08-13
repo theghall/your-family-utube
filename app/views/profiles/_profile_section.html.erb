@@ -1,4 +1,7 @@
-<div id="profiles_wrapper" class="col-md-4">
+<div id="profiles_wrapper" class="col-md-2">
     <%= render 'profiles/profile_list' %>
     <%= render 'profiles/profile_form' %>
+    <% if parent_mode? %>
+        <%= link_to "Exit Parent Mode", root_url %>
+    <% end %>
 </div>

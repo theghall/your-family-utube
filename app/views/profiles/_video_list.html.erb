@@ -1,7 +1,16 @@
-<div id="video_list" class="col-md-6 col-md-offset-1">
-    <ol>
+<div id="video_list" class="col-md-8">
     <% @videos.each do |v| %>
-        <li><%= render 'shared/video_frame', :url => get_video_url(v) %></li>
+        <div class="vidframe">
+            <%= render 'shared/video_frame', :url => get_video_url(v) %>
+        </div>
+        <% if parent_mode? %>
+            <div class="mngbuttons">
+                <%= form_for(:video, url: video_path(v), method: :patch) do |f| %>
+                    <%= f.hidden_field :approved, value: 'true' %>
+                    <%= f.submit "Approve", class: 'btn btn-primary' %>
+                <% end %>
+                <%= link_to "Delete", video_path(v), method: :delete, class: 'btn btn-primary' %>
+            </div>
+        <% end %>
     <% end %>
-    </ol>
 </div>

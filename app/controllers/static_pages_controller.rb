@@ -1,10 +1,14 @@
 class StaticPagesController < ApplicationController
+  include ParentmodeSessionsHelper
+  
+  before_action :forget_parent
+  
   def home
     if !current_user.nil?
       @profiles = current_user.profiles.all
       if session[:profile_id]
         profile = get_profile(session[:profile_id])
-        @videos = get_approved_videos(profile)
+        @videos = get_videos(profile, true)
       end
     end
   end
@@ -18,16 +22,4 @@ class StaticPagesController < ApplicationController
   def contact
   end
   
-  private
-    def get_profile(id)
-      Profile.find_by(id: id)
-    end
-      
-    def get_approved_videos(profile)
-        profile.videos.where(approved: true)
-    end
-    
-    def num_approved_videos(profile)
-        profile.videos.where(approved: true).count
-    end
 end

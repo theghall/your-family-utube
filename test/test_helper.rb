@@ -15,4 +15,8 @@ class ActiveSupport::TestCase
   def num_approved_videos(profile)
     profile.videos.where(approved: true).count
   end
+  
+    def num_unapproved_videos(profile)
+    profile.videos.where(approved: false).count
+  end
 end

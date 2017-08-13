@@ -2,7 +2,10 @@
     <% if @profiles.count == 0 %>
         <%= "No Profiles" %>
     <% else %>
-        <p>Current profile: <%= current_profile %></p>
+        <p>Current profile: <%= current_profile_name %></p>
+        <% if !parent_mode? %>
+            <%= link_to 'Add Video', new_parentmode_session_path, class: 'btn btn-primary' %>
+        <% end %>
         <p>Profiles:</p>
         <ul class="profiles">
             <% @profiles.each do |p| %>

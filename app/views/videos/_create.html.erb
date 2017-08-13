@@ -1,0 +1,7 @@
+<div class="col-md-2">
+    <%= form_for(:video, url: videos_path) do |f| %>
+        <%= f.label 'Video ID' %>
+        <%= f.text_field :youtube_id, class: 'form-control' %>
+        <%= f.submit 'Submit', class: 'btn btn-priamry' %>
+    <% end %>
+</div>

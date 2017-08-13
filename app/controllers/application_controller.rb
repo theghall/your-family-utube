@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
+  include ProfilesSessionsHelper, ParentmodeSessionsHelper
+    # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   
@@ -11,4 +12,17 @@ class ApplicationController < ActionController::Base
         redirect_to new_user_session_url
       end
     end
+    
+    def get_profile(id)
+      Profile.find_by(id: id)
+    end
+    
+    def get_videos(profile, approved)
+        profile.videos.where(approved: approved)
+    end
+    
+    def num_videos(profile, approved)
+        profile.videos.where(approved: approved).count
+    end
+
 end
