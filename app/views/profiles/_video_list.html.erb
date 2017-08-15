@@ -1,4 +1,4 @@
-<div id="video_list" class="col-md-8">
+<div id="video_list" class="<%= div_class %>">
     <% @videos.each do |v| %>
         <div class="vidframe">
             <%= render 'shared/video_frame', :url => get_video_url(v) %>
