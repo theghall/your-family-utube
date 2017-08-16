@@ -6,7 +6,7 @@ class VideosController < ApplicationController
     if !current_user.nil?
       @profiles = current_user.profiles.all
       if session[:profile_id]
-        @videos = get_videos(get_profile(session[:profile_id]), false)
+        @videos = get_videos(get_profile(session[:profile_id]), false, 6)
       end
     end
   end
@@ -17,7 +17,7 @@ class VideosController < ApplicationController
       @video = profile.videos.build(video_params)
       if @video.save
         flash[:notice] = "Video saved"
-        @videos = get_videos(profile, false)
+        @videos = get_videos(profile, false, 6)
       else
         flash[:alert] = "Video not saved"
       end

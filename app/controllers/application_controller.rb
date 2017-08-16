@@ -17,8 +17,8 @@ class ApplicationController < ActionController::Base
       Profile.find_by(id: id)
     end
     
-    def get_videos(profile, approved)
-        profile.videos.where(approved: approved)
+    def get_videos(profile, approved, per_page)
+        profile.videos.where(approved: approved).paginate(page: params[:page], per_page: per_page)
     end
     
     def num_videos(profile, approved)
