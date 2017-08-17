@@ -21,12 +21,11 @@ class ProfilesInterfaceTest < ActionDispatch::IntegrationTest
     name = "Junior"
     assert_difference 'Profile.count', 1 do
         post profiles_path, params: { profiles: { name: name } }
+        follow_redirect!
     end
-    assert_redirected_to root_url
-    follow_redirect!
-    assert_select 'li', text: name, count: 1
     # select profile
     post profiles_sessions_path(name: name)
+    follow_redirect!
     assert_equal session[:profile_id], get_profile_id(name)
   end
   
@@ -37,17 +36,17 @@ class ProfilesInterfaceTest < ActionDispatch::IntegrationTest
      profile = profiles(:novideos_1)
      post profiles_sessions_path(name: profile.name)
      follow_redirect!
-     assert_select 'div#video_list>ol>li>iframe', count: 0
+     assert_select 'div#vidframe', count: 0
     end
     
     test "profile with videos" do
      sign_in @user_with_videos
      get root_path
      # Choose profile
-     profile = profiles(:john_1)
-     post profiles_sessions_path(name: profile.name)
+     @profile = profiles(:john_1)
+     post profiles_sessions_path(name: @profile.name)
      follow_redirect!
-     assert_select 'div#video_list>ol>li>iframe', count: num_approved_videos(profile)
+     assert_select 'div.vidframe', count: num_approved_videos(@profile)
     end
   
 end

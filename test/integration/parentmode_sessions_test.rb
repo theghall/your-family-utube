@@ -6,71 +6,87 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:john)
     @profile = profiles(:john_1)
-    @video= videos(:aliens)
+    @video= videos(:topgun)
   end
   
-    test "only displays unapproved videos" do
+    test "Add video page only displays unapproved videos" do
      sign_in @user
      get root_path
      # Choose profile
      profile = profiles(:john_1)
      post profiles_sessions_path(name: profile.name)
      follow_redirect!
-     assert_select 'div#video_list>ol>li>iframe', count: num_unapproved_videos(profile)
+     post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
+     follow_redirect!
+     assert_template 'videos/index'
+     assert_select 'div.vidframe>iframe', count: num_unapproved_videos(profile)
     end
     
     test "does not add a video when no profile selected" do
       sign_in @user
+      get root_path
       post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
+      follow_redirect!
       assert session[:parent_id], @user.id
-      assert_select "div#add_video", count: 1
       assert_no_difference 'Video.count' do
-        post video_path params: { video: { youtube_id: @video.youtube_id }}
+        post videos_path params: { video: { youtube_id: @video.youtube_id }}
+        follow_redirect!
       end
       assert_not flash.empty?
     end
     
     test "adds video to review list" do
+      youtube_id = "newvideo"
       sign_in @user
-      post parentmode_sessions_path, params: { parent: { pin: "1234" }}
-      assert session[:parent_id], @user.id
-      assert_select "div#add_video", count: 1
+      get root_path
       profile = profiles(:john_1)
       post profiles_sessions_path(name: profile.name)
+      follow_redirect!
+      assert session[:profile_id], profile.id
+      post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
+      follow_redirect!
+      assert session[:parent_id], @user.id
+      assert_select 'input', id: 'video_youtube_id'
       assert_difference 'Video.count',1  do
-        post video_path params: { video: { youtube_id: @video.youtube_id }}
+        post videos_path params: { video: { youtube_id: youtube_id }}
+        follow_redirect!
       end
       assigns(:avideo)
-      assert flash.empty?
-      follow_redirect!
-      assert_match @youtube_id, body.response
+      assert_not flash.empty?
+      assert_match youtube_id, response.body
       assigns(:videos).each do |v|
-        assert_select 'a[href=?]', video_path(v.id), text: 'Approve'
-        assert_select 'a[href=?]', video_path(v.id), text: 'delete'
+        assert_select 'form[action=?]', video_path(v.id)
+        assert_select 'a[href=?]', video_path(v.id), text: 'Delete'
       end
-      patch video_path(avideo)
-      follow_redirect!
-      assert_no_match @video.youtube_id, body.response
     end
     
     test "add video to a profile" do
       sign_in @user
-      post parentmode_sessions_path, params: { parentmode: { pin: '1234' }}
+      get root_path
       profile = profiles(:john_1)
       post profiles_sessions_path(name: profile.name)
-      patch video_path(@video)
+      follow_redirect!                  
+      post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
       follow_redirect!
-      assert_no_match @video.youtube_id, body.response
+      assert session[:parent_id], @user.id
+      assert_template 'videos/index'
+      assert_match @video.youtube_id, response.body
+      patch video_path(@video), params: { video: { approved: 'true' }}
+      follow_redirect!
+      assert_not flash.empty?
+      assert_no_match @video.youtube_id, response.body
     end
     
     test "delete a video from review list" do
       sign_in @user
+      get root_path
       post parentmode_sessions_path, params: { parentmode: { pin: '1234' }}
+      follow_redirect!
       profile = profiles(:john_1)
       post profiles_sessions_path(name: profile.name)
       delete video_path(@video)
       follow_redirect!
-      assert_no_match @video.youtube_id, body.response
+      assert_no_match @video.youtube_id, response.body
     end
       
       

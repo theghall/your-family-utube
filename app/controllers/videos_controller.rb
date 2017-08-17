@@ -24,7 +24,7 @@ class VideosController < ApplicationController
     else
       flash[:alert] = "You must select a profile to save the video under"
     end
-    redirect_to :back
+    redirect_back fallback_location: videos_path
   end
 
   def update
@@ -33,14 +33,14 @@ class VideosController < ApplicationController
       if @video.update_attributes(approved: approved)
         flash[:action] = "Video approved"
       end
-      redirect_to :back
+      redirect_back fallback_location: videos_path
     end
   end
 
   def destroy
     @video.destroy
     flash[:action] = "Video deleted"
-    redirect_to :back
+    redirect_back fallback_location: videos_path
   end
 
   private
