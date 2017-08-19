@@ -7,7 +7,7 @@ class ParentmodeSessionsController < ApplicationController
     def create
         if current_user.parent_authenticated?(parentmode_params[:pin]) 
            session[:parent_id] = current_user.id
-           redirect_to videos_path
+           redirect_to parent_path
         else
             flash[:alert] = "PIN is not valid"
             redirect_to new_parentmode_session_path

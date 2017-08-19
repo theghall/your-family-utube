@@ -1,16 +1,7 @@
 class VideosController < ApplicationController
-  before_action :logged_in_user, only: [:index, :create, :update, :destroy]
+  before_action :logged_in_user, only: [:create, :update, :destroy]
   before_action :correct_profile, only: [:destroy, :update]
   
-  def index
-    if !current_user.nil?
-      @profiles = current_user.profiles.all
-      if session[:profile_id]
-        @videos = get_videos(get_profile(session[:profile_id]), false, 6)
-      end
-    end
-  end
-
   def create
     if session[:profile_id]
       profile = get_profile(session[:profile_id])
@@ -24,7 +15,7 @@ class VideosController < ApplicationController
     else
       flash[:alert] = "You must select a profile to save the video under"
     end
-    redirect_back fallback_location: videos_path
+    redirect_back fallback_location: parent_path
   end
 
   def update
@@ -33,14 +24,14 @@ class VideosController < ApplicationController
       if @video.update_attributes(approved: approved)
         flash[:action] = "Video approved"
       end
-      redirect_back fallback_location: videos_path
+      redirect_back fallback_location: parent_path
     end
   end
 
   def destroy
     @video.destroy
     flash[:action] = "Video deleted"
-    redirect_back fallback_location: videos_path
+    redirect_back fallback_location: parent_path
   end
 
   private

@@ -18,7 +18,7 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
      follow_redirect!
      post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
      follow_redirect!
-     assert_template 'videos/index'
+     assert_template 'static_pages/parent'
      assert_select 'div.vidframe>iframe', count: num_unapproved_videos(profile)
     end
     
@@ -69,7 +69,7 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
       follow_redirect!
       assert session[:parent_id], @user.id
-      assert_template 'videos/index'
+      assert_template 'static_pages/parent'
       assert_match @video.youtube_id, response.body
       patch video_path(@video), params: { video: { approved: 'true' }}
       follow_redirect!

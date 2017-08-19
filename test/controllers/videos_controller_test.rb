@@ -21,8 +21,4 @@ class VideosControllerTest < ActionDispatch::IntegrationTest
         assert_redirected_to new_user_session_url
     end
     
-    test "should redirect index on not logged in" do
-        get videos_path(@john_1)
-        assert_redirected_to new_user_session_url
-    end
 end
