@@ -88,6 +88,52 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       follow_redirect!
       assert_no_match @video.youtube_id, response.body
     end
+    
+    test "adds video to review list ajax way" do
+      youtube_id = "newvideo"
+      sign_in @user
+      get root_path
+      profile = profiles(:john_1)
+      post profiles_sessions_path(name: profile.name)
+      follow_redirect!
+      assert session[:profile_id], profile.id
+      post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
+      follow_redirect!
+      assert session[:parent_id], @user.id
+      assert_select 'input', id: 'video_youtube_id'
+      assert_difference 'Video.count',1  do
+        post videos_path, params: { video: { youtube_id: youtube_id }}, xhr: true
+      end
+      assert_not flash.empty?
+      assert_match youtube_id, response.body
+    end
+    
+    test "add video to a profile ajax way" do
+      sign_in @user
+      get root_path
+      profile = profiles(:john_1)
+      post profiles_sessions_path(name: profile.name)
+      follow_redirect!                  
+      post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
+      follow_redirect!
+      assert session[:parent_id], @user.id
+      assert_template 'static_pages/parent'
+      assert_match @video.youtube_id, response.body
+      patch video_path(@video), params: { video: { approved: 'true' }}, xhr: true
+      assert_not flash.empty?
+      assert_no_match @video.youtube_id, response.body
+    end
+    
+    test "delete a video from review list ajax way" do
+      sign_in @user
+      get root_path
+      post parentmode_sessions_path, params: { parentmode: { pin: '1234' }}
+      follow_redirect!
+      profile = profiles(:john_1)
+      post profiles_sessions_path(name: profile.name), xhr: true
+      delete video_path(@video), xhr: true
+      assert_no_match @video.youtube_id, response.body
+    end
       
       
 end

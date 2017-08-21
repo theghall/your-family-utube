@@ -1,20 +1,22 @@
-<div id="video_list" class="<%= div_class %>">
-    <% @videos.each do |v| %>
-        <div class="vidframe">
-            <%= render 'shared/video_frame', :url => get_video_url(v) %>
-        </div>
-        <% if parent_mode? %>
-            <div class="mngbuttons">
-                <%= form_for(:video, url: video_path(v), method: :patch) do |f| %>
-                    <%= f.hidden_field :approved, value: 'true' %>
-                    <%= f.submit "Approve", class: 'btn btn-primary' %>
-                <% end %>
-                <%= link_to "Delete", video_path(v), method: :delete, class: 'btn btn-primary' %>
-            </div>
-        <% end %>
-    <% end %>
-    <div id="video_paginate" class="<%= div_class %>">
-        <%= will_paginate @videos %>
+<% @videos.each do |v| %>
+    <div class="vidframe">
+        <%= render 'shared/video_frame', :url => get_video_url(v) %>
     </div>
-</div>
+    <% if parent_mode? %>
+        <div class="mngbuttons">
+            <%= form_for(:video, url: video_path(v), method: :patch, remote: true) do |f| %>
+                <%= f.hidden_field :approved, value: 'true' %>
+                <%= f.submit "Approve", class: 'btn btn-primary' %>
+            <% end %>
+            <%= link_to "Delete", video_path(v), method: :delete, remote: true, class: 'btn btn-primary' %>
+        </div>
+    <% end %>
+<% end %>
+<div id="video_paginate" class="col-md-12">
+    <% if parent_mode? %>
+        <%= will_paginate @videos, params: { controller: 'static_pages', action: 'parent' } %>
+    <% else %>
+        <%= will_paginate @videos, params: { controller: 'static_pages', action: 'home' } %>
+    <% end %>
 
+</div>

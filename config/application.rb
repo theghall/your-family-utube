@@ -26,5 +26,8 @@ module Workspace
     # Filter the users account pin
     config.filter_parameters += [:pin]
     config.filter_parameters += [:pin_confirmation]
+    
+    # Include the authenticity token in remote forms.
+    config.action_view.embed_authenticity_token_in_remote_forms = true
   end
 end

@@ -1,5 +1,7 @@
 <% provide(:title, "View Videos") %>
 <div class="row">
 <%= render 'profiles/profile_section' %>
-<%= render 'profiles/video_list', :div_class => "col-md-10" unless @videos.nil? %>
+<div id="video_list" class="col-md-10">
+<%= render 'profiles/video_list' unless @videos.nil? %>
+</div>
 </div>

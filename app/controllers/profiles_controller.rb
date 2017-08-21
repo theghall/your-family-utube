@@ -8,7 +8,13 @@ class ProfilesController < ApplicationController
         else
             flash[:action] = "Profile not saved!"
         end
-        redirect_to root_url
+        
+        load_profiles
+        
+        respond_to do |format|
+            format.html { redirect_back fallback_location: root_url }
+            format.js
+        end
     end
     
     private

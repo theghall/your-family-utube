@@ -36,6 +36,7 @@ class ProfilesInterfaceTest < ActionDispatch::IntegrationTest
      profile = profiles(:novideos_1)
      post profiles_sessions_path(name: profile.name)
      follow_redirect!
+     assert_no_match 'None', response.body
      assert_select 'div#vidframe', count: 0
     end
     
@@ -46,7 +47,26 @@ class ProfilesInterfaceTest < ActionDispatch::IntegrationTest
      @profile = profiles(:john_1)
      post profiles_sessions_path(name: @profile.name)
      follow_redirect!
+     assert_no_match 'None', response.body
      assert_select 'div.vidframe', count: num_approved_videos(@profile)
     end
-  
+    
+    test "add profie the ajax way" do
+        name = "Jazzy"
+        sign_in @user_with_videos
+        get root_path
+        post profiles_path, params: { profiles: {name: name}}, xhr: true
+        assert_match name, response.body
+    end
+    
+    test "profile change the ajax way" do
+        sign_in @user_with_videos
+        get root_path
+        #choose profile
+        @profile = profiles(:john_1)
+        post profiles_sessions_path(name: @profile.name), xhr: true
+        assert_match @profile.name, response.body
+        assert_match 'vidframe', response.body
+    end
+        
 end

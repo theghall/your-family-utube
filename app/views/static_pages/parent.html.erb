@@ -2,5 +2,7 @@
 <div clas="row">
 <%= render 'profiles/profile_section' %>
 <%= render 'videos/create' %>
-<%= render 'profiles/video_list', :div_class => "col-md-8" unless @videos.nil? %>
+<div id="video_list" class="col-md-8">
+<%= render 'profiles/video_list' unless @videos.nil? %>
+</div>
 </div>
