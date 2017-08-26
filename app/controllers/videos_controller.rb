@@ -9,6 +9,9 @@ class VideosController < ApplicationController
       profile = get_profile(session[:profile_id])
       
       @video = profile.videos.build(video_params)
+    
+      # Get video thumbnail from YouTube  
+      @video.remote_thumbnail_url = get_thumbnail(@video.youtube_id)
       
       if @video.save
         flash[:notice] = "Video saved"
@@ -45,7 +48,11 @@ class VideosController < ApplicationController
   end
 
   def destroy
+    # Remove thumbnail file
+    @video.remove_thumbnail
+    
     @video.destroy
+    
     flash[:action] = "Video deleted"
     
     load_videos
@@ -64,6 +71,13 @@ class VideosController < ApplicationController
     
     def correct_profile
       @video = current_profile.videos.find_by(id: params[:id]) if current_profile
+      
       redirect_to root_url if @video.nil?
+    end
+    
+    def get_thumbnail(youtube_id)
+      video = Yt::Video.new(id: youtube_id)
+      
+      video.thumbnail_url
     end
 end

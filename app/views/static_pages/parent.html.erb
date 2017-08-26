@@ -1,8 +1,13 @@
 <% provide(:title, "Add Video") %>
 <div clas="row">
 <%= render 'profiles/profile_section' %>
+<div id="parent-middle" class='col-md-5'>
+<div id="video_frame">
+<%= render 'shared/video_frame', locals: { url: curr_vid_url } unless curr_vid_url.nil? %>
+</div>
 <%= render 'videos/create' %>
-<div id="video_list" class="col-md-8">
+</div>
+<div id="video_list" class="col-md-4">
 <%= render 'profiles/video_list' unless @videos.nil? %>
 </div>
 </div>

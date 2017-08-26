@@ -31,6 +31,15 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use Devise for login
 gem 'devise'
+
+# Use yt for API access to Youtube
+gem 'yt', '~> 0.28.0'
+
+# For downloading video thumbnail
+gem 'carrierwave',             '1.1.0'
+gem 'mini_magick',             '4.7.0'
+gem 'fog',                     '1.40.0'
+
 gem 'faker',  '1.7.3'
 
 # Use Puma as the app server

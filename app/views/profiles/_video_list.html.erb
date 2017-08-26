@@ -1,6 +1,6 @@
 <% @videos.each do |v| %>
     <div class="vidframe">
-        <%= render 'shared/video_frame', :url => get_video_url(v) %>
+        <%= image_tag v.thumbnail.url %>
     </div>
     <% if parent_mode? %>
         <div class="mngbuttons">

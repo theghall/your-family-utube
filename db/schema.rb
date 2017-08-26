@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170809162537) do
+ActiveRecord::Schema.define(version: 20170825211915) do
 
   create_table "profiles", force: :cascade do |t|
     t.text     "name",       null: false
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(version: 20170809162537) do
     t.integer  "profile_id"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.string   "thumbnail"
     t.index ["profile_id"], name: "index_videos_on_profile_id"
   end
 
