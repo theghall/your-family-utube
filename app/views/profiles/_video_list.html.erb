@@ -1,6 +1,7 @@
+<div class="info"><p>Click a thumbnail to load it in the video player</p></div>
 <% @videos.each do |v| %>
     <div class="vidframe">
-        <%= image_tag v.thumbnail.url %>
+        <a href="<%= video_path(v) %>" data-remote="true"><%= image_tag v.thumbnail.url, alt: "thumbnail" %></a>
     </div>
     <% if parent_mode? %>
         <div class="mngbuttons">

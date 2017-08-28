@@ -25,8 +25,8 @@ module ProfilesSessionsHelper
         else
             @videos = get_videos(profile, true, 20)
         end
-        
-        curr_vid_url = (@videos.nil? ? nil : get_video_url(@videos.first))
+ 
+        curr_vid_url = (@videos.empty? ? nil : get_video_url(@videos.first))
         
         set_curr_vid_url(curr_vid_url)
       end

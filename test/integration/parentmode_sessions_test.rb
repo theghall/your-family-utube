@@ -19,7 +19,7 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
      post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
      follow_redirect!
      assert_template 'static_pages/parent'
-     assert_select 'div.vidframe>iframe', count: num_unapproved_videos(profile)
+     assert_select 'div.vidframe', count: num_unapproved_videos(profile)
     end
     
     test "does not add a video when no profile selected" do
@@ -36,7 +36,7 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
     end
     
     test "adds video to review list" do
-      youtube_id = "newvideo"
+      youtube_id = "F0qkhwIQnuc"
       sign_in @user
       get root_path
       profile = profiles(:john_1)
@@ -70,6 +70,7 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       follow_redirect!
       assert session[:parent_id], @user.id
       assert_template 'static_pages/parent'
+      assert_match /#{@video.id}/, response.body
       assert_match @video.youtube_id, response.body
       patch video_path(@video), params: { video: { approved: 'true' }}
       follow_redirect!
@@ -90,7 +91,7 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
     end
     
     test "adds video to review list ajax way" do
-      youtube_id = "newvideo"
+      youtube_id = "F0qkhwIQnuc"
       sign_in @user
       get root_path
       profile = profiles(:john_1)

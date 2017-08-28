@@ -9,6 +9,14 @@
   box_sizing: border-box;
 }
 
+.info {
+  width: auto;
+}
+
+.info p {
+  font-weight: bold;
+}
+
 /* Adjustments for Devise */
 
 #app_notices {

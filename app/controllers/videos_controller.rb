@@ -1,8 +1,17 @@
 class VideosController < ApplicationController
   include ProfilesSessionsHelper
   
-  before_action :logged_in_user, only: [:create, :update, :destroy]
-  before_action :correct_profile, only: [:destroy, :update]
+  before_action :logged_in_user, only: [:show, :create, :update, :destroy]
+  before_action :correct_profile, only: [:show, :destroy, :update]
+  
+  def show
+    set_curr_vid_url(get_video_url(@video))
+    
+    respond_to do |format|
+      format.html { redirect_to (parent_mode? ? parent_path : root_url) }
+      format.js
+    end
+  end
   
   def create
     if session[:profile_id]
@@ -38,6 +47,8 @@ class VideosController < ApplicationController
         flash[:action] = "Video approved"
         
         load_videos
+        
+        @videos.empty? ? set_curr_vid_url(nil) : set_curr_vid_url(get_video_url(@videos.first))
       end
       
       respond_to do |format|
@@ -56,6 +67,8 @@ class VideosController < ApplicationController
     flash[:action] = "Video deleted"
     
     load_videos
+
+    @videos.empty? ? set_curr_vid_url(nil) : set_curr_vid_url(get_video_url(@videos.first))
     
     respond_to do |format|
       format.html { redirect_to parent_path }

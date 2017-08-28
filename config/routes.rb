@@ -12,5 +12,5 @@ devise_for :users, :controllers => { registrations: 'registrations' }
 resources :profiles, only: [:create]
 resources :profiles_sessions, only: [:create]
 resources :parentmode_sessions, only: [:new, :create]
-resources :videos, only: [:create, :update, :destroy]
+resources :videos, only: [:show, :create, :update, :destroy]
 end
