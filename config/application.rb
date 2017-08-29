@@ -30,6 +30,10 @@ module Workspace
     # Include the authenticity token in remote forms.
     config.action_view.embed_authenticity_token_in_remote_forms = true
     
+    Yt.configure do |config|
+      config.log_level = :debug
+    end
+    
     # Set YouTube API key
     config.after_initialize do
       Yt.configuration.api_key = ENV['GOOGLE_API_KEY']
