@@ -1,6 +1,6 @@
 <div id="video-add-form">
     <%= form_for(:video, url: videos_path, method: :post, remote: true) do |f| %>
-        <%= f.label 'Video ID' %>
+        <%= f.label :youtube_id, 'ID of YouTube Video to Add' %>
         <%= f.text_field :youtube_id, class: 'form-control' %>
         <%= f.submit 'Submit', class: 'btn btn-priamry' %>
     <% end %>

@@ -3,7 +3,7 @@
 <%= render 'profiles/profile_section' %>
 <div id="parent-middle" class='col-md-5'>
 <div id="video_frame">
-<%= render 'shared/video_frame', locals: { url: curr_vid_url } unless curr_vid_url.nil? %>
+<%= render 'shared/video_frame', locals: { url: curr_vid_url } %>
 </div>
 <%= render 'videos/create' %>
 </div>
