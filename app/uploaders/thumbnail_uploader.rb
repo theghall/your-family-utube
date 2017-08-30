@@ -18,7 +18,7 @@ class ThumbnailUploader < CarrierWave::Uploader::Base
   end
 
   def default_url(*args)
-    'default.jpg'
+    'missing.jpg'
   end
   
   # Provide a default URL as a default if there hasn't been a file uploaded:

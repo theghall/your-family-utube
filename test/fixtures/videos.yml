@@ -1,10 +1,15 @@
 
 aliens:
-  youtube_id: "aCbfMkh940Q"
+  youtube_id: "https://www.youtube.com/watch?v=YcFnvULy8zA"
   approved: true
   profile: john_1
   
 topgun:
-  youtube_id: "VIliZvuvirs"
+  youtube_id: "https://www.youtube.com/watch?v=vdHBsWXaHN8"
+  approved: false
+  profile: john_1
+
+invalid:
+  youtube_id: "invalid"
   approved: false
   profile: john_1
