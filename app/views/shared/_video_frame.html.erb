@@ -1,2 +1,2 @@
 <div class="info"><p>Video Player</p></div>
-<%= content_tag(:iframe, '', width: 560, height: 315, src: curr_vid_url, allowFullScreen: false) %>
+<%= content_tag(:iframe, '', width: 560, height: 315, src: curr_vid_url, sandbox: "allow-scripts allow-same-origin") %>
