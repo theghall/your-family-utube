@@ -36,9 +36,9 @@ class Video < ApplicationRecord
       begin 
         video.title
       rescue Yt::Errors::NoItems
-        errors.add(:youtube_id, "Is not a valid YouTube Video.")
+        errors[:base] << 'Youtube URL is not for a valid YouTube Video.'
       rescue Yt::Errors::RequestError
-        errors.add(:youtube_id, "Unable to contact YouTube.  If problem persists contact us")
+        errors[:base] << 'Unable to contact YouTube.  If problem persists contact us.'
       end
     end
     

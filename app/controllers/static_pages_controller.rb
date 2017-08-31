@@ -18,6 +18,9 @@ class StaticPagesController < ApplicationController
   end
   
   def parent
+    profile = Profile.new
+    
+    @video = profile.videos.build
   end
   
 end

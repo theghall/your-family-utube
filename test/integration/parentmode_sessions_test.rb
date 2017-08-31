@@ -23,20 +23,22 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
     end
     
     test "does not add a video when no profile selected" do
+      youtube_url = "https://www.youtube.com/watch?v=Qf869uQHYTk"
       sign_in @user
       get root_path
       post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
       follow_redirect!
       assert session[:parent_id], @user.id
       assert_no_difference 'Video.count' do
-        post videos_path params: { video: { youtube_id: @video.youtube_id }}
+        post videos_path params: { video: { youtube_id: youtube_url }}
         follow_redirect!
       end
       assert_not flash.empty?
     end
     
     test "adds video to review list" do
-      youtube_url = "https://www.youtu.be/F0qkhwIQnuc"
+      youtube_url = "https://www.youtube.com/watch?v=Xm18dkRmDC8"
+      youtube_id = "Xm18dkRmDC8"
       sign_in @user
       get root_path
       profile = profiles(:john_1)
@@ -51,9 +53,8 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
         post videos_path params: { video: { youtube_id: youtube_url }}
         follow_redirect!
       end
-      assigns(:avideo)
       assert_not flash.empty?
-      assert_match avideo.youtube_id, response.body
+      assert_match youtube_id, response.body
       assigns(:videos).each do |v|
         assert_select 'form[action=?]', video_path(v.id)
         assert_select 'a[href=?]', video_path(v.id), text: 'Delete'
@@ -74,9 +75,8 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       assert_select 'input', id: 'video_youtube_id'
       assert_difference 'Video.count',0  do
         post videos_path params: { video: { youtube_id: youtube_url }}
-        follow_redirect!
       end
-      assert_not flash.empty?
+      assert_select 'div#error_explanation'
     end
       
     
@@ -111,7 +111,8 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
     end
     
     test "adds video to review list ajax way" do
-      youtube_url = "https://www.youtu.be/F0qkhwIQnuc"
+      youtube_url = "https://www.youtube.com/watch?v=YOI2r3Q-J3w"
+      youtube_id = "YOI2r3Q-J3w"
       sign_in @user
       get root_path
       profile = profiles(:john_1)

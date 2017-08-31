@@ -18,24 +18,35 @@ class VideosController < ApplicationController
       profile = get_profile(session[:profile_id])
       
       @video = profile.videos.build(video_params)
-    
-      # Get video thumbnail from YouTube  
-      @video.remote_thumbnail_url = get_thumbnail(@video.youtube_id)
       
       if @video.save
         flash[:notice] = "Video saved"
         
         load_videos
+        
+        respond_to do |format|
+          format.html { redirect_to parent_path }
+          format.js
+        end
       else
-        flash[:alert] = "Video not saved"
+        load_profiles
+        
+        load_videos
+        
+        respond_to do |format|
+          format.html { render 'static_pages/parent' }
+          format.js
+        end
       end
     else
       flash[:alert] = "You must select a profile to save the video under"
-    end
-    
-    respond_to do |format|
-      format.html { redirect_to parent_path }
-      format.js
+      
+      load_profiles
+
+      respond_to do |format|
+         format.html { render 'static_pages/parent' }
+         format.js
+      end
     end
   end
 
@@ -86,11 +97,5 @@ class VideosController < ApplicationController
       @video = current_profile.videos.find_by(id: params[:id]) if current_profile
       
       redirect_to root_url if @video.nil?
-    end
-    
-    def get_thumbnail(youtube_id)
-      video = Yt::Video.new(id: youtube_id)
-      
-      video.thumbnail_url
     end
 end

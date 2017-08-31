@@ -5,7 +5,9 @@
 <div id="video_frame">
 <%= render 'shared/video_frame', locals: { url: curr_vid_url } %>
 </div>
+<div id="video-add-form">
 <%= render 'videos/create' %>
+</div>
 </div>
 <div id="video_list" class="col-md-4">
 <%= render 'profiles/video_list' unless @videos.nil? %>
