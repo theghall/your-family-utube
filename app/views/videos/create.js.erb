@@ -1,3 +1,10 @@
+$('#notice').html('<%= flash[:notice] %>');
+$('#alert').html('<%= flash[:alert] %>');
 $('#video_youtube_id').val('');
+<% if @videos %>
 $('#video_list').html('<%= escape_javascript(render('profiles/video_list')) %>');
+<% end %>
 $('#video_frame').html('<%= escape_javascript(render('shared/video_frame')) %>');
+<% if @video && @video.errors.any? %>
+$('#video-add-form').html('<%= escape_javascript(render('videos/create')) %>');
+<% end %>
