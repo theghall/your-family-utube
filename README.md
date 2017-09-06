@@ -35,6 +35,7 @@
  Prior to 8/31 you had to add a video by the ID, now you can use the Share URL or
  link address of the video; the ID by itself will produce an error.
  
- If you added any videos prior to 8/31 you will see the default thumbnail when no 
- thumbnail was pulled from YouTube.  I am working to refresh those thumbnails. You can
- still click on them to load the video, if you entered a valid youtube video.
+ Also, if prior to 9/6 you entered a valid URL you should see the proper thumbnail.  If you
+ you see a gray film strip looking thumbnail, either there was an error retrieving
+ it or that is the thumbnail.  You can try refreshing your browser.  When the videos
+ are loaded for a profile an attempt is made to refresh those thumbnails.
