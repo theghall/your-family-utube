@@ -90,7 +90,7 @@ class VideosController < ApplicationController
   private
   
     def video_params
-      params.require(:video).permit(:youtube_id, :approved)
+      params.require(:video).permit(:youtube_id, :approved, :tag_list)
     end
     
     def correct_profile

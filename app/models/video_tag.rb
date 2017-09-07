@@ -1,6 +1,13 @@
 class VideoTag < ApplicationRecord
   belongs_to :video
   belongs_to :tag
-  validates :video_id, presence: true
-  validates :tag_id, presence: true
+  before_save :got_ids
+  
+  private
+  
+    # When creating in Video#tags=, validates: presence: true fails as video_id
+    # is nil at validation
+    def got_ids
+      return self.video_id && self.tag_id
+    end
 end

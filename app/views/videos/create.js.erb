@@ -1,6 +1,7 @@
 $('#notice').html('<%= flash[:notice] %>');
 $('#alert').html('<%= flash[:alert] %>');
 $('#video_youtube_id').val('');
+$('#video_tag_list').val('');
 <% if @videos %>
 $('#video_list').html('<%= escape_javascript(render('profiles/video_list')) %>');
 <% end %>

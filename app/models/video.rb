@@ -10,7 +10,20 @@ class Video < ApplicationRecord
   validates :approved, inclusion: { in: [true, false] }
   validate :youtube_id, :valid_video_url
   
+  def tag_list
+    tags.join(', ')
+  end
+    
+  def tag_list=(tag_list)
+    tag_names = tag_list.split(',').collect{ |s| s.strip.downcase }.uniq
+    
+    new_or_found_tags = tag_names.collect{ |name| Tag.find_or_create_by(name: name) }
+    
+    self.tags = new_or_found_tags
+  end
+  
   private
+    
     def parse_uri(uri)
       begin
         u = URI.parse uri
