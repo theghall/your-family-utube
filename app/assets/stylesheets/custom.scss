@@ -79,3 +79,30 @@ p {
   height: 92px;
   padding: 1px;
 }
+
+/* search form */
+
+#search-form-wrapper {
+  width: auto;
+}
+
+#search-label, #tags_name, #search-submit, #clear-submit {
+ margin: 1px;  
+ float: left;
+} 
+
+#tags_name {
+  width: 200px;
+  display: inline;
+  vertical-align: bottom;
+}
+
+#search-submit {
+  width: 75px;
+}
+
+#clear-submit {
+  width: 100px;
+}
+
+

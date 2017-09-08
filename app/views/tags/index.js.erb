@@ -1,0 +1,12 @@
+$('#notice').html('<%= flash[:notice] %>');
+$('#alert').html('<%= flash[:alert] %>');
+$('#tags_name').val('');
+<% if search_tag? %>
+    $('#clear-submit').prop('disabled', false);
+<% else %>
+    $('#clear-submit').prop('disabled', true);
+<% end %>
+<% if @videos %>
+    $('#video_list').html('<%= escape_javascript(render('profiles/video_list')) %>');
+<% end %>
+$('#video_frame').html('<%= escape_javascript(render('shared/video_frame')) %>');

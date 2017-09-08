@@ -8,6 +8,6 @@ class VideoTag < ApplicationRecord
     # When creating in Video#tags=, validates: presence: true fails as video_id
     # is nil at validation
     def got_ids
-      return self.video_id && self.tag_id
+      throw(:abort) unless self.video_id && self.tag_id
     end
 end

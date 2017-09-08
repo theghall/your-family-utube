@@ -1,4 +1,6 @@
 module ProfilesSessionsHelper
+    include TagsHelper
+    
     def current_profile
         if (profile_id = session[:profile_id])
             @current_profile = Profile.find_by(id: profile_id)
@@ -15,6 +17,14 @@ module ProfilesSessionsHelper
 
     def get_video_url(video) 
         "https://www.youtube.com/embed/" + video.youtube_id + "?rel=0&controls=0"
+    end
+    
+    def num_video_by_search_key(approved)
+        tag = get_search_tag
+        
+        if !tag.empty?
+            tag.videos.where(profile_id: current_profile.id, approved: approved).count 
+        end
     end
     
     def refresh_thumbnails(pvideos)
@@ -43,14 +53,20 @@ module ProfilesSessionsHelper
             end
         end
     end
-    def load_videos
+    
+    def load_videos()
       if session[:profile_id]
         profile = get_profile(session[:profile_id])
+        
+        tag = Tag.where(name: get_search_key).first
+        
         if parent_mode?
-            @videos = get_videos(profile, false, 10)
+            @videos = get_videos(profile, tag, false, 10)
         else
-            @videos = get_videos(profile, true, 20)
+            @videos = get_videos(profile, tag, true, 20)
         end
+        
+        clear_search_key if @videos.empty?
         
         refresh_thumbnails(@videos)
  

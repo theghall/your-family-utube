@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'tags/index'
+
 root 'static_pages#home'
 
 get    '/help',     to: 'static_pages#help'
@@ -13,4 +15,5 @@ resources :profiles, only: [:create]
 resources :profiles_sessions, only: [:create]
 resources :parentmode_sessions, only: [:new, :create]
 resources :videos, only: [:show, :create, :update, :destroy]
+resources :tags, only: [:index]
 end

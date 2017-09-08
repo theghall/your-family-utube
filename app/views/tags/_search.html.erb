@@ -1,0 +1,6 @@
+<%= form_for(:tags, url: tags_path, method: :get, remote: true) do |f| %>
+    <%= f.label :name, 'Tag', id: 'search-label' %>
+    <%= f.text_field :name  %>
+    <%= f.submit 'Search', id: 'search-submit', class: 'btn btn-primary' %>
+    <%= f.submit 'Clear Search', id: 'clear-submit', class: 'btn btn-primary' %>
+<% end %>

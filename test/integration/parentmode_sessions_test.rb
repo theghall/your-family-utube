@@ -4,9 +4,16 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
     include Devise::Test::IntegrationHelpers
 
   def setup
+    @youtube_url = "https://www.youtube.com/watch?v=Xm18dkRmDC8"
+    @youtube_id = "Xm18dkRmDC8"
+    @tags = "tag1, tag2"
+    @tag1 = "tag1"
+    @tag2 = "tag2"
     @user = users(:john)
     @profile = profiles(:john_1)
     @video= videos(:topgun)
+    @user_no_videos = users(:jack)
+    @profile_no_videos = profiles(:jack_1)
   end
   
     test "Add video page only displays unapproved videos" do
@@ -157,5 +164,49 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       assert_no_match @video.youtube_id, response.body
     end
       
-      
+    test "should add tags" do
+      sign_in @user
+      get root_path
+      post parentmode_sessions_path, params: { parentmode: { pin: '1234' }}
+      follow_redirect!
+      profile = profiles(:john_1)
+      post profiles_sessions_path(name: profile.name)
+      # Add video by tags
+      assert_difference 'Tag.count', 2 do
+        post videos_path params: { video: { youtube_id: @youtube_url, tag_list: @tags }}
+        follow_redirect!
+      end
+      #search by those tags
+      get tags_path params: { tags: { name: @tag1 }}
+      follow_redirect!
+      assert_select 'div.vidframe', count: 1
+      get tags_path params: { tags: { name: @tag2 }}
+      follow_redirect!
+      assert_select 'div.vidframe', count: 1
+     end 
+     
+     test "clear search results" do
+      sign_in @user_no_videos
+      get root_path
+      post parentmode_sessions_path, params: { parentmode: { pin: '1234' }}
+      follow_redirect!
+      profile = @profile_no_videos
+      post profiles_sessions_path(name: profile.name)
+      # Add video by tags
+      assert_difference 'Tag.count', 2 do
+        post videos_path params: { video: { youtube_id: @youtube_url, tag_list: @tags }}
+        follow_redirect!
+      end
+      # post a video with no tags
+      post videos_path params: { video: { youtube_id: @youtube_url }}
+      follow_redirect!
+      # search by tag
+      get tags_path params: { tags: { name: @tag1 }}
+      follow_redirect!
+      assert_select 'div.vidframe', count: 1
+      # clear search
+      get tags_path params: { tags: { name: '' }}
+      follow_redirect!
+      assert_select 'div.vidframe', count: 2
+    end
 end

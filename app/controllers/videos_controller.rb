@@ -1,5 +1,5 @@
 class VideosController < ApplicationController
-  include ProfilesSessionsHelper
+  include ProfilesSessionsHelper, TagsHelper
   
   before_action :logged_in_user, only: [:show, :create, :update, :destroy]
   before_action :correct_profile, only: [:show, :destroy, :update]
@@ -21,6 +21,8 @@ class VideosController < ApplicationController
       
       if @video.save
         flash[:notice] = "Video saved"
+        
+        clear_search_key
         
         load_videos
         
@@ -51,11 +53,14 @@ class VideosController < ApplicationController
   end
 
   def update
+
     if video_params["approved"]
       approved = (video_params["approved"] == 'true' ? true : false)
       
       if @video.update_attributes(approved: approved)
         flash[:action] = "Video approved"
+        
+        clear_search_key if num_video_by_search_key(false) == 1
         
         load_videos
         
@@ -77,8 +82,10 @@ class VideosController < ApplicationController
     
     flash[:action] = "Video deleted"
     
+    clear_search_key if num_video_by_search_key(false) == 1
+    
     load_videos
-
+    
     @videos.empty? ? set_curr_vid_url(nil) : set_curr_vid_url(get_video_url(@videos.first))
     
     respond_to do |format|
