@@ -4,8 +4,6 @@
  1) A parent to create a list of videos to vet and approve or delete them as desired.
  2) A parent or child to view videos that were approved for viewing.
  
- Both features above are working.  Tagging has been modeled, but it is not yet implemented.
- 
  You try out what's working so far at: [Safe-T-Tube](https://vast-dawn-24320.herokuapp.com/)
  
 ## **Using the app:**
@@ -25,6 +23,8 @@
  
   * To delete a video click 'Delete'.  That video is no longer available.
  
+  * You can search for videos by tag in either parent or viewing mode
+
   * To exit the parent mode click 'Exit Parent Mode'.  You will be returned to the Home 
  screen.  As with the parent mode, clicking on a thumbnail loads the corresponding
  video into the player.
