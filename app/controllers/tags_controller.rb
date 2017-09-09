@@ -15,8 +15,6 @@ class TagsController < ApplicationController
             flash[:notice] = 'No videos matching that search term were found' 
         end
        
-        @videos.empty? ? set_curr_vid_url(nil) : set_curr_vid_url(get_video_url(@videos.first))
-    
         respond_to do |format|
             format.html { redirect_to parent_path }
             format.js

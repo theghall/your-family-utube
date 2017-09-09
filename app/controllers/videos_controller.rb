@@ -63,8 +63,6 @@ class VideosController < ApplicationController
         clear_search_key if num_video_by_search_key(false) == 1
         
         load_videos
-        
-        @videos.empty? ? set_curr_vid_url(nil) : set_curr_vid_url(get_video_url(@videos.first))
       end
       
       respond_to do |format|
@@ -85,8 +83,6 @@ class VideosController < ApplicationController
     clear_search_key if num_video_by_search_key(false) == 1
     
     load_videos
-    
-    @videos.empty? ? set_curr_vid_url(nil) : set_curr_vid_url(get_video_url(@videos.first))
     
     respond_to do |format|
       format.html { redirect_to parent_path }

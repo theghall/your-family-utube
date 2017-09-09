@@ -6,8 +6,6 @@ class ProfilesSessionsController < ApplicationController
     session[:profile_id] = Profile.find_by(name: params[:name]).id
     load_videos
 
-    @videos.empty? ? set_curr_vid_url(nil) : set_curr_vid_url(get_video_url(@videos.first))
-
     respond_to do |format|
       format.html { redirect_back fallback_location: root_path }
       format.js
