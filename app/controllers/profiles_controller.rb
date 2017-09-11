@@ -4,9 +4,9 @@ class ProfilesController < ApplicationController
     def create
         @profile = current_user.profiles.build(profiles_params)
         if @profile.save
-            flash[:action] = "Profile saved!"
+            flash[:notice] = "Profile saved!"
         else
-            flash[:action] = "Profile not saved!"
+            flash[:alert] = "Profile not saved!"
         end
         
         load_profiles

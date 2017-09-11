@@ -1,2 +1,4 @@
+$('#notice').html('<%= flash[:notice] %>');
+$('#alert').html('<%= flash[:alert] %>');
 $("#video_list").html('<%= escape_javascript(render('profiles/video_list')) %>');
 $('#video_frame').html('<%= escape_javascript(render('shared/video_frame')) %>');

@@ -1,2 +1,4 @@
+$('#notice').html('<%= flash[:notice] %>');
+$('#alert').html('<%= flash[:alert] %>');
 $('#profiles_name').val('');
 $('#profiles').html('<%= escape_javascript(render('profiles/profile_list')) %>');

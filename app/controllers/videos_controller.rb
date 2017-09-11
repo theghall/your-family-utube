@@ -58,7 +58,7 @@ class VideosController < ApplicationController
       approved = (video_params["approved"] == 'true' ? true : false)
       
       if @video.update_attributes(approved: approved)
-        flash[:action] = "Video approved"
+        flash[:notice] = "Video approved"
         
         clear_search_key if num_video_by_search_key(false) == 1
         
@@ -78,7 +78,7 @@ class VideosController < ApplicationController
     
     @video.destroy
     
-    flash[:action] = "Video deleted"
+    flash[:notice] = "Video deleted"
     
     clear_search_key if num_video_by_search_key(false) == 1
     
