@@ -2,5 +2,5 @@
     <%= f.label :name, 'Tag', id: 'search-label' %>
     <%= f.text_field :name  %>
     <%= f.submit 'Search', id: 'search-submit', class: 'btn btn-primary' %>
-    <%= f.submit 'Clear Search', id: 'clear-submit', class: 'btn btn-primary' %>
 <% end %>
+<%= button_to('Clear Search', tags_path, id: 'clear-submit', method: :get, disabled: !search_tag?, class: 'btn btn-primary', params: { tags: { name: '' }}, remote: true, data: { disable_with: 'Clear Search' }) %>

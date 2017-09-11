@@ -15,4 +15,5 @@
 //= require turbolinks
 //= require jquery.turbolinks
 //= require bootstrap/dropdown
+//= require safe-t-tube
 //= require_tree .
