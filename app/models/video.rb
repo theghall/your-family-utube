@@ -25,6 +25,7 @@ class Video < ApplicationRecord
   private
     
     def parse_uri(uri)
+      # Let Google API determine valid id
       begin
         u = URI.parse uri
       rescue URI::InvalidURIError
@@ -32,7 +33,10 @@ class Video < ApplicationRecord
       else
         if u.path =~ /watch/
           id = CGI::parse(u.query)["v"].first
+	elsif u.path[0] == '/'
+	  id = u.path[1..-1]
         else
+          # If just an id is passed in this will catch it
           id = u.path
         end
       end
@@ -49,7 +53,7 @@ class Video < ApplicationRecord
       begin 
         video.title
       rescue Yt::Errors::NoItems
-        errors[:base] << 'Youtube URL is not for a valid YouTube Video.'
+        errors[:base] << 'Thet YouTube Video cannot be found.'
       rescue Yt::Errors::RequestError
         errors[:base] << 'Unable to contact YouTube.  If problem persists contact us.'
       end

@@ -1,6 +1,6 @@
     <%= form_for(@video, url: videos_path, method: :post, remote: true) do |f| %>
         <%= render 'shared/error_messages', object: f.object %>
-        <%= f.label :youtube_id, 'URL of YouTube Video to Add' %>
+        <%= f.label :youtube_id, 'URL or ID of YouTube Video to Add' %>
         <%= f.text_field :youtube_id, class: 'form-control' %>
         <%= f.label :tag_list, 'Tags' %>
         <%= f.text_field :tag_list, class: 'form-control' %>

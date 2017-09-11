@@ -104,6 +104,46 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       assert_not flash.empty?
       assert_no_match @video.youtube_id, response.body
     end
+
+    test "adds video to review list with short video URL" do
+      youtube_url = "https://youtu.be/3sFw5Mt70vY"
+      youtube_id = "3sFw5Mt70vY"
+      sign_in @user
+      get root_path
+      profile = profiles(:john_1)
+      post profiles_sessions_path(name: profile.name)
+      follow_redirect!
+      assert session[:profile_id], profile.id
+      post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
+      follow_redirect!
+      assert session[:parent_id], @user.id
+      assert_select 'input', id: 'video_youtube_id'
+      assert_difference 'Video.count',1  do
+        post videos_path, params: { video: { youtube_id: youtube_url }}, xhr: true
+      end
+      assert_not flash.empty?
+      assert_match youtube_id, response.body
+    end
+
+    test "adds video to review list with just id" do
+      youtube_url = "sHZ8RYT8bgM"
+      youtube_id = "sHZ8RYT8bgM"
+      sign_in @user
+      get root_path
+      profile = profiles(:john_1)
+      post profiles_sessions_path(name: profile.name)
+      follow_redirect!
+      assert session[:profile_id], profile.id
+      post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
+      follow_redirect!
+      assert session[:parent_id], @user.id
+      assert_select 'input', id: 'video_youtube_id'
+      assert_difference 'Video.count',1  do
+        post videos_path, params: { video: { youtube_id: youtube_url }}, xhr: true
+      end
+      assert_not flash.empty?
+      assert_match youtube_id, response.body
+    end
     
     test "delete a video from review list" do
       sign_in @user
