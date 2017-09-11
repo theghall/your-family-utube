@@ -2,7 +2,7 @@
 <div class="col-md-4">
     <%= form_for(:parentmode, url: parentmode_sessions_path) do |f| %>
         <%= f.label 'Parent PIN' %>
-        <%= f.password_field :pin, class: 'form-control' %>
+        <%= f.password_field :pin, autofocus: true, class: 'form-control' %>
         <%= f.submit 'Submit', class: 'btn btn-primary' %>
     <% end %>
     
