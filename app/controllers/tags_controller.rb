@@ -7,14 +7,19 @@ class TagsController < ApplicationController
         
         clear_search_key
         
-        set_search_key(tags_params[:name])
+	# An empty search key does nothing
+	if valid_tag?(tags_params[:name])
+           set_search_key(tags_params[:name])
         
-        load_videos
+           load_videos
 
-        if @videos.empty?
-            flash[:notice] = 'No videos matching that search term were found' 
+           if @videos.empty?
+              flash[:notice] = 'No videos matching that search term were found' 
+           end
+        else
+           flash[:notice] = "That is not a valid tag."
         end
-       
+
         respond_to do |format|
             format.html { redirect_to parent_path }
             format.js

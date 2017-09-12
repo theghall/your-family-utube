@@ -66,8 +66,6 @@ module ProfilesSessionsHelper
             @videos = get_videos(profile, tag, true, 20)
         end
         
-        clear_search_key if @videos.empty?
-        
         refresh_thumbnails(@videos)
  
         curr_vid_url = (@videos.empty? ? nil : get_video_url(@videos.first))

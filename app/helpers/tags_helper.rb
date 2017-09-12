@@ -1,5 +1,13 @@
 module TagsHelper
     
+    def valid_tag?(key)
+        return true if key.empty?
+
+        t = Tag.where(name: key).first
+
+        !t.nil?	
+    end
+
     def set_search_key(key)
         session[:search_tag] = key unless key.empty?
     end
