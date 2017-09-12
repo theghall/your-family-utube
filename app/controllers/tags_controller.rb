@@ -10,7 +10,7 @@ class TagsController < ApplicationController
         set_search_key(tags_params[:name])
         
         load_videos
-        
+
         if @videos.empty?
             flash[:notice] = 'No videos matching that search term were found' 
         end
