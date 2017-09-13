@@ -1,6 +1,7 @@
 class StaticPagesController < ApplicationController
   include ParentmodeSessionsHelper, ProfilesSessionsHelper, TagsHelper
   
+  before_action :logged_in_user, only: [:parent]
   before_action :forget_parent, except: [:parent]
   before_action :load_profiles, only: [:home, :parent]
   before_action :load_videos, only: [:home, :parent]

@@ -21,4 +21,9 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should redirect parent on not logged in" do
+    get parent_path
+    assert_redirected_to new_user_session_url
+  end
+
 end
