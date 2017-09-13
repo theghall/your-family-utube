@@ -71,6 +71,22 @@ p {
   font-size: 1.1em;
   line-height: 1.7em;
 }
+ /* Profiles */
+
+#curr-profile-wrapper p {
+  margin: 2px;
+  padding: 0;
+  display: inline-block;
+}
+
+#profiles-list-wrapper {
+  margin-top: 10px;
+}
+
+#profile-form {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 
 /* Videos */
 
