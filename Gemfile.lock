@@ -330,6 +330,8 @@ GEM
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
+    rollbar (2.15.4)
+      multi_json
     ruby-progressbar (1.8.1)
     sass (3.5.1)
       sass-listen (~> 4.0.0)
@@ -412,6 +414,7 @@ DEPENDENCIES
   puma (= 3.9.1)
   rails (= 5.0.3)
   rails-controller-testing (= 1.0.2)
+  rollbar (= 2.15.4)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   spring (= 2.0.2)

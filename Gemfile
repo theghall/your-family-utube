@@ -45,6 +45,8 @@ gem 'faker',  '1.7.3'
 # Use Puma as the app server
 gem 'puma', '3.9.1'
 
+gem 'rollbar', '2.15.4'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
