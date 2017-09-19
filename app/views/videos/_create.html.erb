@@ -2,7 +2,7 @@
         <%= render 'shared/error_messages', object: f.object %>
         <%= f.label :youtube_id, 'URL or ID of YouTube Video to Add' %>
         <%= f.text_field :youtube_id, class: 'form-control' %>
-        <%= f.label :tag_list, 'Tags' %>
+        <%= f.label :tag_list, 'Tags (comma separated list of words and phrases)' %>
         <%= f.text_field :tag_list, class: 'form-control' %>
         <%= f.submit 'Submit', class: 'btn btn-priamry' %>
     <% end %>
