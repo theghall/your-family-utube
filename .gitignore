@@ -23,3 +23,5 @@ secrets.sh
 
 /play
 /public/uploads
+
+.DS_store

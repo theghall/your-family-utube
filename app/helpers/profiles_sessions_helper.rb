@@ -57,8 +57,8 @@ module ProfilesSessionsHelper
     def load_videos()
       if session[:profile_id]
         profile = get_profile(session[:profile_id])
-        
-        tag = Tag.where(name: get_search_key).first
+
+        tag = Tag.where(user_id: profile.user_id, name: get_search_key).first
         
         if parent_mode?
             @videos = get_videos(profile, tag, false, 10)

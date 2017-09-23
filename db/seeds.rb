@@ -51,3 +51,17 @@ video.save!
 video = profile.videos.build(youtube_id: 'https://www.youtube.com/watch?v=vtSmfws0_To', approved: true, tag_list: 'movie clip, casablanca')
 video.save!
 
+user = User.new(name: "Donald Duck",
+             email: "donald@email.com",
+             password: "foobar",
+             password_confirmation: "foobar",
+             pin: "1234",
+             pin_confirmation: "1234")
+user.skip_confirmation!
+user.save!
+
+profile = user.profiles.build(name: "Goofy")
+profile.save!
+
+video = profile.videos.build(youtube_id: 'https://www.youtube.com/watch?v=iSyfpUyzQGU', approved: true, tag_list: 'warp')
+video.save!

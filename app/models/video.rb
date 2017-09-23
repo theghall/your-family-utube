@@ -9,17 +9,16 @@ class Video < ApplicationRecord
   validates :youtube_id, presence: true, allow_blank: false
   validates :approved, inclusion: { in: [true, false] }
   validate :youtube_id, :valid_video_url
+  after_save :save_tags
+
+  attr_accessor :tag_names
   
   def tag_list
     tags.join(', ')
   end
     
   def tag_list=(tag_list)
-    tag_names = tag_list.split(',').collect{ |s| s.strip.downcase }.uniq
-    
-    new_or_found_tags = tag_names.collect{ |name| Tag.find_or_create_by(name: name) }
-    
-    self.tags = new_or_found_tags
+    @tag_names = tag_list.split(',').collect{ |s| s.strip.downcase }.uniq
   end
   
   private
@@ -69,6 +68,16 @@ class Video < ApplicationRecord
         # default video thumbnail will be displayed.  parse_uri might have a bug.
       end
 
+    end
+
+    def save_tags
+      return if tag_names.nil?
+
+      profile = Profile.where(id: profile_id).first
+
+      new_or_found_tags = tag_names.collect{ |name| Tag.find_or_create_by(user_id: profile.user_id, name: name) }
+
+      self.tags = new_or_found_tags
     end
 
 end
