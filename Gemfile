@@ -50,8 +50,9 @@ gem 'rollbar', '2.15.4'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'pg', '0.18.4'
+
 group :development, :test do
-  gem 'sqlite3', '1.3.13'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
 end
@@ -74,6 +75,5 @@ end
 
 group :production do
   gem 'newrelic_rpm', '4.4.0.336'
-  gem 'pg', '0.18.4'
 end
 

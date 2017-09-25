@@ -12,13 +12,16 @@
 
 ActiveRecord::Schema.define(version: 20170825211915) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "profiles", force: :cascade do |t|
     t.text     "name",       null: false
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id", "name"], name: "index_profiles_on_user_id_and_name", unique: true
-    t.index ["user_id"], name: "index_profiles_on_user_id"
+    t.index ["user_id", "name"], name: "index_profiles_on_user_id_and_name", unique: true, using: :btree
+    t.index ["user_id"], name: "index_profiles_on_user_id", using: :btree
   end
 
   create_table "tags", force: :cascade do |t|
@@ -26,8 +29,8 @@ ActiveRecord::Schema.define(version: 20170825211915) do
     t.text     "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id", "name"], name: "index_tags_on_user_id_and_name", unique: true
-    t.index ["user_id"], name: "index_tags_on_user_id"
+    t.index ["user_id", "name"], name: "index_tags_on_user_id_and_name", unique: true, using: :btree
+    t.index ["user_id"], name: "index_tags_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -49,9 +52,9 @@ ActiveRecord::Schema.define(version: 20170825211915) do
     t.string   "unconfirmed_email"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
   create_table "video_tags", force: :cascade do |t|
@@ -59,8 +62,8 @@ ActiveRecord::Schema.define(version: 20170825211915) do
     t.integer  "tag_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["tag_id"], name: "index_video_tags_on_tag_id"
-    t.index ["video_id"], name: "index_video_tags_on_video_id"
+    t.index ["tag_id"], name: "index_video_tags_on_tag_id", using: :btree
+    t.index ["video_id"], name: "index_video_tags_on_video_id", using: :btree
   end
 
   create_table "videos", force: :cascade do |t|
@@ -70,7 +73,12 @@ ActiveRecord::Schema.define(version: 20170825211915) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.string   "thumbnail"
-    t.index ["profile_id"], name: "index_videos_on_profile_id"
+    t.index ["profile_id"], name: "index_videos_on_profile_id", using: :btree
   end
 
+  add_foreign_key "profiles", "users"
+  add_foreign_key "tags", "users"
+  add_foreign_key "video_tags", "tags"
+  add_foreign_key "video_tags", "videos"
+  add_foreign_key "videos", "profiles"
 end
