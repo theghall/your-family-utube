@@ -4,5 +4,5 @@
         <%= f.text_field :youtube_id, class: 'form-control' %>
         <%= f.label :tag_list, 'Tags (comma separated list of words and phrases)' %>
         <%= f.text_field :tag_list, class: 'form-control' %>
-        <%= f.submit 'Submit', class: 'btn btn-priamry' %>
+	<%= button_tag 'Reset', type: 'submit', name: 'reset', value: true, class: 'btn btn-primary' %><%= f.submit 'Submit', class: 'btn btn-primary' %>
     <% end %>

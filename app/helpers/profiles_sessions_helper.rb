@@ -15,8 +15,12 @@ module ProfilesSessionsHelper
         @profiles = current_user.profiles.all unless current_user.nil?
     end
 
+    def make_video_url(youtube_id)
+        "https://www.youtube.com/embed/" + youtube_id + "?rel=0&controls=0"
+    end
+
     def get_video_url(video) 
-        "https://www.youtube.com/embed/" + video.youtube_id + "?rel=0&controls=0"
+      make_video_url(video.youtube_id)
     end
     
     def num_video_by_search_key(approved)

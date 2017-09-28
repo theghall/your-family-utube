@@ -1,4 +1,6 @@
 class Video < ApplicationRecord
+  include VideosHelper
+
   belongs_to :profile
   has_many :video_tags, dependent: :destroy
   has_many :tags, through: :video_tags
@@ -22,24 +24,6 @@ class Video < ApplicationRecord
   end
   
   private
-    
-    def parse_uri(uri)
-      # Let Google API determine valid id
-      begin
-        u = URI.parse uri
-      rescue URI::InvalidURIError
-        id = "invalid"
-      else
-        if u.path =~ /watch/
-          id = CGI::parse(u.query)["v"].first
-	elsif u.path[0] == '/'
-	  id = u.path[1..-1]
-        else
-          # If just an id is passed in this will catch it
-          id = u.path
-        end
-      end
-    end
     
     def parse_id
       # Initially user enters a youtube URL

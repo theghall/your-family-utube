@@ -1,12 +1,26 @@
 class VideosController < ApplicationController
-  include ProfilesSessionsHelper, TagsHelper
+  include ProfilesSessionsHelper, TagsHelper,VideosHelper
   
+  before_action :handle_reset, only: [:create]
   before_action :logged_in_user, only: [:show, :create, :update, :destroy]
   before_action :correct_profile, only: [:show, :destroy, :update]
   
   def show
     set_curr_vid_url(get_video_url(@video))
     
+    respond_to do |format|
+      format.html { redirect_to (parent_mode? ? parent_path : root_url) }
+      format.js
+    end
+  end
+
+  def preload
+    params = video_params
+
+    if valid_youtube_video?(parse_uri(params['youtube_id'])) 
+      set_curr_vid_url(make_video_url(parse_uri(params['youtube_id'])))
+    end
+
     respond_to do |format|
       format.html { redirect_to (parent_mode? ? parent_path : root_url) }
       format.js
@@ -100,5 +114,16 @@ class VideosController < ApplicationController
       @video = current_profile.videos.find_by(id: params[:id]) if current_profile
       
       redirect_to root_url if @video.nil?
+    end
+
+    def handle_reset
+      if params[:reset]
+        load_videos
+
+        respond_to do |format|
+          format.html { redirect_to parent_path }
+          format.js { render :template => 'videos/create.js.erb' }
+        end
+      end
     end
 end

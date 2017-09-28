@@ -1,0 +1,74 @@
+
+function getAuthToken($form) {
+  var authToken  = '';
+  var $children = $form.children();
+
+  $children.each(function(index, element) {
+	name = $(this).attr('name');
+	if (name === 'authenticity_token') {
+	 authToken = $(this).attr('value');
+	}
+  });
+
+  return authToken;
+}
+
+function encodeYoutubeVideoId(authToken, youtubeId) {
+  var urlEncodedData = '';
+  var urlEncodedPairs = [];
+
+  urlEncodedPairs.push(encodeURIComponent('authenticity_token') + '=' + encodeURIComponent(authToken));
+  urlEncodedPairs.push(encodeURIComponent('video[youtube_id]') + '=' + encodeURIComponent(youtubeId));
+
+  urlEncodedData = urlEncodedPairs.join('&').replace(/%20/g, '+');
+
+  return urlEncodedData;
+}
+
+$(document).ready(function () {
+
+   // Chrome won't submit form if button is disabled directly
+   $('body').on('submit','form',function() {
+
+       var formId = $(this).attr('id');
+
+       switch (formId) {
+       case 'tag-search-form':
+          $('#clear-submit').prop('disabled', false);
+	  break;
+       case 'clear-submit-form':
+         $('form#clear-submit').prop('disabled', true);
+	 break;
+       case 'new_video':
+	 $('#error_explanation').remove();
+	 break;
+       }
+   }); 
+
+   $('body').on('focusout','input',function() {
+	var authToken = '';
+	var elemID = $(this).attr('id');
+
+	switch(elemID) {
+	case 'video_youtube_id':
+
+	  var $form = $(this).parent();
+
+	  authToken = getAuthToken($form);
+
+    	  var postUrl = "<%= Rails.application.routes.url_helpers.preload_video_path %>";
+
+	  // Make request to preload video into viewer
+	  // dataType is actually what is the expected response
+	  // contentType refers to what is in data
+	  $.ajax({
+	    	type: 'post',
+		dataType:'script',
+		data: encodeYoutubeVideoId(authToken, $(this).val()),
+		contentType: 'application/x-www-form-urlencoded;; charset=utf-8',
+		url: postUrl
+	  })
+	  break;
+	  }
+   });
+});
