@@ -17,6 +17,11 @@
   font-weight: bold;
 }
 
+/* Boostrap adjustments */
+.btn-group-vertical .button_to, .mng-button {
+    margin-bottom:3px;
+}
+
 /* Adjustments for Devise */
 
 #app_notices {

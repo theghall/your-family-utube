@@ -9,9 +9,9 @@
         <div class="mngbuttons">
             <%= form_for(:video, url: video_path(v), method: :patch, remote: true) do |f| %>
                 <%= f.hidden_field :approved, value: 'true' %>
-                <%= f.submit "Approve", class: 'btn btn-primary' %>
+                <%= f.submit "Approve", class: 'btn btn-primary mng-button' %>
             <% end %>
-            <%= link_to "Delete", video_path(v), method: :delete, remote: true, class: 'btn btn-primary' %>
+            <%= link_to "Delete", video_path(v), method: :delete, remote: true, class: 'btn btn-primary mng-button' %>
         </div>
     <% end %>
 <% end %>
