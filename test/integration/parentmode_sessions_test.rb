@@ -6,7 +6,7 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
   def setup
     @youtube_url = "https://www.youtube.com/watch?v=Xm18dkRmDC8"
     @youtube_id = "Xm18dkRmDC8"
-    @tags = "tag1, tag2"
+    @tags = "Tag1, Tag2"
     @tag1 = "tag1"
     @tag2 = "tag2"
     @user = users(:john)
@@ -216,13 +216,21 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
         post videos_path params: { video: { youtube_id: @youtube_url, tag_list: @tags }}
         follow_redirect!
       end
-      #search by those tags
+      #search by those tags lowercase
       get tags_path params: { tags: { name: @tag1 }}
       follow_redirect!
       assert_select 'div.vidframe', count: 1
       get tags_path params: { tags: { name: @tag2 }}
       follow_redirect!
       assert_select 'div.vidframe', count: 1
+      # search by an uppercase tag
+      get tags_path params: { tags: { name: @tag1.upcase }}
+      follow_redirect!
+      assert_select 'div.vidframe', count: 1
+      # search by an invalid tag
+      get tags_path params: { tags: { name: 'xxxxx' }}
+      follow_redirect!
+      assert_not flash.empty?
      end 
      
      test "clear search results" do

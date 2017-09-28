@@ -7,9 +7,11 @@ class TagsController < ApplicationController
         
         clear_search_key
         
-	# An empty search key does nothing
-	if valid_tag?(tags_params[:name])
-           set_search_key(tags_params[:name])
+        search_key = tags_params[:name].downcase
+
+        # An empty search key does nothing
+	      if valid_tag?(search_key)
+           set_search_key(search_key)
         
            load_videos
 
