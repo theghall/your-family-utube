@@ -13,6 +13,11 @@
   * To add videos click 'Add Video'.  You will be prompted for your parent pin.
  
   * Before adding a video you must select a profile by clicking on one.
+
+  * When you tab off the YouTube URL field or move focus to the tag field you will see the
+ video in the viewer so you can see what you are entering tags for.
+ 
+  * Each user has their own tag namespace, so other users' tags won't pollute yours. 
  
   * As you add videos the last video added is loaded into the video player.
  
@@ -24,6 +29,7 @@
   * To delete a video click 'Delete'.  That video is no longer available.
  
   * You can search for videos by tag in either parent or viewing mode
+ (Currently working on autocomplete for tags)
 
   * To exit the parent mode click 'Exit Parent Mode'.  You will be returned to the Home 
  screen.  As with the parent mode, clicking on a thumbnail loads the corresponding
