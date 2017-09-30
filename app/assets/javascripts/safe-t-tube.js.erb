@@ -25,8 +25,29 @@ function encodeYoutubeVideoId(authToken, youtubeId) {
   return urlEncodedData;
 }
 
+function setTagAutocompleteHandler() {
+  $('body').on('focus', 'input', function() { 
+  var elemID = $(this).attr('id');
+
+  // minLength is set to 1 so a disabled person does not have to type alot
+  // set delay to throttle fast users 
+   switch(elemID) {
+    case 'tags_name': 
+      $('#tags_name')
+        .autocomplete({
+        source: '<%= Rails.application.routes.url_helpers.tags_path %>', 
+        autoFocus: true,
+        minLength: 1,
+        delay: 600
+      }); 
+    break;
+    }
+  });
+}
+
 $(document).ready(function () {
 
+   // enable/disable tag search button
    // Chrome won't submit form if button is disabled directly
    $('body').on('submit','form',function() {
 
@@ -45,6 +66,7 @@ $(document).ready(function () {
        }
    }); 
 
+   // Preload video when user loses focus of Youtube url field
    $('body').on('focusout','input',function() {
 	var authToken = '';
 	var elemID = $(this).attr('id');
@@ -71,4 +93,7 @@ $(document).ready(function () {
 	  break;
 	  }
    });
+
+   setTagAutocompleteHandler();
+
 });

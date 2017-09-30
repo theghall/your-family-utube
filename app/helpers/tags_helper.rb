@@ -27,4 +27,8 @@ module TagsHelper
     def search_tag?
         session[:search_tag].nil? ? false: true
     end
+
+    def get_tags
+      Tag.where(user_id: current_user.id).map(&:name).sort
+    end
 end

@@ -217,18 +217,18 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
         follow_redirect!
       end
       #search by those tags lowercase
-      get tags_path params: { tags: { name: @tag1 }}
+      get videos_path params: { tags: { name: @tag1 }}
       follow_redirect!
       assert_select 'div.vidframe', count: 1
-      get tags_path params: { tags: { name: @tag2 }}
+      get videos_path params: { tags: { name: @tag2 }}
       follow_redirect!
       assert_select 'div.vidframe', count: 1
       # search by an uppercase tag
-      get tags_path params: { tags: { name: @tag1.upcase }}
+      get videos_path params: { tags: { name: @tag1.upcase }}
       follow_redirect!
       assert_select 'div.vidframe', count: 1
       # search by an invalid tag
-      get tags_path params: { tags: { name: 'xxxxx' }}
+      get videos_path params: { tags: { name: 'xxxxx' }}
       follow_redirect!
       assert_not flash.empty?
      end 
@@ -249,11 +249,11 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       post videos_path params: { video: { youtube_id: @youtube_url }}
       follow_redirect!
       # search by tag
-      get tags_path params: { tags: { name: @tag1 }}
+      get videos_path params: { tags: { name: @tag1 }}
       follow_redirect!
       assert_select 'div.vidframe', count: 1
       # clear search
-      get tags_path params: { tags: { name: '' }}
+      get videos_path params: { tags: { name: '' }}
       follow_redirect!
       assert_select 'div.vidframe', count: 2
     end

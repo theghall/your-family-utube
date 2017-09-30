@@ -28,6 +28,14 @@
   padding-top: 10px;
 }
 
+/* jquery autocomplete */
+ul.ui-autocomplete {
+    list-style: none;
+}
+
+/* For ARIA support, so screen readers still see autocomplete message */
+.ui-helper-hidden-accessible { position: absolute; left:-999em; }
+
 /* universal */
 
 body {

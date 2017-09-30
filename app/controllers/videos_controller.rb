@@ -2,7 +2,7 @@ class VideosController < ApplicationController
   include ProfilesSessionsHelper, TagsHelper,VideosHelper
   
   before_action :handle_reset, only: [:create]
-  before_action :logged_in_user, only: [:show, :create, :update, :destroy]
+  before_action :logged_in_user, only: [:show, :index, :create, :update, :destroy]
   before_action :correct_profile, only: [:show, :destroy, :update]
   
   def show
@@ -23,6 +23,31 @@ class VideosController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to (parent_mode? ? parent_path : root_url) }
+      format.js
+    end
+  end
+
+  def index
+        
+    clear_search_key
+        
+    search_key = tags_params[:name].downcase
+
+    # An empty search key does nothing
+    if valid_tag?(search_key)
+      set_search_key(search_key)
+        
+      load_videos
+
+      if @videos.empty?
+        flash[:notice] = 'No videos matching that search term were found' 
+      end
+    else
+      flash[:notice] = "That is not a valid tag."
+    end
+
+    respond_to do |format|
+      format.html { redirect_to parent_path }
       format.js
     end
   end
@@ -109,6 +134,10 @@ class VideosController < ApplicationController
     def video_params
       params.require(:video).permit(:youtube_id, :approved, :tag_list)
     end
+
+    def tags_params
+      params.require(:tags).permit(:name)
+   end
     
     def correct_profile
       @video = current_profile.videos.find_by(id: params[:id]) if current_profile

@@ -8,4 +8,10 @@ class Tag < ApplicationRecord
     def to_s
         name
     end
+
+    def self.search(userid, key, approved)
+      approved_literal = approved ? 'TRUE' : 'FALSE'
+
+      where('user_id = :userid AND name LIKE :key AND approved = :approved', userid: userid, key: "%#{key.downcase}%", approved: approved_literal);
+    end
 end
