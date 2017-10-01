@@ -13,7 +13,7 @@ devise_for :users, :controllers => { registrations: 'registrations' }
 
 resources :profiles, only: [:create]
 resources :profiles_sessions, only: [:create]
-resources :parentmode_sessions, only: [:new, :create]
+resources :parentmode_sessions, only: [:new, :create, :destroy]
 resources :videos, only: [:show, :index, :create, :update, :destroy]
 post     '/preload_video', to: 'videos#preload'
 resources :tags, only: [:index]

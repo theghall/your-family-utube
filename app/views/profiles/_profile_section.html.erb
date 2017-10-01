@@ -4,6 +4,6 @@
     </div>
     <%= render 'profiles/profile_form' %>
     <% if parent_mode? %>
-        <%= link_to "Exit Parent Mode", root_url %>
+        <%= button_to("Exit Parent Mode", parentmode_session_path(current_user.id), method: :delete, class: 'btn btn-primary')  %>
     <% end %>
 </div>
