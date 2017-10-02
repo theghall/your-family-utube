@@ -2,7 +2,7 @@
     <div id="profiles">
     <%= render 'profiles/profile_list' %>
     </div>
-    <%= render 'profiles/profile_form' %>
+    <%= render 'profiles/profile_form' if parent_mode?  %>
     <% if parent_mode? %>
         <%= button_to("Exit Parent Mode", parentmode_session_path(current_user.id), method: :delete, class: 'btn btn-primary')  %>
     <% end %>
