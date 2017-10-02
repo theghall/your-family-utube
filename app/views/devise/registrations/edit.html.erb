@@ -17,6 +17,12 @@
         <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
       <% end %>
 
+      <%= f.label :pin %> <i>(leave blank f you don't want to change it)</i>
+      <%= f.password_field :pin, autocomplete: "off", :maxlength => 4, class: 'form-control' %>
+      
+      <%= f.label :pin_confirmation %>
+      <%= f.password_field :pin_confirmation, autocomplete: "off", :maxlength => 4, class: 'form-control' %>
+
       <%= f.label :password %> <i>(leave blank if you don't want to change it)</i>
       <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
       <% if @minimum_password_length %>
