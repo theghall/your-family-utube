@@ -7,8 +7,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable
-  before_create :create_parent_digest
-  before_update :create_parent_digest
+  after_validation :create_parent_digest
   validates :pin, presence: true, length:{ is: 4 }, confirmation: true
   
   attr_accessor :pin, :pin_confirmation
