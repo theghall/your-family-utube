@@ -25,23 +25,62 @@ function encodeYoutubeVideoId(authToken, youtubeId) {
   return urlEncodedData;
 }
 
-function setTagAutocompleteHandler() {
-  $('body').on('focus', 'input', function() { 
-  var elemID = $(this).attr('id');
+function  setPreloadVideoHandler() {
+   // Preload video when user loses focus of Youtube url field
+   $('#video_youtube_id').focusout(function() {
+	var authToken = '';
 
-  // minLength is set to 1 so a disabled person does not have to type alot
-  // set delay to throttle fast users 
-   switch(elemID) {
-    case 'tags_name': 
-      $('#tags_name')
-        .autocomplete({
-        source: '<%= Rails.application.routes.url_helpers.tags_path %>', 
-        autoFocus: true,
-        minLength: 1,
-        delay: 600
-      }); 
-    break;
-    }
+        var $form = $(this).parent();
+
+        authToken = getAuthToken($form);
+
+        var postUrl = "<%= Rails.application.routes.url_helpers.preload_video_path %>";
+
+        // Make request to preload video into viewer
+        // dataType is actually what is the expected response
+        // contentType refers to what is in data
+        $.ajax({
+          type: 'post',
+          dataType:'script',
+          data: encodeYoutubeVideoId(authToken, $(this).val()),
+          contentType: 'application/x-www-form-urlencoded;; charset=utf-8',
+          url: postUrl
+          })
+   });
+}
+
+function  setClearTagSearchHandler() {
+   // enable/disable tag clear search button
+   // Chrome won't submit form if button is disabled directly
+   $('body').on('submit','form',function() {
+
+       var formId = $(this).attr('id');
+
+       switch (formId) {
+       case 'tag-search-form':
+          $('#clear-submit').prop('disabled', false);
+	  break;
+       case 'clear-submit-form':
+         $('form#clear-submit').prop('disabled', true);
+	 break;
+       case 'new_video':
+	 $('#error_explanation').remove();
+	 break;
+       }
+   }); 
+}
+
+function setTagAutocompleteHandler() {
+  $('#tags_name').focus(function() { 
+    // minLength is set to 1 so a disabled person does not have to type alot
+    // set delay to throttle fast users 
+    $('#tags_name')
+      .autocomplete({
+      source: '<%= Rails.application.routes.url_helpers.tags_path %>', 
+      autoFocus: true,
+      minLength: 1,
+      delay: 600
+     }); 
   });
 }
 
@@ -65,52 +104,10 @@ function setParentmodeRadioHandler() {
 }
 
 function ready() {
-   // enable/disable tag search button
-   // Chrome won't submit form if button is disabled directly
-   $('body').on('submit','form',function() {
 
-       var formId = $(this).attr('id');
+   setClearTagSearchHandler();
 
-       switch (formId) {
-       case 'tag-search-form':
-          $('#clear-submit').prop('disabled', false);
-	  break;
-       case 'clear-submit-form':
-         $('form#clear-submit').prop('disabled', true);
-	 break;
-       case 'new_video':
-	 $('#error_explanation').remove();
-	 break;
-       }
-   }); 
-
-   // Preload video when user loses focus of Youtube url field
-   $('body').on('focusout','input',function() {
-	var authToken = '';
-	var elemID = $(this).attr('id');
-
-	switch(elemID) {
-	case 'video_youtube_id':
-
-	  var $form = $(this).parent();
-
-	  authToken = getAuthToken($form);
-
-    	  var postUrl = "<%= Rails.application.routes.url_helpers.preload_video_path %>";
-
-	  // Make request to preload video into viewer
-	  // dataType is actually what is the expected response
-	  // contentType refers to what is in data
-	  $.ajax({
-	    	type: 'post',
-		dataType:'script',
-		data: encodeYoutubeVideoId(authToken, $(this).val()),
-		contentType: 'application/x-www-form-urlencoded;; charset=utf-8',
-		url: postUrl
-	  })
-	  break;
-	  }
-   });
+   setPreloadVideoHandler();
 
    setTagAutocompleteHandler();
 
