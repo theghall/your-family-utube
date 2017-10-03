@@ -7,15 +7,24 @@ class ParentmodeSessionsController < ApplicationController
     end
 
     def create
-        if current_user.parent_authenticated?(parentmode_params[:pin]) 
+        params = parentmode_params
+
+        if pm_authenticated?(params)
            session[:parent_id] = current_user.id
 
            clear_search_key
 
            redirect_to parent_path
         else
-            flash[:alert] = "PIN is not valid"
-            redirect_to new_parentmode_session_path
+          if params[:password].nil?
+            flash_msg = 'PIN is not valid'
+          else
+            flash_msg = 'Password is not valid'
+          end
+
+          flash[:alert] = flash_msg
+
+          redirect_to new_parentmode_session_path
         end
     end
 
@@ -28,6 +37,14 @@ class ParentmodeSessionsController < ApplicationController
     private
     
         def parentmode_params
-            params.require(:parentmode).permit(:pin)
+            params.require(:parentmode).permit(:pin, :password)
+        end
+
+        def pm_authenticated?(params)
+          if params[:password].nil?
+            current_user.valid_pin?(params[:pin])
+          else
+            current_user.valid_password?(params[:password])
+          end
         end
 end

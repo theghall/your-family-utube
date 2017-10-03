@@ -257,4 +257,26 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       follow_redirect!
       assert_select 'div.vidframe', count: 2
     end
+
+    test "should show error on invlid PIN" do
+      sign_in @user
+      get root_path
+      post parentmode_sessions_path, params: { parentmode: { pin: '0000' }}
+      assert_not flash.empty?
+    end
+
+    test "should show error on invlid password" do
+      sign_in @user
+      get root_path
+      post parentmode_sessions_path, params: { parentmode: { password: 'invalid' }}
+      assert_not flash.empty?
+    end
+
+    test "should enter parent mode with password" do
+     sign_in @user
+     get root_path
+     post parentmode_sessions_path, params: { parentmode: { password: "password" }}
+     follow_redirect!
+     assert_template 'static_pages/parent'
+    end
 end

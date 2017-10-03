@@ -14,6 +14,5 @@
 //= require jquery-ui/widgets/autocomplete
 //= require jquery_ujs
 //= require turbolinks
-//= require jquery.turbolinks
 //= require bootstrap/dropdown
 //= require_tree .

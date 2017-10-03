@@ -22,7 +22,7 @@ class User < ApplicationRecord
     BCrypt::Password.new(digest).is_password?(password)
   end
   
-  def parent_authenticated?(pin)
+  def valid_pin?(pin)
     Devise::Encryptor.compare(self.class, parent_digest, pin) # User.authenticate?(parent_digest, pin)
   end
     

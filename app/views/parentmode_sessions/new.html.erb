@@ -1,8 +1,17 @@
 <%= provide(:title, 'PIN') %>
 <div class="col-md-4">
+    <div id='pm-radio-container'>
+      <%= radio_button_tag(:pm_method, 'PIN', checked: 'checked') %>
+      <%= label_tag(:pin_label, 'Use PIN') %>
+      <%= radio_button_tag(:pm_method, 'Password') %>
+      <%= label_tag(:passwd_label, 'Use Password if you forgot PIN') %>
+    </div>
+    <p>You can change your PIN under Account Settings.</p>
     <%= form_for(:parentmode, url: parentmode_sessions_path) do |f| %>
-        <%= f.label 'Parent PIN' %>
+        <%= f.label :pin, 'Parent PIN' %>
         <%= f.password_field :pin, autofocus: true, class: 'form-control' %>
+        <%= f.label 'Password' %>
+        <%= f.password_field :password, disabled: true, class: 'form-control' %>
         <%= f.submit 'Submit', class: 'btn btn-primary' %>
     <% end %>
     

@@ -45,8 +45,26 @@ function setTagAutocompleteHandler() {
   });
 }
 
-$(document).ready(function () {
+function setParentmodeRadioHandler() {
+   $('#pm-radio-container input:radio').click(function() {
+      var elemId = $(this).attr('id');
 
+      switch (elemId) {
+      case 'pm_method_PIN':
+         $('#parentmode_pin').prop('disabled', false);
+         $('#parentmode_pin').focus();
+	 $('#parentmode_password').prop('disabled', true);
+      break;
+      case 'pm_method_Password':
+         $('#parentmode_pin').prop('disabled', true);
+	 $('#parentmode_password').prop('disabled', false);
+	 $('#parentmode_password').focus();
+      break;
+      }
+   });
+}
+
+function ready() {
    // enable/disable tag search button
    // Chrome won't submit form if button is disabled directly
    $('body').on('submit','form',function() {
@@ -96,4 +114,11 @@ $(document).ready(function () {
 
    setTagAutocompleteHandler();
 
-});
+   setParentmodeRadioHandler();
+
+}
+
+// Because turbo-links, solution for Rails 5
+// Otherwise setParentmodeRadioHandler won't work
+$(document).ready(ready);
+$(document).on('turbolinks:load', ready);
