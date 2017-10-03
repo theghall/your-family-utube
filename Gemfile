@@ -1,54 +1,35 @@
 source 'https://rubygems.org'
 
-
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+# Framwork
 gem 'rails', '5.0.3'
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+# Presentation
+gem 'sass-rails', '5.0.6'
 gem 'bootstrap-sass', '3.3.7'
 gem 'will_paginate', '3.1.5'
 gem 'bootstrap-will_paginate', '1.0.0'
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
-# Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.1.0'
-
-gem 'gon'
-
-# See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
-
-# Use jquery as the JavaScript library
-gem 'jquery-rails'
+# Assest utilities
+gem 'uglifier', '3.2.0'
+gem 'coffee-rails', '4.1.1'
+# Libraries
+# Devise: user authtentication
+gem 'devise', '4.3.0'
+gem 'jquery-rails', '4.3.1'
 gem 'jquery-ui-rails', '6.0.1'
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
-# bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.0', group: :doc
-
-# Use Devise for login
-gem 'devise'
-
-# Use yt for API access to Youtube
-gem 'yt', '~> 0.28.0'
-
+# Yt: Youtube API
+gem 'yt', '0.28.5'
+gem 'turbolinks', '5.0.1'
 # For downloading video thumbnail
-gem 'carrierwave',             '1.1.0'
-gem 'mini_magick',             '4.7.0'
-gem 'fog',                     '1.40.0'
-
-gem 'faker',  '1.7.3'
+gem 'carrierwave', '1.1.0'
+gem 'fog-aws',     '1.4.1'
 
 # Use Puma as the app server
 gem 'puma', '3.9.1'
 
+# Utilities
+gem 'faker',  '1.7.3'
 gem 'rollbar', '2.15.4'
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
+# Database
 gem 'pg', '0.18.4'
 
 group :development, :test do
