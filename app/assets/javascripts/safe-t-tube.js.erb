@@ -71,22 +71,16 @@ function  setClearTagSearchHandler() {
 }
 
 function setTagAutocompleteHandler() {
-  $('body').on('focus','input',function() {
-    var elemId = $(this).attr('id');
-
-    switch (elemId) {
-    case('tags_name'):
-      // minLength is set to 1 so a disabled person does not have to type alot
-      // set delay to throttle fast users 
-      $('#tags_name')
-        .autocomplete({
-        source: '<%= Rails.application.routes.url_helpers.tags_path %>', 
-        autoFocus: true,
-        minLength: 1,
-        delay: 600
-       }); 
-    break;
-    }
+  $('#tags_name').focus(function() {
+    // minLength is set to 1 so a disabled person does not have to type alot
+    // set delay to throttle fast users 
+    $('#tags_name')
+      .autocomplete({
+      source: '<%= Rails.application.routes.url_helpers.tags_path %>', 
+      autoFocus: true,
+      minLength: 1,
+      delay: 600
+    }); 
   });
 }
 

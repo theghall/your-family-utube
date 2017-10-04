@@ -1,10 +1,8 @@
 <% provide(:title, "View Videos") %>
 <div class="row">
-<%= render 'profiles/profile_section' %>
-<div id="video_frame" class="col-md-5">
-<%= render 'shared/video_frame', locals: { url: curr_vid_url } unless curr_vid_url.nil? %>
-</div>
-<div id="video_list" class="col-md-5">
-<%= render 'profiles/video_list' unless @videos.nil? %>
-</div>
+  <%= render 'profiles/profile_section' %>
+  <div id="video_frame" class="col-md-5">
+    <%= render 'shared/video_frame', locals: { url: curr_vid_url } unless curr_vid_url.nil? %>
+  </div>
+  <%= render 'shared/video_select' %>
 </div>
