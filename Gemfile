@@ -19,8 +19,8 @@ gem 'jquery-ui-rails', '6.0.1'
 gem 'yt', '0.28.5'
 gem 'turbolinks', '5.0.1'
 # For downloading video thumbnail
+gem 'fog', '1.42.0', require: 'fog/aws'
 gem 'carrierwave', '1.1.0'
-gem 'fog-aws',     '1.4.1'
 
 # Use Puma as the app server
 gem 'puma', '3.9.1'
