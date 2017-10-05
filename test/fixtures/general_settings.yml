@@ -1,0 +1,6 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+john_settings:
+  user_id: john
+  setting_id: allow_control
+  value: true

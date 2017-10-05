@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+allow_control:
+  name: 'Allow Controls'
+  default_value: 'false'
+  strict_values: true
+  allowed_values: 'false, true'
+
+anything:
+  name: 'Anything'
+  default_value: ''
+  strict_values: false
+  allowed_values: ''

@@ -10,10 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170825211915) do
+ActiveRecord::Schema.define(version: 20171004235018) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "general_settings", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "setting_id"
+    t.string   "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["setting_id"], name: "index_general_settings_on_setting_id", using: :btree
+    t.index ["user_id", "setting_id"], name: "index_general_settings_on_user_id_and_setting_id", unique: true, using: :btree
+    t.index ["user_id"], name: "index_general_settings_on_user_id", using: :btree
+  end
+
+  create_table "profile_settings", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "profile_id"
+    t.integer  "setting_id"
+    t.string   "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["profile_id"], name: "index_profile_settings_on_profile_id", using: :btree
+    t.index ["setting_id"], name: "index_profile_settings_on_setting_id", using: :btree
+    t.index ["user_id", "profile_id", "setting_id"], name: "index_profile_settings_on_user_id_and_profile_id_and_setting_id", unique: true, using: :btree
+    t.index ["user_id"], name: "index_profile_settings_on_user_id", using: :btree
+  end
 
   create_table "profiles", force: :cascade do |t|
     t.text     "name",       null: false
@@ -22,6 +46,16 @@ ActiveRecord::Schema.define(version: 20170825211915) do
     t.datetime "updated_at", null: false
     t.index ["user_id", "name"], name: "index_profiles_on_user_id_and_name", unique: true, using: :btree
     t.index ["user_id"], name: "index_profiles_on_user_id", using: :btree
+  end
+
+  create_table "settings", force: :cascade do |t|
+    t.string   "name"
+    t.string   "default_value"
+    t.boolean  "strict_values"
+    t.string   "allowed_values"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.index ["name"], name: "index_settings_on_name", unique: true, using: :btree
   end
 
   create_table "tags", force: :cascade do |t|
@@ -76,6 +110,11 @@ ActiveRecord::Schema.define(version: 20170825211915) do
     t.index ["profile_id"], name: "index_videos_on_profile_id", using: :btree
   end
 
+  add_foreign_key "general_settings", "settings"
+  add_foreign_key "general_settings", "users"
+  add_foreign_key "profile_settings", "profiles"
+  add_foreign_key "profile_settings", "settings"
+  add_foreign_key "profile_settings", "users"
   add_foreign_key "profiles", "users"
   add_foreign_key "tags", "users"
   add_foreign_key "video_tags", "tags"
