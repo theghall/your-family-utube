@@ -28,6 +28,7 @@ gem 'puma', '3.9.1'
 # Utilities
 gem 'faker',  '1.7.3'
 gem 'rollbar', '2.15.4'
+gem 'seedbank', '0.4.0'
 
 # Database
 gem 'pg', '0.18.4'
