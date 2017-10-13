@@ -16,7 +16,11 @@ module ProfilesSessionsHelper
     end
 
     def make_video_url(youtube_id)
-        "https://www.youtube.com/embed/" + youtube_id + "?rel=0&controls=0"
+      options = '?rel=0'
+
+      options = options + '&controls=0' unless ProfileSetting.controls_allowed?(current_profile)
+
+      "https://www.youtube.com/embed/" + youtube_id + options
     end
 
     def get_video_url(video) 
