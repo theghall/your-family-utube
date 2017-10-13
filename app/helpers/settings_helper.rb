@@ -26,7 +26,7 @@ module SettingsHelper
   def set_all_profile_missing_defaults
     profiles = User.find(current_user.id).profiles
 
-    profile.each do |p|
+    profiles.each do |p|
       set_profile_missing_defaults(p.id)
     end
   end

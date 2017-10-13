@@ -1,5 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+general:
+  name: 'General'
+  setting_type: 'general'
+  default_value: 'aaaa'
+  strict_values: false
+
 allow_control:
   name: 'Allow Controls'
   setting_type: 'profile'

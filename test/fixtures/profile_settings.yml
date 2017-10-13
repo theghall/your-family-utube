@@ -1,6 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-john_1_settings:
-  profile_id: john_1
-  setting_id: allow_control
-  value: false
+john_1_control_setting:
+  profile: john_1
+  setting: allow_control
+  value: 'true'
+
+john_1_anything_setting:
+  profile: john_1
+  setting: anything
+  value: 'original'

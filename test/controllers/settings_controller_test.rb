@@ -1,14 +1,15 @@
 require 'test_helper'
 
 class SettingsControllerTest < ActionDispatch::IntegrationTest
-  test "should get index," do
-    get settings_index,_url
-    assert_response :success
+  test "settings page:should get redirected if not logged in," do
+    get settings_path
+    assert_redirected_to new_user_session_url
   end
 
-  test "should get update" do
-    get settings_update_url
-    assert_response :success
+  test "Settings update: :should get redirected if not logged in," do
+    put setting_path(1)
+    assert_redirected_to new_user_session_url
   end
+
 
 end

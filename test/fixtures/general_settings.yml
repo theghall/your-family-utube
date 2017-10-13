@@ -2,5 +2,4 @@
 
 john_settings:
   user_id: john
-  setting_id: allow_control
-  value: true
+  setting_id: general

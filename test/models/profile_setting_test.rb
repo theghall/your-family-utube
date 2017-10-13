@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ProfileSettingTest < ActiveSupport::TestCase
   def setup
-    @setting = profile_settings(:john_1_settings)
+    @setting = profile_settings(:john_1_control_setting)
   end
 
   test 'it should be valid' do

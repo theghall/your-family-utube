@@ -7,4 +7,8 @@ module ApplicationHelper
       page_title + " | " + base_title
     end
   end
+
+  def parent_user
+    redirect_to root_url unless parent_mode?
+  end
 end

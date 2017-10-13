@@ -1,7 +1,8 @@
 class SettingsController < ApplicationController
-  include SettingsHelper
+  include ApplicationHelper, SettingsHelper
 
   before_action :logged_in_user, only: [:index, :update]
+  before_action :parent_user, only: [:index, :update]
 
   def index
     @profile_settings = User.find(current_user.id).profile_settings
