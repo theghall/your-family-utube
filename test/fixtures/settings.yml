@@ -9,9 +9,9 @@ general:
 allow_control:
   name: 'Allow Controls'
   setting_type: 'profile'
-  default_value: 'false'
+  default_value: 'No'
   strict_values: true
-  allowed_values: 'false, true'
+  allowed_values: 'No, Yes'
 
 anything:
   name: 'Anything'
