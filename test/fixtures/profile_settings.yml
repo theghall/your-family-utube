@@ -1,7 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 john_1_settings:
-  user_id: john
   profile_id: john_1
   setting_id: allow_control
   value: false

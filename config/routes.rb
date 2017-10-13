@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'tags/index'
-
 root 'static_pages#home'
 
 get    '/help',     to: 'static_pages#help'
@@ -17,4 +15,5 @@ resources :parentmode_sessions, only: [:new, :create, :destroy]
 resources :videos, only: [:show, :index, :create, :update, :destroy]
 post     '/preload_video', to: 'videos#preload'
 resources :tags, only: [:index]
+resources :settings, only: [:index, :update]
 end

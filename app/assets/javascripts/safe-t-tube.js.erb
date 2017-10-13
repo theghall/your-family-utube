@@ -103,6 +103,28 @@ function setParentmodeRadioHandler() {
    });
 }
 
+function setSettingsSubmitHandler() {
+  $('#profile-settings').submit(function(e) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    var userId = $('#user_id').val();
+    var dataString = $(this).serializeJSON();
+
+    console.log('dataString: ' + dataString);
+
+    var putUrl = "<%= Rails.application.routes.url_helpers.settings_path %>" + '/' + userId;
+
+    $.ajax({
+      type: 'PUT',
+      url: putUrl,
+      data: dataString,
+      contentType: 'application/json;; charset=utf-8'
+    });
+
+  });
+}
+
 function ready() {
 
    setClearTagSearchHandler();
@@ -112,6 +134,8 @@ function ready() {
    setTagAutocompleteHandler();
 
    setParentmodeRadioHandler();
+
+   setSettingsSubmitHandler();
 
 }
 

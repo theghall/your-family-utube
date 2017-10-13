@@ -9,11 +9,6 @@ class ProfileSettingTest < ActiveSupport::TestCase
     assert @setting.valid?
   end
 
-  test 'user id should not be null' do
-    @setting.user_id = ''
-    assert_not @setting.valid?
-  end
-
   test 'profile id should not be null' do
     @setting.profile_id = ''
     assert_not @setting.valid?

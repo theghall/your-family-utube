@@ -11,9 +11,24 @@ class SettingTest < ActiveSupport::TestCase
     assert @setting.valid?
   end  
 
-  test 'it should not allow null value' do
+  test 'it should not allow name null value' do
     @setting.name = ''
     assert_not @setting.valid?
+  end
+
+  test 'it should not allow type null value' do
+    @setting.setting_type = ''
+    assert_not @setting.valid?
+  end
+
+  test 'it should allow profile as type' do
+    @setting.setting_type = 'profile'
+    assert @setting.valid?
+  end
+
+  test 'it should allow general as type' do
+    @setting.setting_type = 'general'
+    assert @setting.valid?
   end
 
   test 'it should not allow duplicate value' do

@@ -1,0 +1,23 @@
+<div class='col-md-4'>
+<h3>Profile Settings:</h3>
+<% c_profile_id = 0 %>
+<%= form_tag(setting_path(current_user.id), id: 'profile-settings', method: :put) do %>
+<%= hidden_field_tag 'user_id', current_user.id %>
+<%  for setting in @profile_settings %>
+  <% if setting.profile_id != c_profile_id %>
+    <h4><%= Profile.find(setting.profile_id).name %></h4> 
+    <% c_profile_id = setting.profile_id %>
+  <% end %>
+  <%= hidden_field_tag 'settings[profiles][][profile_id]', c_profile_id %>
+  <% setting_name = Setting.find(setting.setting_id).name %>
+  <%= label_tag setting_name %>
+  <%= hidden_field_tag 'settings[profiles][][setting_id]', setting.setting_id %>
+  <% if strict_values(setting.setting_id) %>
+    <%= select_tag 'settings[profiles][][value]', options_for_select(setting_options(setting.setting_id), setting.value), class: 'form-control' %>
+  <% else %>
+    <%= text_field_tag 'settings[profiles][][value]', html_escape(setting.value), class: 'form-control' %>
+  <% end %>
+  </br>
+<% end %>
+<%= submit_tag 'Submit', class: 'btn btn-primary' %>
+<% end %>

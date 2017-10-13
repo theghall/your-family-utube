@@ -15,6 +15,7 @@ gem 'coffee-rails', '4.1.1'
 gem 'devise', '4.3.0'
 gem 'jquery-rails', '4.3.1'
 gem 'jquery-ui-rails', '6.0.1'
+gem 'jquery-serialize-object-rails', '2.5.0.1'
 # Yt: Youtube API
 gem 'yt', '0.28.5'
 gem 'turbolinks', '5.0.1'
