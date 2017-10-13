@@ -19,11 +19,25 @@ class SettingsController < ApplicationController
       setting = ProfileSetting.find_by(profile_id: s['profile_id'].to_i, \
                                        setting_id: s['setting_id'].to_i)
       
+      any_changed = false
+
+      all_succeeded = true
+
       if setting.value != s['value']
         setting.update_attribute(:value, s['value'])
 
-        setting.save
+        all_succeeded &= setting.save
+
+        any_changed = true
       end
+
+      if all_succeeded
+        flash[:notice] = 'All updated suceeded'
+      else
+        flash[:alert] = 'Some or all updates failed.' if any_changed
+      end
+
+      flash[:notice] = 'Nothing to save' if !any_changed && all_succeeded
     end
 
     redirect_to settings_path

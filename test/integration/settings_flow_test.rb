@@ -54,6 +54,8 @@ class SettingsFlowTest < ActionDispatch::IntegrationTest
     assert_template 'settings/index'
     original_value = @profile1_setting.value
     put setting_path(@user.id), params: @setting_params
+    follow_redirect!
+    assert_not flash[:notice].empty?
     @profile1_setting.reload
     assert_not_equal original_value, @profile1_setting.value
   end
