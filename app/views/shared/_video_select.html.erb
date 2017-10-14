@@ -1,4 +1,4 @@
-<div id="video_list_wrapper" class="col-md-4">
+<div id="video_list_wrapper" class="<%= parent_mode? ? 'col-md-4' : 'col-md-5' %>">
   <%= render 'shared/tag_search' %>
   <div id="video_list">
     <%= render 'profiles/video_list' unless @videos.nil? %>
