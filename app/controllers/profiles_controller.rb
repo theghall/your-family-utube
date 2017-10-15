@@ -1,5 +1,8 @@
 class ProfilesController < ApplicationController
+    include ApplicationHelper
+
     before_action :logged_in_user, only: [:create]
+    before_action :parent_user, only: [:create]
     
     def create
         @profile = current_user.profiles.build(profiles_params)

@@ -1,8 +1,9 @@
 class VideosController < ApplicationController
-  include ProfilesSessionsHelper, TagsHelper,VideosHelper
+  include ApplicationHelper, ProfilesSessionsHelper, TagsHelper,VideosHelper
   
   before_action :handle_reset, only: [:create]
   before_action :logged_in_user, only: [:show, :index, :create, :update, :destroy]
+  before_action :parent_user, only: [:create, :update, :destroy]
   before_action :correct_profile, only: [:show, :destroy, :update]
   
   def show

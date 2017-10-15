@@ -1,4 +1,11 @@
 class RegistrationsController < Devise::RegistrationsController
+  include ApplicationHelper
+
+  before_action :parent_user, only: [:edit]
+
+  def edit
+    super
+  end
 
 private
 

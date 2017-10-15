@@ -12,6 +12,8 @@ class ProfilesInterfaceTest < ActionDispatch::IntegrationTest
   test "profile interface with user with no profiles" do
     sign_in @user_no_profiles
     get root_path
+    post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
+    follow_redirect!
     assert_match "No Profiles", response.body 
     # Invalid profile name
     assert_no_difference 'Profile.count' do
@@ -21,11 +23,9 @@ class ProfilesInterfaceTest < ActionDispatch::IntegrationTest
     name = "Junior"
     assert_difference 'Profile.count', 1 do
         post profiles_path, params: { profiles: { name: name } }
-        follow_redirect!
     end
     # select profile
     post profiles_sessions_path(name: name)
-    follow_redirect!
     assert_equal session[:profile_id], get_profile_id(name)
   end
   
@@ -55,6 +55,7 @@ class ProfilesInterfaceTest < ActionDispatch::IntegrationTest
         name = "Jazzy"
         sign_in @user_with_videos
         get root_path
+        post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
         post profiles_path, params: { profiles: {name: name}}, xhr: true
         assert_match name, response.body
     end

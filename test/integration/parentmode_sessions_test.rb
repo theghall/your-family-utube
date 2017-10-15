@@ -39,9 +39,9 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       sign_in @user
       get root_path
       patch video_path(@video), params: { video: { approved: 'true' }}
-      @video.reload
-      assert @video.approved, false
       assert_redirected_to root_path
+      @video.reload
+      assert '@video.approved', false
     end
 
     test "should redirect if try to access user account settings dirctrly" do
