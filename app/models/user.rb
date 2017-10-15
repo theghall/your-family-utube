@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   has_many :profiles, dependent: :destroy
-  has_many :generals_settings, dependent: :destroy
+  has_many :general_settings, dependent: :destroy
   has_many :profile_settings, through: :profiles
   has_many :tags, dependent: :destroy
   has_many :videos, through: :profiles
