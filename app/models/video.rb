@@ -7,7 +7,7 @@ class Video < ApplicationRecord
   default_scope -> { order(created_at: :desc) }
   mount_uploader :thumbnail, ThumbnailUploader
   before_validation :parse_id
-  after_validation :set_thumbnail
+  after_validation :set_video_attributes
   validates :youtube_id, presence: true, allow_blank: false
   validates :approved, inclusion: { in: [true, false] }
   validate :youtube_id, :valid_video_url
@@ -42,8 +42,7 @@ class Video < ApplicationRecord
       end
     end
     
-    def set_thumbnail
-      utube_video = Yt::Video.new(id: self.youtube_id)
+    def set_thumbnail(utube_video)
       begin 
         self.remote_thumbnail_url = utube_video.thumbnail_url
 
@@ -51,6 +50,25 @@ class Video < ApplicationRecord
         # If youtube_id is for a valid video should not happen, but if so
         # default video thumbnail will be displayed.  parse_uri might have a bug.
       end
+
+    end
+
+    def set_title(utube_video)
+      begin
+        self.title = utube_video.title.gsub("\"",'')
+      rescue Yt::Errors::RequestError
+        # If youtube_id is for a valid video should not happen, but if so
+        # we will give a default title.  parse_uri might have a bug.
+        self.title = 'Unknown'
+      end
+
+    end
+
+    def set_video_attributes
+      utube_video = Yt::Video.new(id: self.youtube_id)
+
+      set_thumbnail(utube_video)
+      set_title(utube_video)
 
     end
 

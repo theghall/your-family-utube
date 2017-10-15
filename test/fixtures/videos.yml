@@ -3,13 +3,16 @@ aliens:
   youtube_id: "https://www.youtube.com/watch?v=YcFnvULy8zA"
   approved: true
   profile: john_1
+  title: 'aliens'
   
 topgun:
   youtube_id: "https://www.youtube.com/watch?v=vdHBsWXaHN8"
   approved: false
   profile: john_1
+  title: 'topgun'
 
 invalid:
   youtube_id: "invalid"
   approved: false
   profile: john_1
+  title: 'invalid'

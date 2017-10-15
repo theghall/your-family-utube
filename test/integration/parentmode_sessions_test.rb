@@ -11,7 +11,7 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
     @tag2 = "tag2"
     @user = users(:john)
     @profile = profiles(:john_1)
-    @video= videos(:topgun)
+    @a_video= videos(:topgun)
     @user_no_videos = users(:jack)
     @profile_no_videos = profiles(:jack_1)
   end
@@ -38,10 +38,10 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
     test "should redirect if try to approve a video directly" do
       sign_in @user
       get root_path
-      patch video_path(@video), params: { video: { approved: 'true' }}
+      patch video_path(@a_video), params: { video: { approved: 'true' }}
       assert_redirected_to root_path
-      @video.reload
-      assert '@video.approved', false
+      @a_video.reload
+      assert '@a_video.approved', false
     end
 
     test "should redirect if try to access user account settings dirctrly" do
@@ -132,12 +132,12 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       follow_redirect!
       assert session[:parent_id], @user.id
       assert_template 'static_pages/parent'
-      assert_match /#{@video.id}/, response.body
-      assert_match @video.youtube_id, response.body
-      patch video_path(@video), params: { video: { approved: 'true' }}
+      assert_match /#{@a_video.id}/, response.body
+      assert_match @a_video.youtube_id, response.body
+      patch video_path(@a_video), params: { video: { approved: 'true' }}
       follow_redirect!
       assert_not flash.empty?
-      assert_no_match @video.youtube_id, response.body
+      assert_no_match @a_video.youtube_id, response.body
     end
 
     test "adds video to review list with short video URL" do
@@ -187,9 +187,9 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       follow_redirect!
       profile = profiles(:john_1)
       post profiles_sessions_path(name: profile.name)
-      delete video_path(@video)
+      delete video_path(@a_video)
       follow_redirect!
-      assert_no_match @video.youtube_id, response.body
+      assert_no_match @a_video.youtube_id, response.body
     end
     
     test "adds video to review list ajax way" do
@@ -222,10 +222,10 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       follow_redirect!
       assert session[:parent_id], @user.id
       assert_template 'static_pages/parent'
-      assert_match @video.youtube_id, response.body
-      patch video_path(@video), params: { video: { approved: 'true' }}, xhr: true
+      assert_match @a_video.youtube_id, response.body
+      patch video_path(@a_video), params: { video: { approved: 'true' }}, xhr: true
       assert_not flash.empty?
-      assert_no_match @video.youtube_id, response.body
+      assert_no_match @a_video.youtube_id, response.body
     end
     
     test "delete a video from review list ajax way" do
@@ -235,8 +235,8 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       follow_redirect!
       profile = profiles(:john_1)
       post profiles_sessions_path(name: profile.name), xhr: true
-      delete video_path(@video), xhr: true
-      assert_no_match @video.youtube_id, response.body
+      delete video_path(@a_video), xhr: true
+      assert_no_match @a_video.youtube_id, response.body
     end
       
     test "should add tags" do

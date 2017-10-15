@@ -10,9 +10,11 @@ class VideoTest < ActiveSupport::TestCase
     assert @valid_video.valid?
   end
   
-  test "thumbnail shoud not be missing for valid video" do
-    @valid_video.save
-    assert_not_equal @valid_video.thumbnail_url, 'missing.jpg'
+  test "should have video attibutes" do
+    video = Video.new(youtube_id: @valid_video.youtube_id)
+    video.save
+    assert_not_equal video.thumbnail_url, 'missing.jpg'
+    assert_not video.title.nil?
   end
   
   test "should not be blank" do
