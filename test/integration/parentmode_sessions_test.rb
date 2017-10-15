@@ -16,6 +16,41 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
     @profile_no_videos = profiles(:jack_1)
   end
   
+    test "should redirect if try to add profile directly" do
+      sign_in @user
+      get root_path
+      assert_no_difference 'Profile.count' do
+        post profiles_path, params: {profiles: {name: 'somebody'}}
+      end
+      assert_redirected_to root_path
+    end
+
+    test "should redirect if try to add a video directly" do
+      youtube_url = "https://www.youtube.com/watch?v=Qf869uQHYTk"
+      sign_in @user
+      get root_path
+      assert_no_difference 'Video.count' do
+        post videos_path params: { video: { youtube_id: youtube_url }}
+      end
+      assert_redirected_to root_url
+    end
+
+    test "should redirect if try to approve a video directly" do
+      sign_in @user
+      get root_path
+      patch video_path(@video), params: { video: { approved: 'true' }}
+      @video.reload
+      assert @video.approved, false
+      assert_redirected_to root_path
+    end
+
+    test "should redirect if try to access user account settings dirctrly" do
+      sign_in @user
+      get root_path
+      get edit_user_registration_path
+      assert_redirected_to root_path
+    end
+
     test "Add video page only displays unapproved videos" do
      sign_in @user
      get root_path
@@ -278,5 +313,14 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
      post parentmode_sessions_path, params: { parentmode: { password: "password" }}
      follow_redirect!
      assert_template 'static_pages/parent'
+    end
+
+    test "should not cancel account if not in parentmode" do
+      sign_in @user
+      get root_path
+      assert_no_difference 'User.count' do
+        get cancel_user_registration_path
+      end
+      assert_redirected_to root_url
     end
 end

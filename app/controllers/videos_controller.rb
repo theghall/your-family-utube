@@ -92,7 +92,6 @@ class VideosController < ApplicationController
   end
 
   def update
-
     if video_params["approved"]
       approved = (video_params["approved"] == 'true' ? true : false)
       
