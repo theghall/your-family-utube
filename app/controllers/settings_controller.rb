@@ -15,14 +15,14 @@ class SettingsController < ApplicationController
     #
     settings = settings_params
 
+    any_changed = false
+
+    all_succeeded = true
+
     settings['profiles'].each do |s|
       setting = ProfileSetting.find_by(profile_id: s['profile_id'].to_i, \
                                        setting_id: s['setting_id'].to_i)
       
-      any_changed = false
-
-      all_succeeded = true
-
       if setting.value != s['value']
         setting.update_attribute(:value, s['value'])
 
