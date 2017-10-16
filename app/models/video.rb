@@ -64,11 +64,23 @@ class Video < ApplicationRecord
 
     end
 
+    def set_has_cc(utube_video)
+      begin
+        self.has_cc = utube_video.captioned?
+      rescue Yt::Errors::RequestError
+        # If youtube_id is for a valid video should not happen, but if so
+        # we will assume false for CC.  parse_uri might have a bug.
+        self.has_cc = false
+
+      end
+    end
+
     def set_video_attributes
       utube_video = Yt::Video.new(id: self.youtube_id)
 
       set_thumbnail(utube_video)
       set_title(utube_video)
+      set_has_cc(utube_video)
 
     end
 

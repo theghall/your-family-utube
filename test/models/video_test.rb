@@ -15,6 +15,7 @@ class VideoTest < ActiveSupport::TestCase
     video.save
     assert_not_equal video.thumbnail_url, 'missing.jpg'
     assert_not video.title.nil?
+    assert_not video.has_cc.nil?
   end
   
   test "should not be blank" do
