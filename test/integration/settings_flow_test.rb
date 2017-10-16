@@ -5,8 +5,9 @@ class SettingsFlowTest < ActionDispatch::IntegrationTest
 
   def setup
     @user = users(:john)
+    @profiles = @user.profiles
     @profile1 = profiles(:john_1)
-    @setting = Setting.second
+    @setting = settings(:anything)
     @profile1_setting = profile_settings(:john_1_anything_setting)
     @setting_params = {settings: {profiles: [{profile_id: @profile1.id.to_s, setting_id: @setting.id.to_s, value: 'changed'}]}}
     @user2 = users(:jack)
@@ -27,22 +28,33 @@ class SettingsFlowTest < ActionDispatch::IntegrationTest
   end
 
   test "should create missing settings" do
-    # 2 settings, 2 profiles missing settings
-    assert_difference 'ProfileSetting.count', 4 do
+    # 3 settings, 2 profiles missing settings
+    assert_difference 'ProfileSetting.count', 6 do
       sign_in @user2
       get root_url
     end
   end
 
   test "should not throw error if profile has settings" do
-    # 2 settings, 2 profiles missing settings
-    assert_difference 'ProfileSetting.count', 4 do
+    # 3 settings, 2 profiles missing settings
+    assert_difference 'ProfileSetting.count', 6 do
       sign_in @user2
       get root_url
     end
     sign_out @user2
     sign_in @user2
     get root_url
+  end
+
+  test "should display settings for each profile" do
+    sign_in @user
+    get root_url
+    post parentmode_sessions_path, params: { parentmode: { pin: '1234' }}
+    follow_redirect!
+    get settings_path
+    assert_select 'label', {:html=>"Anything", :count=>@profiles.count}
+    assert_select 'label', {:html=>"Allow controls", :count=>@profiles.count}
+    assert_select 'label', {:html=>"Video cc", :count=>@profiles.count}
   end
 
   test "should update record" do

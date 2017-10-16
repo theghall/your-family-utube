@@ -13,6 +13,13 @@ allow_control:
   strict_values: true
   allowed_values: 'No, Yes'
 
+show_cc:
+  name: 'Video CC'
+  setting_type: 'profile'
+  default_value: 'Off'
+  strict_values: true
+  allowed_values: 'On, Off'
+
 anything:
   name: 'Anything'
   setting_type: 'profile'

@@ -16,9 +16,14 @@ module ProfilesSessionsHelper
     end
 
     def make_video_url(youtube_id)
+      # Do not show related videos after video plays is a fixed option
       options = '?rel=0'
 
-      options = options + '&controls=0' unless ProfileSetting.controls_allowed?(current_profile)
+      # controls=1 is API default
+      options += '&controls=0' unless ProfileSetting.controls_allowed?(current_profile)
+      
+      # cc_load_policy is 0 by default
+      options += '&cc_load_policy=1' if ProfileSetting.load_cc?(current_profile)
 
       "https://www.youtube.com/embed/" + youtube_id + options
     end
@@ -76,7 +81,7 @@ module ProfilesSessionsHelper
         
         refresh_thumbnails(@videos)
  
-        curr_vid_url = (@videos.empty? ? nil : get_video_url(@videos.first))
+        curr_vid_url = (@videos.empty? ? '' : get_video_url(@videos.first))
         
         set_curr_vid_url(curr_vid_url)
       end
@@ -87,6 +92,8 @@ module ProfilesSessionsHelper
     end
     
     def curr_vid_url
-        session[:curr_vid_url]
+        url = session[:curr_vid_url]
+
+        url.nil? ? '' : url
     end
 end

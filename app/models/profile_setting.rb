@@ -9,4 +9,11 @@ class ProfileSetting < ApplicationRecord
 
     ProfileSetting.find_by(profile_id: profile.id, setting_id: setting_id).value == 'Yes'
   end
+
+  def self.load_cc?(profile)
+    setting_id = Setting.where(name: 'Video CC').pluck(:id).first
+
+    ProfileSetting.find_by(profile_id: profile.id, setting_id: setting_id).value == 'On'
+
+  end
 end
