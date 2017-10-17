@@ -7,7 +7,7 @@
     <% end %>
     	<div id='profiles-list-wrapper'>
     	<p><strong>Profiles:</strong></p>
-        <div id="profiles" class="btn-group-vertical">
+        <div id="profile-list" class="btn-group-vertical">
         <% @profiles.each do |p| %>
             <%= button_to "#{p.name}", profiles_sessions_path(name: p.name), method: :post, class: 'btn', remote: true %>
         <% end %>
