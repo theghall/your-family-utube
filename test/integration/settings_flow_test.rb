@@ -72,4 +72,24 @@ class SettingsFlowTest < ActionDispatch::IntegrationTest
     assert_not_equal original_value, @profile1_setting.value
   end
 
+  test "should not require parent PIN to go back to parent mode from app settings" do
+    sign_in @user
+    get root_url
+    post parentmode_sessions_path, params: { parentmode: { pin: '1234' }}
+    follow_redirect!
+    get settings_path
+    get parent_path
+    assert_template 'static_pages/parent'
+  end
+
+  test "should not require parent PIN to go back to parent mode from acct settings" do
+    sign_in @user
+    get root_url
+    post parentmode_sessions_path, params: { parentmode: { pin: '1234' }}
+    follow_redirect!
+    get edit_user_registration_path
+    get parent_path
+    assert_template 'static_pages/parent'
+  end
+
 end
