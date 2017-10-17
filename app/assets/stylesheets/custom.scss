@@ -109,6 +109,11 @@ p {
   padding: 1px;
 }
 
+/* Make links work on Safari Mobile, hopefully */
+.vid-thumbnail {
+  cursor: pointer;
+}
+
 /* search form */
 
 #search-form-wrapper {
