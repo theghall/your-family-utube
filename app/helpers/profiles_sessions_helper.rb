@@ -16,8 +16,8 @@ module ProfilesSessionsHelper
     end
 
     def make_video_url(youtube_id)
-      # Do not show related videos after video plays is a fixed option
-      options = '?rel=0'
+      # rel = 0: Do not show related videos after video plays is a fixed option
+      options = "?origin=#{request.host}&rel=0"
 
       # controls=1 is API default
       options += '&controls=0' unless ProfileSetting.controls_allowed?(current_profile)
