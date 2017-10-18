@@ -8,7 +8,8 @@ class Video < ApplicationRecord
   mount_uploader :thumbnail, ThumbnailUploader
   before_validation :parse_id
   after_validation :set_video_attributes
-  validates :youtube_id, presence: true, allow_blank: false
+  validates :youtube_id, presence: true, allow_blank: false,
+            uniqueness: { scope: :profile_id, message: "This profile already has this video" }
   validates :approved, inclusion: { in: [true, false] }
   validate :youtube_id, :valid_video_url
   after_save :save_tags

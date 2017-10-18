@@ -6,6 +6,7 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
   def setup
     @youtube_url = "https://www.youtube.com/watch?v=Xm18dkRmDC8"
     @youtube_id = "Xm18dkRmDC8"
+    @youtube_url2="https://youtu.be/SKRma7PDW10"
     @tags = "Tag1, Tag2"
     @tag1 = "tag1"
     @tag2 = "tag2"
@@ -121,7 +122,21 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       assert_select 'div#error_explanation'
     end
       
-    
+    test "should not allow a dupe youtube video per profile" do
+      sign_in @user_no_videos
+      get root_path
+      post parentmode_sessions_path, params: { parentmode: { pin: '1234' }}
+      follow_redirect!
+      profile = @profile_no_videos
+      post profiles_sessions_path(name: profile.name)
+      post videos_path params: { video: { youtube_id: @youtube_url, tag_list: @tags }}
+      follow_redirect!
+      assert_no_difference 'Video.count' do
+        post videos_path params: { video: { youtube_id: @youtube_url, tag_list: @tags }}
+        assert_select 'div.alert', 1
+      end
+    end
+
     test "add video to a profile" do
       sign_in @user
       get root_path
@@ -281,7 +296,7 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
         follow_redirect!
       end
       # post a video with no tags
-      post videos_path params: { video: { youtube_id: @youtube_url }}
+      post videos_path params: { video: { youtube_id: @youtube_url2 }}
       follow_redirect!
       # search by tag
       get videos_path params: { tags: { name: @tag1 }}
