@@ -12,7 +12,7 @@
         </div>
     <% end %>
 <% end %>
-<div id="video_paginate" class="col-md-12">
+<div id="video-paginate">
     <% if parent_mode? %>
         <%= will_paginate @videos, params: { controller: 'static_pages', action: 'parent' } %>
     <% else %>

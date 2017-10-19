@@ -109,7 +109,13 @@ p {
   padding: 1px;
 }
 
-/* Make links work on Safari Mobile, hopefully */
+/* Insure div floats below images */
+#video-paginate {
+  width: 1100px;
+  float: left;
+}
+
+/* Make links work on mobile */
 .vid-thumbnail {
   cursor: pointer;
 }
