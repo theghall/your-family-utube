@@ -30,25 +30,22 @@ class VideosController < ApplicationController
 
   def index
         
-    clear_search_key
-        
-    search_key = tags_params[:name].downcase
+    load_profiles
 
-    # An empty search key does nothing
-    if valid_tag?(search_key)
-      set_search_key(search_key)
+    set_empty_video
+
+    if current_profile
+      clear_search_key
         
+      process_tag(tags_params[:name])
+
       load_videos
 
-      if @videos.empty?
-        flash[:notice] = 'No videos matching that search term were found' 
-      end
-    else
-      flash[:notice] = "That is not a valid tag."
+      display_results
     end
 
     respond_to do |format|
-      format.html { redirect_to parent_path }
+      format.html
       format.js
     end
   end
@@ -97,7 +94,11 @@ class VideosController < ApplicationController
       approved = (video_params["approved"] == 'true' ? true : false)
       
       if @video.update_attributes(approved: approved)
-        flash[:notice] = "Video approved"
+        if approved
+          flash[:notice] = "Video approved"
+        else
+          flash[:notice]= "Video marked for review"
+        end
         
         clear_search_key if num_video_by_search_key(false) == 1
         
@@ -138,6 +139,27 @@ class VideosController < ApplicationController
     def tags_params
       params.require(:tags).permit(:name)
    end
+
+    def set_empty_video
+      p = Profile.new
+
+      @video = p.videos.build
+    end
+
+    def process_tag(tag)
+      tag.downcase!
+
+      if valid_tag?(tag)
+        set_search_key(tag)
+      else
+        set_search_key('')
+        flash[:notice] = 'That is not a valid tag.'
+      end
+    end
+
+    def display_results
+      flash[:notice] = 'No videos match that tag.' if @videos.empty?
+    end
     
     def correct_profile
       @video = current_profile.videos.find_by(id: params[:id]) if current_profile

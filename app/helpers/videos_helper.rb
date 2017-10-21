@@ -1,4 +1,11 @@
 module VideosHelper
+
+    def set_empty_video
+      p = Profile.new
+
+      @video = p.videos.build
+    end
+
     def parse_uri(uri)
       # Let Google API determine valid id
       begin

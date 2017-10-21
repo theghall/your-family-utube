@@ -7,12 +7,13 @@ class ProfilesInterfaceTest < ActionDispatch::IntegrationTest
     @user_no_profiles = users(:noprofiles)
     @user_no_videos = users(:novideos)
     @user_with_videos = users(:john)
+    @pm_params = { parentmode: { pin: "1234"}}
   end
   
   test "profile interface with user with no profiles" do
     sign_in @user_no_profiles
     get root_path
-    post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
+    post parentmode_sessions_path, params: @pm_params
     follow_redirect!
     assert_match "No Profiles", response.body 
     # Invalid profile name
@@ -55,7 +56,7 @@ class ProfilesInterfaceTest < ActionDispatch::IntegrationTest
         name = "Jazzy"
         sign_in @user_with_videos
         get root_path
-        post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
+        post parentmode_sessions_path, params: @pm_params
         post profiles_path, params: { profiles: {name: name}}, xhr: true
         assert_match name, response.body
     end

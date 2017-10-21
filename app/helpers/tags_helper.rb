@@ -17,7 +17,12 @@ module TagsHelper
     end
     
     def get_search_key
-        session[:search_tag]
+        key = session[:search_tag]
+        key.nil? ? '' : key
+    end
+
+    def get_tags_params
+      {tags: {name: get_search_key}}
     end
     
     def get_search_tag

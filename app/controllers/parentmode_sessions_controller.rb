@@ -1,22 +1,25 @@
 class ParentmodeSessionsController < ApplicationController
-    include ParentmodeSessionsHelper, TagsHelper
+    include ApplicationHelper, ParentmodeSessionsHelper, TagsHelper
 
-    before_action :logged_in_user, only: [:new, :create]
+    before_action :logged_in_user, only: [:new, :create, :update]
+    before_action :parent_user, only: [:update]
     
     def new
     end
 
     def create
-        params = parentmode_params
+        pm_params = parentmode_params
 
-        if pm_authenticated?(params)
+        if pm_authenticated?(pm_params)
            session[:parent_id] = current_user.id
 
            clear_search_key
 
-           redirect_to parent_path
+           set_manage_mode('review')
+
+           redirect_to videos_path(get_tags_params)
         else
-          if params[:password].nil?
+          if pm_params[:password].nil?
             flash_msg = 'PIN is not valid'
           else
             flash_msg = 'Password is not valid'
@@ -28,6 +31,16 @@ class ParentmodeSessionsController < ApplicationController
         end
     end
 
+    def update
+      pm_params = parentmode_params
+
+      set_manage_mode(pm_params['mode'])
+
+      clear_search_key
+
+      redirect_to videos_path({tags: {name: get_search_key}})
+    end
+
     def destroy
       exit_parent_mode
 
@@ -37,7 +50,7 @@ class ParentmodeSessionsController < ApplicationController
     private
     
         def parentmode_params
-            params.require(:parentmode).permit(:pin, :password)
+            params.require(:parentmode).permit(:pin, :password, :mode)
         end
 
         def pm_authenticated?(params)

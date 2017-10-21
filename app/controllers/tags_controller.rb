@@ -6,7 +6,7 @@ class TagsController < ApplicationController
     # used by autocomplete, perhaps a non-RESTful action would be better
     def index
 
-      approved = (parent_mode? ? false : true)
+      approved = ((parent_mode? && review_mode?) ? false : true)
 
       # Autocomplete sends request as ?term=<tag>
       # Only used by autocomplete, so JSON is all we need right now

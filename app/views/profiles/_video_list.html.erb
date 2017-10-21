@@ -5,8 +5,13 @@
     <% if parent_mode? %>
         <div class="mngbuttons">
             <%= form_for(:video, url: video_path(v), method: :patch, remote: true) do |f| %>
-                <%= f.hidden_field :approved, value: 'true' %>
-		<%= f.submit "Approve", data: { confirm: 'Approve: Are you sure?' }, class: 'btn btn-primary mng-button' %>
+		<% if review_mode? %>
+                  <%= f.hidden_field :approved, value: 'true' %>
+		  <%= f.submit "Approve", class: 'btn btn-primary mng-button' %>
+		 <% else %>
+                  <%= f.hidden_field :approved, value: 'false' %>
+		  <%= f.submit "Review", class: 'btn btn-primary mng-button' %>
+	         <% end %>
             <% end %>
 	    <%= link_to "Delete", video_path(v), method: :delete, remote: true, data: { confirm: 'Delete: Are you sure?' }, class: 'btn btn-primary mng-button' %>
         </div>

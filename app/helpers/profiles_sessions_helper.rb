@@ -74,7 +74,11 @@ module ProfilesSessionsHelper
         tag = Tag.where(user_id: profile.user_id, name: get_search_key).first
         
         if parent_mode?
+          if review_mode?
             @videos = get_videos(profile, tag, false, 8)
+          else
+            @videos = get_videos(profile, tag, true, 25)
+          end
         else
             @videos = get_videos(profile, tag, true, 16)
         end

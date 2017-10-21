@@ -61,7 +61,6 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
      follow_redirect!
      post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
      follow_redirect!
-     assert_template 'static_pages/parent'
      assert_select 'div.vidframe', count: num_unapproved_videos(profile)
     end
     
@@ -146,7 +145,6 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
       follow_redirect!
       assert session[:parent_id], @user.id
-      assert_template 'static_pages/parent'
       assert_match /#{@a_video.id}/, response.body
       assert_match @a_video.youtube_id, response.body
       patch video_path(@a_video), params: { video: { approved: 'true' }}
@@ -236,7 +234,6 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
       follow_redirect!
       assert session[:parent_id], @user.id
-      assert_template 'static_pages/parent'
       assert_match @a_video.youtube_id, response.body
       patch video_path(@a_video), params: { video: { approved: 'true' }}, xhr: true
       assert_not flash.empty?
@@ -268,22 +265,18 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       end
       #search by those tags lowercase
       get videos_path params: { tags: { name: @tag1 }}
-      follow_redirect!
       assert_select 'div.vidframe', count: 1
       get videos_path params: { tags: { name: @tag2 }}
-      follow_redirect!
       assert_select 'div.vidframe', count: 1
       # search by an uppercase tag
       get videos_path params: { tags: { name: @tag1.upcase }}
-      follow_redirect!
       assert_select 'div.vidframe', count: 1
       # search by an invalid tag
       get videos_path params: { tags: { name: 'xxxxx' }}
-      follow_redirect!
       assert_not flash.empty?
      end 
      
-     test "clear search results" do
+     test "should clear search results" do
       sign_in @user_no_videos
       get root_path
       post parentmode_sessions_path, params: { parentmode: { pin: '1234' }}
@@ -300,11 +293,9 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       follow_redirect!
       # search by tag
       get videos_path params: { tags: { name: @tag1 }}
-      follow_redirect!
       assert_select 'div.vidframe', count: 1
       # clear search
       get videos_path params: { tags: { name: '' }}
-      follow_redirect!
       assert_select 'div.vidframe', count: 2
     end
 
@@ -327,7 +318,7 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
      get root_path
      post parentmode_sessions_path, params: { parentmode: { password: "password" }}
      follow_redirect!
-     assert_template 'static_pages/parent'
+     assert_template 'videos/index'
     end
 
     test "should not cancel account if not in parentmode" do
@@ -337,5 +328,32 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
         get cancel_user_registration_path
       end
       assert_redirected_to root_url
+    end
+
+    test "should display videos to manage" do
+      sign_in @user
+      get root_url
+      post profiles_sessions_path(name: @profile.name)
+      follow_redirect!
+      post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
+      follow_redirect!
+      put parentmode_session_path(@user.id), params: { parentmode: { mode: 'manage'}}
+      follow_redirect!
+      assert_select 'div.vidframe', num_approved_videos(@profile) 
+    end
+
+    test "should swith back to review mode" do
+      sign_in @user
+      get root_url
+      post profiles_sessions_path(name: @profile.name)
+      follow_redirect!
+      post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
+      follow_redirect!
+      put parentmode_session_path(@user.id), params: { parentmode: { mode: 'manage'}}
+      follow_redirect!
+      assert_select 'div.vidframe', num_approved_videos(@profile) 
+      put parentmode_session_path(@user.id), params: { parentmode: { mode: 'review'}}
+      follow_redirect!
+      assert_select 'div.vidframe', num_unapproved_videos(@profile) 
     end
 end
