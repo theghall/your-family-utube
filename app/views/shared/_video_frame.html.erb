@@ -1,2 +1,3 @@
 <div class="info"><p>Video Player (Click on a thumbnail to load a video into the player)</p></div>
-<%= content_tag(:iframe, '', width: 560, height: 315, src: curr_vid_url.html_safe) %>
+<% # sandbox is not there for security, but to prevent clicking out of the iframe as its attribute negate any security %>
+<%= content_tag(:iframe, '', width: 560, height: 315, src: curr_vid_url.html_safe, sandbox: "allow-scripts allow-same-origin") %>
