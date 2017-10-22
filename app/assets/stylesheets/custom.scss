@@ -60,29 +60,38 @@ textarea {
 
 /* typography */
 
-h1, h2, h3, h4, h5, h6 {
-  line-height: 1;
-}
-
 h1 {
   font-size: 3em;
-  letter-spacing: -2px;
-  margin-bottom: 30px;
-  text-align: center;
+  font-weight: bold;
 }
 
 h2 {
-  font-size: 2em;
-  letter-spacing: -1px;
-  margin-bottom: 30px;
-  text-align: center;
+  font-size: 2.8em;
   font-weight: normal;
-  color: #777;
 }
 
-p {
+h3 {
+  font-size: 2.6em;
+  font-weight: normal;
+}
+
+h4 {
+  font-size: 2.4em;
+  font-weight: normal;
+}
+
+h5 {
+  font-size: 2.2em;
+  font-weight: normal;
+}
+
+h6 {
+  font-size: 2em;
+  font-weight: normal;
+}
+
+p, li {
   font-size: 1.5em;
-  line-height: 1.7em;
 }
 
 /* Help */
