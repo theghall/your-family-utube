@@ -72,7 +72,7 @@ h1 {
 }
 
 h2 {
-  font-size: 1.2em;
+  font-size: 2em;
   letter-spacing: -1px;
   margin-bottom: 30px;
   text-align: center;
@@ -81,10 +81,20 @@ h2 {
 }
 
 p {
-  font-size: 1.1em;
+  font-size: 1.5em;
   line-height: 1.7em;
 }
- /* Profiles */
+
+/* Help */
+h2.help-section {
+  font-weight: bold;
+}
+
+p.help-question {
+  font-weight: bold;
+}
+
+/* Profiles */
 
 #curr-profile-wrapper p {
   margin: 2px;
