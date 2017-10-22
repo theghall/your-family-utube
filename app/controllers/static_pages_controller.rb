@@ -2,11 +2,13 @@ class StaticPagesController < ApplicationController
   include ParentmodeSessionsHelper, ProfilesSessionsHelper, TagsHelper, 
           SettingsHelper
   
-  before_action :logged_in_user, only: [:parent]
   before_action :set_missing_defaults, only: [:home], :if => :user_signed_in?
-  before_action :exit_parent_mode, except: [:parent]
-  before_action :load_profiles, only: [:home, :parent]
-  before_action :load_videos, only: [:home, :parent]
+
+  # Make sure that the other actions are opened in a new tab, otherwise
+  # people will have to re-enter parent mode after viewing help
+  before_action :exit_parent_mode, only: [:home]
+  before_action :load_profiles, only: [:home]
+  before_action :load_videos, only: [:home]
   
   def home
   end
@@ -23,12 +25,6 @@ class StaticPagesController < ApplicationController
   def contact
   end
   
-  def parent
-    profile = Profile.new
-    
-    @video = profile.videos.build
-  end
-
   private
   
     def set_missing_defaults

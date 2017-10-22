@@ -7,10 +7,18 @@ class VideosController < ApplicationController
   before_action :correct_profile, only: [:show, :destroy, :update]
   
   def show
+    load_profiles
+
     set_curr_vid_url(get_video_url(@video))
     
     respond_to do |format|
-      format.html { redirect_to (parent_mode? ? parent_path : root_url) }
+      format.html {
+        if parent_mode?
+          render 'videos/index'
+        else
+          redirect_to root_url
+        end
+      }
       format.js
     end
   end
@@ -23,7 +31,7 @@ class VideosController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to (parent_mode? ? parent_path : root_url) }
+      format.html { redirect_to (parent_mode? ? videos_path : root_url) }
       format.js
     end
   end
@@ -51,6 +59,8 @@ class VideosController < ApplicationController
   end
   
   def create
+    load_profiles
+
     if session[:profile_id]
       profile = get_profile(session[:profile_id])
       
@@ -62,34 +72,22 @@ class VideosController < ApplicationController
         clear_search_key
         
         load_videos
-        
-        respond_to do |format|
-          format.html { redirect_to parent_path }
-          format.js
-        end
       else
-        load_profiles
-        
         load_videos
-        
-        respond_to do |format|
-          format.html { render 'static_pages/parent' }
-          format.js
-        end
       end
     else
       flash[:alert] = "You must select a profile to save the video under"
-      
-      load_profiles
+    end
 
-      respond_to do |format|
-         format.html { render 'static_pages/parent' }
-         format.js
-      end
+    respond_to do |format|
+      format.html { render 'videos/index' }
+      format.js
     end
   end
 
   def update
+    load_profiles
+
     if video_params["approved"]
       approved = (video_params["approved"] == 'true' ? true : false)
       
@@ -106,13 +104,15 @@ class VideosController < ApplicationController
       end
       
       respond_to do |format|
-        format.html { redirect_to parent_path }
+        format.html { render 'videos/index' }
         format.js
       end
     end
   end
 
   def destroy
+    load_profiles
+
     # Remove thumbnail file
     @video.remove_thumbnail
     
@@ -125,7 +125,7 @@ class VideosController < ApplicationController
     load_videos
     
     respond_to do |format|
-      format.html { redirect_to parent_path }
+      format.html { render 'videos/index' }
       format.js
     end
   end
@@ -172,7 +172,7 @@ class VideosController < ApplicationController
         load_videos
 
         respond_to do |format|
-          format.html { redirect_to parent_path }
+          format.html { render 'videos/index' }
           format.js { render :template => 'videos/create.js.erb' }
         end
       end

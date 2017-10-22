@@ -78,8 +78,8 @@ class SettingsFlowTest < ActionDispatch::IntegrationTest
     post parentmode_sessions_path, params: { parentmode: { pin: '1234' }}
     follow_redirect!
     get settings_path
-    get parent_path
-    assert_template 'static_pages/parent'
+    get videos_path
+    assert_template 'videos/index'
   end
 
   test "should not require parent PIN to go back to parent mode from acct settings" do
@@ -88,8 +88,8 @@ class SettingsFlowTest < ActionDispatch::IntegrationTest
     post parentmode_sessions_path, params: { parentmode: { pin: '1234' }}
     follow_redirect!
     get edit_user_registration_path
-    get parent_path
-    assert_template 'static_pages/parent'
+    get videos_path
+    assert_template 'videos/index'
   end
 
 end

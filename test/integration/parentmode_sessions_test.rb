@@ -93,7 +93,6 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       assert_select 'input', id: 'video_youtube_id'
       assert_difference 'Video.count',1  do
         post videos_path params: { video: { youtube_id: youtube_url }}
-        follow_redirect!
       end
       assert_not flash.empty?
       assert_match youtube_id, response.body
@@ -129,7 +128,6 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       profile = @profile_no_videos
       post profiles_sessions_path(name: profile.name)
       post videos_path params: { video: { youtube_id: @youtube_url, tag_list: @tags }}
-      follow_redirect!
       assert_no_difference 'Video.count' do
         post videos_path params: { video: { youtube_id: @youtube_url, tag_list: @tags }}
         assert_select 'div.alert', 1
@@ -148,7 +146,6 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       assert_match /#{@a_video.id}/, response.body
       assert_match @a_video.youtube_id, response.body
       patch video_path(@a_video), params: { video: { approved: 'true' }}
-      follow_redirect!
       assert_not flash.empty?
       assert_no_match @a_video.youtube_id, response.body
     end
@@ -200,6 +197,7 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       follow_redirect!
       profile = profiles(:john_1)
       post profiles_sessions_path(name: profile.name)
+      follow_redirect!
       delete video_path(@a_video)
       follow_redirect!
       assert_no_match @a_video.youtube_id, response.body
@@ -261,7 +259,6 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       # Add video by tags
       assert_difference 'Tag.count', 2 do
         post videos_path params: { video: { youtube_id: @youtube_url, tag_list: @tags }}
-        follow_redirect!
       end
       #search by those tags lowercase
       get videos_path params: { tags: { name: @tag1 }}
@@ -286,11 +283,9 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       # Add video by tags
       assert_difference 'Tag.count', 2 do
         post videos_path params: { video: { youtube_id: @youtube_url, tag_list: @tags }}
-        follow_redirect!
       end
       # post a video with no tags
       post videos_path params: { video: { youtube_id: @youtube_url2 }}
-      follow_redirect!
       # search by tag
       get videos_path params: { tags: { name: @tag1 }}
       assert_select 'div.vidframe', count: 1

@@ -11,6 +11,11 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should get faq" do
+    get faq_url
+    assert_response :success
+  end
+
   test "should get about" do
     get about_url
     assert_response :success
@@ -19,11 +24,6 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
   test "should get contact" do
     get contact_url
     assert_response :success
-  end
-
-  test "should redirect parent on not logged in" do
-    get parent_path
-    assert_redirected_to new_user_session_url
   end
 
 end
