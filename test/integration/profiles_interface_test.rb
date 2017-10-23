@@ -36,7 +36,6 @@ class ProfilesInterfaceTest < ActionDispatch::IntegrationTest
      # Choose profile
      profile = profiles(:novideos_1)
      post profiles_sessions_path(name: profile.name)
-     follow_redirect!
      assert_no_match 'None', response.body
      assert_select 'div#vidframe', count: 0
     end
@@ -47,7 +46,6 @@ class ProfilesInterfaceTest < ActionDispatch::IntegrationTest
      # Choose profile
      @profile = profiles(:john_1)
      post profiles_sessions_path(name: @profile.name)
-     follow_redirect!
      assert_no_match 'None', response.body
      assert_select 'div.vidframe', count: num_approved_videos(@profile)
     end

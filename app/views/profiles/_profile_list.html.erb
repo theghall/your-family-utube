@@ -1,26 +1,26 @@
-<% if @profiles.count == 0 %>
-    <%= "No Profiles" %>
+<div id='curr-profile-wrapper'><p><strong>Current profile:</strong></p><p id='curr-profile'><%= current_profile_name %></p></div>
+<% if !parent_mode? %>
+  <%= link_to 'Parent Mode', new_parentmode_session_path, class: 'btn btn-primary' %>
 <% else %>
-    <div id='curr-profile-wrapper'><p><strong>Current profile:</strong></p><p id='curr-profile'><%= current_profile_name %></p></div>
-    <% if !parent_mode? %>
-        <%= link_to 'Parent Mode', new_parentmode_session_path, class: 'btn btn-primary' %>
+  <%= form_for(:parentmode, url: parentmode_session_path(current_user.id), method: :put) do |f| %>
+    <% if review_mode? %>
+      <%= f.hidden_field :mode, value: 'manage' %>
+      <%= f.submit "Manage Videos", class: 'btn btn-primary' %>
     <% else %>
-      <%= form_for(:parentmode, url: parentmode_session_path(current_user.id), method: :put) do |f| %>
-        <% if review_mode? %>
-          <%= f.hidden_field :mode, value: 'manage' %>
-          <%= f.submit "Manage Videos", class: 'btn btn-primary' %>
-        <% else %>
-          <%= f.hidden_field :mode, value: 'review' %>
-          <%= f.submit "Review Videos", class: 'btn btn-primary' %>
-        <% end %>
-      <% end %>
+      <%= f.hidden_field :mode, value: 'review' %>
+      <%= f.submit "Review Videos", class: 'btn btn-primary' %>
     <% end %>
-    <div id='profiles-list-wrapper'>
-      <p><strong>Profiles:</strong></p>
-      <div id="profile-list" class="btn-group-vertical">
-      <% @profiles.each do |p| %>
-        <%= button_to "#{p.name}", profiles_sessions_path(name: p.name), method: :post, class: 'btn', remote: true %>
-      <% end %>
-      </div>
-    </div>
+  <% end %>
 <% end %>
+<div id='profiles-list-wrapper'>
+  <p><strong>Profiles:</strong></p>
+  <div id="profile-list" class="btn-group-vertical">
+     <% if @profiles.count == 0 %>
+       <p>No Profiles</p>
+     <% else %>
+       <% @profiles.each do |p| %>
+         <%= button_to "#{p.name}", profiles_sessions_path(name: p.name), method: :post, class: 'btn', remote: true %>
+       <% end %>
+     <% end %>
+  </div>
+</div>

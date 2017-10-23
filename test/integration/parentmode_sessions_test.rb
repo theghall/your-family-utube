@@ -52,13 +52,31 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       assert_redirected_to root_path
     end
 
+    test "should display manage videos button and exit button" do
+      sign_in @user
+      get root_url
+      post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
+      follow_redirect!
+      post profiles_sessions_path(name: @profile.name)
+      assert_select 'form[action=?]', "#{parentmode_session_path(@user.id)}", 2
+    end
+
+    test "should display review videos button and exit button" do
+      sign_in @user
+      get root_url
+      post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
+      post profiles_sessions_path(name: @profile.name)
+      put parentmode_session_path(@user.id), params: { parentmode: { mode: 'review'}}
+      follow_redirect!
+      assert_select 'form[action=?]', "#{parentmode_session_path(@user.id)}", 2
+    end
+
     test "Add video page only displays unapproved videos" do
      sign_in @user
      get root_path
      # Choose profile
      profile = profiles(:john_1)
      post profiles_sessions_path(name: profile.name)
-     follow_redirect!
      post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
      follow_redirect!
      assert_select 'div.vidframe', count: num_unapproved_videos(profile)
@@ -85,7 +103,6 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       get root_path
       profile = profiles(:john_1)
       post profiles_sessions_path(name: profile.name)
-      follow_redirect!
       assert session[:profile_id], profile.id
       post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
       follow_redirect!
@@ -108,7 +125,6 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       get root_path
       profile = profiles(:john_1)
       post profiles_sessions_path(name: profile.name)
-      follow_redirect!
       assert session[:profile_id], profile.id
       post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
       follow_redirect!
@@ -139,7 +155,6 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       get root_path
       profile = profiles(:john_1)
       post profiles_sessions_path(name: profile.name)
-      follow_redirect!                  
       post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
       follow_redirect!
       assert session[:parent_id], @user.id
@@ -157,7 +172,6 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       get root_path
       profile = profiles(:john_1)
       post profiles_sessions_path(name: profile.name)
-      follow_redirect!
       assert session[:profile_id], profile.id
       post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
       follow_redirect!
@@ -177,7 +191,6 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       get root_path
       profile = profiles(:john_1)
       post profiles_sessions_path(name: profile.name)
-      follow_redirect!
       assert session[:profile_id], profile.id
       post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
       follow_redirect!
@@ -197,10 +210,8 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       follow_redirect!
       profile = profiles(:john_1)
       post profiles_sessions_path(name: profile.name)
-      follow_redirect!
       delete video_path(@a_video)
-      follow_redirect!
-      assert_no_match @a_video.youtube_id, response.body
+      assert_select 'a[href=?]', "#{video_path(@a_video.id)}", 0
     end
     
     test "adds video to review list ajax way" do
@@ -210,7 +221,6 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       get root_path
       profile = profiles(:john_1)
       post profiles_sessions_path(name: profile.name)
-      follow_redirect!
       assert session[:profile_id], profile.id
       post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
       follow_redirect!
@@ -228,7 +238,6 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       get root_path
       profile = profiles(:john_1)
       post profiles_sessions_path(name: profile.name)
-      follow_redirect!                  
       post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
       follow_redirect!
       assert session[:parent_id], @user.id
@@ -329,7 +338,6 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       sign_in @user
       get root_url
       post profiles_sessions_path(name: @profile.name)
-      follow_redirect!
       post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
       follow_redirect!
       put parentmode_session_path(@user.id), params: { parentmode: { mode: 'manage'}}
@@ -341,7 +349,6 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       sign_in @user
       get root_url
       post profiles_sessions_path(name: @profile.name)
-      follow_redirect!
       post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
       follow_redirect!
       put parentmode_session_path(@user.id), params: { parentmode: { mode: 'manage'}}
