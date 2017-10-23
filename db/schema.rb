@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171018003000) do
+ActiveRecord::Schema.define(version: 20171023140943) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "account_types", force: :cascade do |t|
+    t.string   "name"
+    t.boolean  "video_limit"
+    t.integer  "num_videos"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["name"], name: "index_account_types_on_name", unique: true, using: :btree
+  end
 
   create_table "general_settings", force: :cascade do |t|
     t.integer  "user_id"

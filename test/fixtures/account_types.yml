@@ -1,0 +1,8 @@
+free:
+  name: free
+  video_limit: true
+  num_videos: 5
+
+unlimited:
+  name: unlimited
+  video_limit: false

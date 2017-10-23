@@ -34,8 +34,6 @@ video = profile.videos.build(youtube_id: 'https://youtu.be/X_gwnFSFzv0', approve
 video.save!
 video = profile.videos.build(youtube_id: 'https://youtu.be/jDBPmEAheCY', approved: true, tag_list: 'movie clip, lord of the rings')
 video.save!
-video = profile.videos.build(youtube_id: 'https://youtu.be/bgLfOrVJJMg', approved: true, tag_list: 'movie clip, arnold, terminator')
-video.save!
 video = profile.videos.build(youtube_id: 'https://youtu.be/bgLfOrVJJMg', approved: true, tag_list: 'movie clip, kirk, shatner, star trek')
 video.save!
 video = profile.videos.build(youtube_id: 'https://youtu.be/b47TY5VbFHY', approved: true, tag_list: 'movie clip, star wars, solo, ford')
