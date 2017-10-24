@@ -1,16 +1,18 @@
 **This app is a WIP.**
 
-## **Safe-T-Tube allows:**
+## This app is now called Your Family UTube, but I am keeping the repo name as is for now ##
+
+## **Your Family UTube:**
  1) A parent to create a list of videos to vet and approve or delete them as desired.
  2) A parent or child to view videos that were approved for viewing.
  
- You try out what's working so far at: [Safe-T-Tube](https://vast-dawn-24320.herokuapp.com/)
+ You try out what's working so far at: [Your Family UTube](https://vast-dawn-24320.herokuapp.com/)
  
 ## **Using the app:**
   * After creating your account and are logged in, you must create at least one profile to
- save videos under.
+ save videos under. You can do this in Parent Mode.
  
-  * To add videos click 'Add Video'.  You will be prompted for your parent pin.
+  * To enter Parent Mode, press 'Parent Mode'.  You will be prompted for your parent pin. In Parent Mode you can add videos for review or manage videos you have previously approved.
  
   * Before adding a video you must select a profile by clicking on one.
 

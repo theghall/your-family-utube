@@ -7,12 +7,12 @@
 	  <li class="navbar-left navbar-text">Account Type: <%= AccountType.type_name(current_user.account_type_id).capitalize %></li>
           <li class="navbar-left navbar-text" id="video-count">Videos: <%= video_count_display %> </li>
        <% end %>
-       <li class="active"><%= link_to "Safe-T-Tube", root_path %></li>
+       <li class="active"><%= link_to app_name, root_path %></li>
        <li class="navbar-right"><%= link_to "FAQ",    faq_path, target: :_blank  %></li>
        <li class="navbar-right"><%= link_to "Help",   help_path, target: :_blank %></li>
        <% if user_signed_in? %>
          <li class="navbar-right dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"> Account <b class="caret"></b> </a>
-         <ul class="navbar-right dropdown-menu">
+a        <ul class="navbar-right dropdown-menu">
            <% if parent_mode? %>
              <li class="navbar-right"><%= link_to "Account Details", edit_user_registration_path %></li>
              <li class="navbar-right"><%= link_to "Cancel Account", user_registration_path, data: { confirm: "Cancel account: Are you sure?" }, method: :delete %></li>

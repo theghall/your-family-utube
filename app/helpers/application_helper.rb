@@ -1,6 +1,10 @@
 module ApplicationHelper
+  def app_name
+    "Your Family UTube"
+  end
+
   def full_title(page_title = '')
-    base_title = "Safe-T-Tube"
+    base_title = app_name
     if page_title.empty?
       base_title
     else

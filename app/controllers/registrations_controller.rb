@@ -3,6 +3,10 @@ class RegistrationsController < Devise::RegistrationsController
 
   before_action :parent_user, only: [:edit]
 
+  def create
+    super
+  end
+
   def edit
     super
   end

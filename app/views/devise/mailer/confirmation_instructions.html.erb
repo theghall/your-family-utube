@@ -1,5 +1,8 @@
-<p>Welcome <%= @email %>!</p>
+<p>Welcome to Your Family UTube %> <%= @email %>!</p>
 
 <p>You can confirm your account email through the link below:</p>
 
 <p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+
+<p>You can find help for using Your Family Utube here: <%= link_to 'Help', help_url %></p>
+<p>You can find answers to Frequently Asked Questions for using Your Family Utube here: <%= link_to 'Help', faq_url %></p>
