@@ -1,6 +1,6 @@
 <% provide(:title, "Application Settings") %>
 <div class='col-md-4'>
-<%= link_to 'Parent Page', videos_path, class: 'btn btn-primary' %>
+<%= render 'shared/parent_page_btn' %>
 <h3>Profile Settings:</h3>
 <% c_profile_id = 0 %>
 <%= form_tag(setting_path(current_user.id), id: 'profile-settings', method: :put) do %>
