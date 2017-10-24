@@ -25,7 +25,7 @@ a        <ul class="navbar-right dropdown-menu">
         </li>
         <li class="navbar-right"><%= link_to "Home",   root_path %></li>
         <% else %>
-          <li><%= link_to "Log in", user_session_path %></li>
+          <li class="navbar-right"><%= link_to "Log in", user_session_path %></li>
         <% end %>
       </ul>
     </nav>
