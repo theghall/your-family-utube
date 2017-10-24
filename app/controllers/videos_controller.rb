@@ -26,8 +26,12 @@ class VideosController < ApplicationController
   def preload
     params = video_params
 
-    if valid_youtube_video?(parse_uri(params['youtube_id'])) 
-      set_curr_vid_url(make_video_url(parse_uri(params['youtube_id'])))
+    if session[:profile_id]
+      if valid_youtube_video?(parse_uri(params['youtube_id'])) 
+       set_curr_vid_url(make_video_url(parse_uri(params['youtube_id'])))
+      end
+    else
+      flash[:alert] = "You must select a profile first"
     end
 
     respond_to do |format|
