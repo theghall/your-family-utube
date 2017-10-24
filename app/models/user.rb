@@ -4,6 +4,7 @@ class User < ApplicationRecord
   has_many :profile_settings, through: :profiles
   has_many :tags, dependent: :destroy
   has_many :videos, through: :profiles
+  belongs_to :account_type
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,

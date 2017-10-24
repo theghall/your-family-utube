@@ -19,9 +19,9 @@
 <% end %>
 <div id="video-paginate">
     <% if parent_mode? %>
-        <%= will_paginate @videos, params: { controller: 'static_pages', action: 'parent' } %>
+        <%= will_paginate @videos, params: { controller: 'videos', action: 'index' } %>
     <% else %>
-        <%= will_paginate @videos, params: { controller: 'static_pages', action: 'home' } %>
+        <%= will_paginate @videos, params: { controller: 'videos', action: 'index' } %>
     <% end %>
 
 </div>

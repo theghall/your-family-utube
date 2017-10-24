@@ -22,13 +22,13 @@ class AccountTypeTest < ActiveSupport::TestCase
     assert_not @free.valid?
   end
 
-  test "num videos should not be zero" do
-    @free.num_videos = 0
+  test "max videos should not be zero" do
+    @free.max_videos = 0
     assert_not @free.valid?
   end
 
-  test "num videos should not be less than zero" do
-    @free.num_videos = -1
+  test "max videos should not be less than zero" do
+    @free.max_videos = -1
     assert_not @free.valid?
   end
 

@@ -4,6 +4,7 @@ john:
     encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
     parent_digest: <%= Devise::Encryptor.digest(User, '1234') %>
     confirmed_at: <%= Time.zone.now %>
+    account_type: unlimited
     
 jack:
     name: Jack Digger
@@ -11,6 +12,7 @@ jack:
     encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
     parent_digest: <%= Devise::Encryptor.digest(User, '1234') %>
     confirmed_at: <%= Time.zone.now %>
+    account_type: free
     
 novideos:
     name: Phil Panther
@@ -18,6 +20,7 @@ novideos:
     encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
     parent_digest: <%= Devise::Encryptor.digest(User, '1234') %>
     confirmed_at: <%= Time.zone.now %>
+    account_type: free
     
 noprofiles:
     name: Henry Rake
@@ -25,4 +28,5 @@ noprofiles:
     encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
     parent_digest: <%= Devise::Encryptor.digest(User, '1234') %>
     confirmed_at: <%= Time.zone.now %>
+    account_type: free
     

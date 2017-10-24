@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171023140943) do
+ActiveRecord::Schema.define(version: 20171023174946) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20171023140943) do
   create_table "account_types", force: :cascade do |t|
     t.string   "name"
     t.boolean  "video_limit"
-    t.integer  "num_videos"
+    t.integer  "max_videos"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["name"], name: "index_account_types_on_name", unique: true, using: :btree
@@ -94,6 +94,8 @@ ActiveRecord::Schema.define(version: 20171023140943) do
     t.string   "unconfirmed_email"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.integer  "account_type_id"
+    t.index ["account_type_id"], name: "index_users_on_account_type_id", using: :btree
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
@@ -127,6 +129,7 @@ ActiveRecord::Schema.define(version: 20171023140943) do
   add_foreign_key "profile_settings", "settings"
   add_foreign_key "profiles", "users"
   add_foreign_key "tags", "users"
+  add_foreign_key "users", "account_types"
   add_foreign_key "video_tags", "tags"
   add_foreign_key "video_tags", "videos"
   add_foreign_key "videos", "profiles"

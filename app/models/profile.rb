@@ -10,6 +10,10 @@ class Profile < ApplicationRecord
             uniqueness: { scope: :user_id, message: "Profile name already taken" }
   after_save :set_profile_settings
 
+  def self.user_id(profile_id)
+    Profile.where(id: profile_id).pluck(:user_id).first
+  end
+
   private
     def set_profile_settings
       set_profile_missing_defaults(id)

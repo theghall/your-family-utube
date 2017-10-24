@@ -11,7 +11,7 @@ class VideoTest < ActiveSupport::TestCase
   end
   
   test "should have video attibutes" do
-    video = Video.new(youtube_id: @valid_video.youtube_id)
+    video = Video.new(youtube_id: @valid_video.youtube_id, profile_id: @valid_video.profile_id)
     video.save
     assert_not_equal video.thumbnail_url, 'missing.jpg'
     assert_not video.title.nil?

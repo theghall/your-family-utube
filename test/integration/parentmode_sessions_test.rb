@@ -13,8 +13,16 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
     @user = users(:john)
     @profile = profiles(:john_1)
     @a_video= videos(:topgun)
-    @user_no_videos = users(:jack)
-    @profile_no_videos = profiles(:jack_1)
+    @user_no_videos = users(:novideos)
+    @profile_no_videos = profiles(:novideos_1)
+    @url1 = "https://www.youtube.com/watch?v=aT_3fHc0alA"
+    @url2 = "https://www.youtube.com/watch?v=EIG0CJxJsic"
+    @url3 = "https://www.youtube.com/watch?v=4CbmyFtICUU"
+    @url4 = "https://www.youtube.com/watch?v=vzhqsWOTanw"
+    @url5 = "https://www.youtube.com/watch?v=ABrIGGR8uRI"
+    @url6 = "https://www.youtube.com/watch?v=A9L8xdatwYY"
+    @free = account_types(:free)
+    @unlimited = account_types(:unlimited)
   end
   
     test "should redirect if try to add profile directly" do
@@ -357,5 +365,68 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       put parentmode_session_path(@user.id), params: { parentmode: { mode: 'review'}}
       follow_redirect!
       assert_select 'div.vidframe', num_unapproved_videos(@profile) 
+    end
+
+    test "should not add video over max videos for limited account" do
+      sign_in @user_no_videos
+      get root_url
+      @profile_no_videos.videos.destroy
+      post profiles_sessions_path(name: @profile_no_videos.name)
+      post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
+      follow_redirect!
+      assert_difference 'Video.count',1  do
+        post videos_path params: { video: { youtube_id: @url1 }}
+      end
+      assert_difference 'Video.count',1  do
+        post videos_path params: { video: { youtube_id: @url2 }}
+      end
+      assert_difference 'Video.count',1  do
+        post videos_path params: { video: { youtube_id: @url3 }}
+      end
+      assert_difference 'Video.count',1  do
+        post videos_path params: { video: { youtube_id: @url4 }}
+      end
+      assert_difference 'Video.count',1  do
+        post videos_path params: { video: { youtube_id: @url5 }}
+      end
+      assert_no_difference 'Video.count'  do
+        post videos_path params: { video: { youtube_id: @url6 }}
+      end
+    end
+
+    test "should add video when limited account switched to unlimited" do
+      sign_in @user_no_videos
+      get root_url
+      @profile_no_videos.videos.destroy
+      post profiles_sessions_path(name: @profile_no_videos.name)
+      post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
+      follow_redirect!
+      assert_difference 'Video.count',1  do
+        post videos_path params: { video: { youtube_id: @url1 }}
+      end
+      assert_difference 'Video.count',1  do
+        post videos_path params: { video: { youtube_id: @url2 }}
+      end
+      assert_difference 'Video.count',1  do
+        post videos_path params: { video: { youtube_id: @url3 }}
+      end
+      assert_difference 'Video.count',1  do
+        post videos_path params: { video: { youtube_id: @url4 }}
+      end
+      assert_difference 'Video.count',1  do
+        post videos_path params: { video: { youtube_id: @url5 }}
+      end
+      assert_no_difference 'Video.count'  do
+        post videos_path params: { video: { youtube_id: @url6 }}
+      end
+      # switch account types
+      @user_no_videos.update_attribute(:account_type_id, @unlimited.id)
+      @user_no_videos.save
+      assert_difference 'Video.count',1  do
+        post videos_path params: { video: { youtube_id: @url6 }}
+      end
+      # switch back
+      @user_no_videos.update_attribute(:account_type_id, @free.id)
+      @user_no_videos.save
     end
 end

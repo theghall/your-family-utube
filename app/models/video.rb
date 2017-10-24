@@ -6,6 +6,7 @@ class Video < ApplicationRecord
   has_many :tags, through: :video_tags
   default_scope -> { order(created_at: :desc) }
   mount_uploader :thumbnail, ThumbnailUploader
+  before_validation :max_videos
   before_validation :parse_id
   after_validation :set_video_attributes
   validates :youtube_id, presence: true, allow_blank: false,
@@ -25,7 +26,23 @@ class Video < ApplicationRecord
   end
   
   private
-    
+   
+    def max_videos
+      user_id = Profile.user_id(self.profile_id)
+
+      user = User.find_by(id: user_id)
+
+      if AccountType.has_limit(user.account_type_id)
+        max_videos = AccountType.limit(user.account_type_id)
+
+        profile = Profile.find_by(id: self.profile_id)
+
+        if profile.videos.count + 1 > max_videos
+          errors[:base] << 'You have reached the maximum number of videos allowed.'
+        end
+      end
+    end 
+
     def parse_id
       # Initially user enters a youtube URL
       self.youtube_id = parse_uri(self.youtube_id)

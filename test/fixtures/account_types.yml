@@ -1,7 +1,7 @@
 free:
   name: free
   video_limit: true
-  num_videos: 5
+  max_videos: 5
 
 unlimited:
   name: unlimited

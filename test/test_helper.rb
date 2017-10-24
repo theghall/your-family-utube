@@ -11,7 +11,7 @@ class ActiveRecord::FixtureSet
 
     def self.create_fixtures f_dir, fs_names, *args
       # Make sure user and profiles are loaded first
-      fs_names = %w(users profiles settings) & fs_names | fs_names
+      fs_names = %w(account_types users profiles settings) & fs_names | fs_names
       orig_create_fixtures f_dir, fs_names, *args
     end
 end
