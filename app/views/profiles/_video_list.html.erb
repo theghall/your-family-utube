@@ -1,6 +1,10 @@
 <% @videos.each do |v| %>
     <div class="vidframe">
-        <a href="<%= video_path(v) %>" data-remote="true"><%= image_tag v.thumbnail.url, alt: 'thumbnail:' + v.title,  title: v.title, class: 'vid-thumbnail'%></a>
+	<% if manage_mode? %>
+          <%= image_tag v.thumbnail.url, alt: 'thumbnail:' + v.title,  title: v.title, class: 'vid-thumbnail'%>
+	<% else %>
+          <a href="<%= video_path(v) %>" data-remote="true"><%= image_tag v.thumbnail.url, alt: 'thumbnail:' + v.title,  title: v.title, class: 'vid-thumbnail'%></a>
+    <% end %>
     </div>
     <% if parent_mode? %>
         <div class="mngbuttons">

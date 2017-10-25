@@ -429,4 +429,31 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       @user_no_videos.update_attribute(:account_type_id, @free.id)
       @user_no_videos.save
     end
+
+    test "should have clickable images in view and review modes" do
+      sign_in @user
+      get root_url
+      v = @profile.videos.where(approved: true).first
+      post profiles_sessions_path(name: @profile.name)
+      assert_select 'a[href=?]', video_path(v.id), 1
+      post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
+      follow_redirect!
+      post videos_path params: { video: { youtube_id: @url1 }}
+      v = @profile.videos.where(approved: false).first
+      # Delete is an href, so there should be 2 per video on this page
+      assert_select 'a[href=?]', video_path(v.id), 2
+    end
+
+    test "should not have clickable images in manage mode" do
+      sign_in @user
+      get root_url
+      post profiles_sessions_path(name: @profile.name)
+      post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
+      follow_redirect!
+      post videos_path params: { video: { youtube_id: @url1 }}
+      v = @profile.videos.where(approved: false).first
+      put parentmode_session_path(@user.id), params: { parentmode: { mode: 'manage'}}
+      follow_redirect!
+      assert_select 'a[href=?]', video_path(v.id), 0
+    end
 end
