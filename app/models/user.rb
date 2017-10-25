@@ -10,8 +10,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable
+  validate :pin, :validate_pin
   after_validation :create_parent_digest
-  validates :pin, presence: true, length:{ is: 4 }, confirmation: true
   
   attr_accessor :pin, :pin_confirmation
   
@@ -31,7 +31,33 @@ class User < ApplicationRecord
     
   private
   
+    def change_in_pin(pin, pin_confirmation)
+      # default for parent_digest is "", so must be create
+      return true if self.parent_digest.empty?
+
+      return !pin.empty? && !pin_confirmation.empty? && !self.parent_digest.empty?
+    end
+
+    # Cannot find way to have Devise skip validation if user is editing account
+    # but does not change pin. So, I have to do stuff Rails would normally do for me
+    def validate_pin
+      pin = self.pin.nil? ? '' : self.pin.strip
+      pin_confirmation = self.pin_confirmation.nil? ? '' : self.pin_confirmation.strip
+
+      return unless change_in_pin(pin, pin_confirmation)
+
+      if pin.empty?
+        errors.add(:pin, 'cannot be blank')
+      else
+        if pin.length != 4
+          errors.add(:pin, 'is not 4 characters')
+        elsif pin != pin_confirmation
+          errors.add(:pin_confirmation, 'does not match pin.')
+        end
+      end
+    end
+
     def create_parent_digest
-      self.parent_digest = Devise::Encryptor.digest(self.class, pin) # User.digest(pin)
+      self.parent_digest = Devise::Encryptor.digest(self.class, pin) unless pin.nil? || pin.empty?
     end
 end
