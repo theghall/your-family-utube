@@ -5,6 +5,10 @@ class AccountType < ApplicationRecord
   validates :video_limit, inclusion: { in: [true, false] }
   validate :valid_max, :max_videos
 
+  def self.type_id(name)
+    AccountType.where(name: name).pluck(:id).first
+  end
+
   def self.type_name(account_type_id)
     AccountType.where(id: account_type_id).pluck(:name).first
   end

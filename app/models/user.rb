@@ -12,6 +12,7 @@ class User < ApplicationRecord
          :confirmable
   validate :pin, :validate_pin
   after_validation :create_parent_digest
+  before_create :set_account_type
   
   attr_accessor :pin, :pin_confirmation
   
@@ -59,5 +60,9 @@ class User < ApplicationRecord
 
     def create_parent_digest
       self.parent_digest = Devise::Encryptor.digest(self.class, pin) unless pin.nil? || pin.empty?
+    end
+
+    def set_account_type
+      self.account_type_id = AccountType.type_id('free')
     end
 end
