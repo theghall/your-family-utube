@@ -19,7 +19,7 @@
        <p>No Profiles</p>
      <% else %>
        <% @profiles.each do |p| %>
-         <%= button_to "#{p.name}", profiles_sessions_path(name: p.name), method: :post, class: 'btn-lg', remote: true %>
+         <%= button_to "#{p.name}", profiles_sessions_path(name: p.name), method: :post, id: 'profile-btn', class: 'btn btn-lg', remote: true %>
        <% end %>
      <% end %>
   </div>
