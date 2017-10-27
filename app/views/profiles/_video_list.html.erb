@@ -1,5 +1,6 @@
 <% @videos.each do |v| %>
-    <div class="vidframe">
+  <div id="mng-wrapper">
+    <div id="vidframe">
 	<% if manage_mode? %>
           <%= image_tag v.thumbnail.url, alt: 'thumbnail:' + v.title,  title: v.title, class: 'vid-thumbnail'%>
 	<% else %>
@@ -7,19 +8,20 @@
     <% end %>
     </div>
     <% if parent_mode? %>
-        <div class="mngbuttons">
+        <div id="mngbuttons">
             <%= form_for(:video, url: video_path(v), method: :patch, remote: true) do |f| %>
 		<% if review_mode? %>
                   <%= f.hidden_field :approved, value: 'true' %>
-		  <%= f.submit "Approve", class: 'btn btn-primary mng-button' %>
+		  <%= f.submit "Approve", id: 'mng-aprve-del-btn', class: 'btn-lg btn-primary' %>
 		 <% else %>
                   <%= f.hidden_field :approved, value: 'false' %>
-		  <%= f.submit "Review", class: 'btn btn-primary mng-button' %>
+		  <%= f.submit "Review", id: 'mng-aprve-del-btn', class: 'btn-lg btn-primary' %>
 	         <% end %>
             <% end %>
-	    <%= link_to "Delete", video_path(v), method: :delete, remote: true, data: { confirm: 'Delete: Are you sure?' }, class: 'btn btn-primary mng-button' %>
+	    <%= link_to "Delete", video_path(v), method: :delete, remote: true, data: { confirm: 'Delete: Are you sure?' }, id: "mng-del-btn", class: 'btn-lg btn-primary' %>
         </div>
     <% end %>
+  </div>
 <% end %>
 <div id="video-paginate">
     <% if parent_mode? %>

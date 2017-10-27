@@ -1,14 +1,14 @@
 <div id='curr-profile-wrapper'><p><strong>Current profile:</strong></p><p id='curr-profile'><%= current_profile_name %></p></div>
 <% if !parent_mode? %>
-  <%= link_to 'Parent Mode', new_parentmode_session_path, class: 'btn btn-primary' %>
+  <%= link_to 'Parent Mode', new_parentmode_session_path, id: 'btn-prnt-mode', class: 'btn-lg btn-primary' %>
 <% else %>
   <%= form_for(:parentmode, url: parentmode_session_path(current_user.id), method: :put) do |f| %>
     <% if review_mode? %>
       <%= f.hidden_field :mode, value: 'manage' %>
-      <%= f.submit "Manage Videos", class: 'btn btn-primary' %>
+      <%= f.submit "Manage Videos", class: 'btn-lg btn-primary' %>
     <% else %>
       <%= f.hidden_field :mode, value: 'review' %>
-      <%= f.submit "Review Videos", class: 'btn btn-primary' %>
+      <%= f.submit "Review Videos", class: 'btn-lg btn-primary' %>
     <% end %>
   <% end %>
 <% end %>
@@ -19,7 +19,7 @@
        <p>No Profiles</p>
      <% else %>
        <% @profiles.each do |p| %>
-         <%= button_to "#{p.name}", profiles_sessions_path(name: p.name), method: :post, class: 'btn', remote: true %>
+         <%= button_to "#{p.name}", profiles_sessions_path(name: p.name), method: :post, class: 'btn-lg', remote: true %>
        <% end %>
      <% end %>
   </div>

@@ -2,17 +2,17 @@
 <div class="col-md-4">
     <div id='pm-radio-container'>
       <%= radio_button_tag(:pm_method, 'PIN', checked: 'checked') %>
-      <%= label_tag(:pin_label, 'Use PIN') %>
+      <%= label_tag(:pin_label, 'Use PIN', class: 'col-form-label col-form-label-lg') %>
       <%= radio_button_tag(:pm_method, 'Password') %>
-      <%= label_tag(:passwd_label, 'Use Password if you forgot PIN') %>
+      <%= label_tag(:passwd_label, 'Use Password if you forgot PIN', class: 'col-form-label col-form-label-lg') %>
     </div>
-    <p>You can change your PIN under Account Settings.</p>
+    <p>PIN can be changed under Account Settings.</p>
     <%= form_for(:parentmode, url: parentmode_sessions_path) do |f| %>
-        <%= f.label :pin, 'Parent PIN' %>
-        <%= f.password_field :pin, autofocus: true, class: 'form-control' %>
-        <%= f.label 'Password' %>
-        <%= f.password_field :password, disabled: true, class: 'form-control' %>
-        <%= f.submit 'Submit', class: 'btn btn-primary' %>
+        <%= f.label :pin, 'Parent PIN', class: 'col-form-label col-form-label-lg' %>
+        <%= f.password_field :pin, autofocus: true, class: 'form-control input-lg' %>
+        <%= f.label 'Password', class: 'col-form-label col-form-label-lg' %>
+        <%= f.password_field :password, disabled: true, class: 'form-control input-lg' %>
+        <%= f.submit 'Submit', class: 'btn-lg btn-primary' %>
     <% end %>
     
 </div>

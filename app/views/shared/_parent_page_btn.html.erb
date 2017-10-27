@@ -1,4 +1,4 @@
 <%= form_for(:tags, url: videos_path, method: :get) do |f| %>
   <%= f.hidden_field :name, value: get_search_key %>
-  <%= f.submit "Parent Page", class: 'btn btn-primary mng-button' %>
+  <%= f.submit "Parent Page", class: 'btn-lg btn-primary' %>
 <% end %>

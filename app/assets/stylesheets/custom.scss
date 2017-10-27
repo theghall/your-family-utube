@@ -1,41 +1,6 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-/* Miscellaneous */
-
-@mixin box_sizing {
-  -moz-box-string: border-box;
-  -webkit-box-sizing: border-box;
-  box_sizing: border-box;
-}
-
-.info {
-  width: auto;
-}
-
-.info p {
-  font-weight: bold;
-}
-
-/* Boostrap adjustments */
-.btn-group-vertical .button_to, .mng-button {
-    margin-bottom:3px;
-}
-
-/* Adjustments for Devise */
-
-#app_notices {
-  padding-top: 10px;
-}
-
-/* jquery autocomplete */
-ul.ui-autocomplete {
-    list-style: none;
-}
-
-/* For ARIA support, so screen readers still see autocomplete message */
-.ui-helper-hidden-accessible { position: absolute; left:-999em; }
-
 /* universal */
 
 body {
@@ -47,6 +12,7 @@ section {
 }
 
 textarea {
+  height: 45px;
   resize: vertical;
 }
 
@@ -94,6 +60,50 @@ p, li {
   font-size: 1.5em;
 }
 
+/* Miscellaneous */
+
+@mixin box_sizing {
+  -moz-box-string: border-box;
+  -webkit-box-sizing: border-box;
+  box_sizing: border-box;
+}
+
+.info {
+  font-size: 16px;
+}
+
+.info p {
+  font-weight: bold;
+}
+
+/* Boostrap adjustments */
+
+/* TODO: remove ths when boostrap gem is for boostrarp 4+ */
+.col-form-label-lg {
+  font-size: 16px
+}
+
+.btn-group-vertical .button_to, .mng-button {
+    margin-bottom:3px;
+}
+
+
+/* Adjustments for Devise */
+
+#app_notices {
+  padding-top: 10px;
+}
+
+/* jquery autocomplete */
+ul.ui-autocomplete {
+    list-style: none;
+}
+
+/* For ARIA support, so screen readers still see autocomplete message */
+.ui-helper-hidden-accessible { position: absolute; left:-999em; }
+
+
+
 /* Header */
 @media (min-width: 768px) {
   .navbar-nav {
@@ -122,6 +132,10 @@ p.help-question {
 
 /* Profiles */
 
+#btn-prnt-mode {
+  text-decoration: none;
+}
+
 #curr-profile-wrapper p {
   margin: 2px;
   padding: 0;
@@ -139,10 +153,28 @@ p.help-question {
 
 /* Videos */
 
-.vidframe, .mngbuttons {
+#add-vid-reset {
+  margin-right: 3px;
+}
+
+#mng-wrapper {
+  float: left;
+  border: 0px;
+  margin-bottom: 2px;
+}
+
+#vidframe, #mngbuttons {
   float: left;
   height: 92px;
   padding: 1px;
+}
+
+#mng-aprve-del-btn {
+  margin-bottom: 11px;
+}
+
+a#mng-del-btn:link {
+  text-decoration: none;
 }
 
 /* Insure div floats below images */
@@ -160,7 +192,7 @@ p.help-question {
 
 #search-form-wrapper {
   width: auto;
-  height: 40px;
+  height: 50px;
 }
 
 #search-label, #tags_name, #search-submit, #clear-submit {

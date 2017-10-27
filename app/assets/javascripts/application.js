@@ -15,5 +15,5 @@
 //= require jquery_ujs
 //= require jquery.serialize-object
 //= require turbolinks
-//= require bootstrap/dropdown
+//= require bootstrap
 //= require_tree .

@@ -1,8 +1,8 @@
 <div class='ui-widget'>
 <%= form_for(:tags, html: {id: 'tag-search-form'}, url: videos_path, method: :get, remote: true) do |f| %>
-    <%= f.label :name, 'Tag', id: 'search-label' %>
-    <%= f.text_field :name  %>
-    <%= f.submit 'Search', id: 'search-submit', class: 'btn btn-primary' %>
+    <%= f.label :name, 'Tag', id: 'search-label', class: 'col-form-label col-form-label-lg' %>
+    <%= f.text_field :name, class: 'form-control input-lg' %>
+    <%= f.submit 'Search', id: 'search-submit', class: 'btn-lg btn-primary' %>
 <% end %>
-<%= button_to('Clear Search', videos_path, form: {id: 'clear-submit-form'}, id: 'clear-submit', method: :get, disabled: !search_tag?, class: 'btn btn-primary', params: { tags: { name: '' }}, remote: true, data: { disable_with: 'Clear Search' }) %>
+<%= button_to('Clear Search', videos_path, form: {id: 'clear-submit-form'}, id: 'clear-submit', method: :get, disabled: !search_tag?, class: 'btn-lg btn-primary', params: { tags: { name: '' }}, remote: true, data: { disable_with: 'Clear Search' }) %>
 </div>

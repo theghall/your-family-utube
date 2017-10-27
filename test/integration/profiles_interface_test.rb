@@ -47,7 +47,7 @@ class ProfilesInterfaceTest < ActionDispatch::IntegrationTest
      @profile = profiles(:john_1)
      post profiles_sessions_path(name: @profile.name)
      assert_no_match 'None', response.body
-     assert_select 'div.vidframe', count: num_approved_videos(@profile)
+     assert_select 'div#vidframe', count: num_approved_videos(@profile)
     end
     
     test "add profie the ajax way" do

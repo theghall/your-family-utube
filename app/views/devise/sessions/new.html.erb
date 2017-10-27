@@ -4,18 +4,18 @@
   <div class="col-md-6 col-md-offset-3">
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 
-      <%= f.label :email %><%= link_to "(Signup)", new_user_registration_path %>
-      <%= f.email_field :email, autofocus: true, class: 'form-control' %>
+      <%= f.label :email, class: 'col-form-label col-form-label-lg' %><%= link_to "(Signup)", new_user_registration_path, class: 'info' %>
+      <%= f.email_field :email, autofocus: true, class: 'form-control input-lg' %>
 
-      <%= f.label :password %><%= link_to "(Forgot Password)", new_user_password_path %>
-      <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
+      <%= f.label :password, class: 'col-form-label col-form-label-lg' %><%= link_to "(Forgot Password)", new_user_password_path, class: 'info' %> 
+      <%= f.password_field :password, autocomplete: "off", class: 'form-control input-lg' %>
 
       <% if devise_mapping.rememberable? -%>
         <%= f.check_box :remember_me %>
-        <%= f.label :remember_me %>
+        <%= f.label :remember_me, class: 'col-form-label col-form-label-lg' %>
       <% end -%>
 
-      <%= f.submit "Log in", class: 'btn btn-primary' %>
+      <%= f.submit "Log in", class: 'btn-lg btn-primary' %>
 
     <% end %>
   </div>

@@ -87,7 +87,7 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
      post profiles_sessions_path(name: profile.name)
      post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
      follow_redirect!
-     assert_select 'div.vidframe', count: num_unapproved_videos(profile)
+     assert_select 'div#vidframe', count: num_unapproved_videos(profile)
     end
     
     test "does not add a video when no profile selected" do
@@ -279,12 +279,12 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       end
       #search by those tags lowercase
       get videos_path params: { tags: { name: @tag1 }}
-      assert_select 'div.vidframe', count: 1
+      assert_select 'div#vidframe', count: 1
       get videos_path params: { tags: { name: @tag2 }}
-      assert_select 'div.vidframe', count: 1
+      assert_select 'div#vidframe', count: 1
       # search by an uppercase tag
       get videos_path params: { tags: { name: @tag1.upcase }}
-      assert_select 'div.vidframe', count: 1
+      assert_select 'div#vidframe', count: 1
       # search by an invalid tag
       get videos_path params: { tags: { name: 'xxxxx' }}
       assert_not flash.empty?
@@ -305,10 +305,10 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       post videos_path params: { video: { youtube_id: @youtube_url2 }}
       # search by tag
       get videos_path params: { tags: { name: @tag1 }}
-      assert_select 'div.vidframe', count: 1
+      assert_select 'div#vidframe', count: 1
       # clear search
       get videos_path params: { tags: { name: '' }}
-      assert_select 'div.vidframe', count: 2
+      assert_select 'div#vidframe', count: 2
     end
 
     test "should show error on invlid PIN" do
@@ -350,7 +350,7 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       follow_redirect!
       put parentmode_session_path(@user.id), params: { parentmode: { mode: 'manage'}}
       follow_redirect!
-      assert_select 'div.vidframe', num_approved_videos(@profile) 
+      assert_select 'div#vidframe', num_approved_videos(@profile) 
     end
 
     test "should swith back to review mode" do
@@ -361,10 +361,10 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       follow_redirect!
       put parentmode_session_path(@user.id), params: { parentmode: { mode: 'manage'}}
       follow_redirect!
-      assert_select 'div.vidframe', num_approved_videos(@profile) 
+      assert_select 'div#vidframe', num_approved_videos(@profile) 
       put parentmode_session_path(@user.id), params: { parentmode: { mode: 'review'}}
       follow_redirect!
-      assert_select 'div.vidframe', num_unapproved_videos(@profile) 
+      assert_select 'div#vidframe', num_unapproved_videos(@profile) 
     end
 
     test "should not add video over max videos for limited account" do

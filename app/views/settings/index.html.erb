@@ -12,14 +12,14 @@
   <% end %>
   <%= hidden_field_tag 'settings[profiles][][profile_id]', c_profile_id %>
   <% setting_name = Setting.find(setting.setting_id).name %>
-  <%= label_tag setting_name %>
+  <%= label_tag setting_name, nil, class: 'col-form-label col-form-label-lg' %>
   <%= hidden_field_tag 'settings[profiles][][setting_id]', setting.setting_id %>
   <% if strict_values(setting.setting_id) %>
-    <%= select_tag 'settings[profiles][][value]', options_for_select(setting_options(setting.setting_id), setting.value), class: 'form-control' %>
+    <%= select_tag 'settings[profiles][][value]', options_for_select(setting_options(setting.setting_id), setting.value), class: 'form-control input-lg' %>
   <% else %>
-    <%= text_field_tag 'settings[profiles][][value]', html_escape(setting.value), class: 'form-control' %>
+    <%= text_field_tag 'settings[profiles][][value]', html_escape(setting.value), class: 'form-control input-lg' %>
   <% end %>
   </br>
 <% end %>
-<%= submit_tag 'Submit', class: 'btn btn-primary' %>
+<%= submit_tag 'Submit', class: 'btn-lg btn-primary' %>
 <% end %>
