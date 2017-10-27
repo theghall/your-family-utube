@@ -25,9 +25,9 @@
 <% end %>
 <div id="video-paginate">
     <% if parent_mode? %>
-        <%= will_paginate @videos, params: { controller: 'videos', action: 'index' } %>
+	    <%= will_paginate @videos, params: { controller: 'videos', action: 'index', tags: { name: get_search_key } } %>
     <% else %>
-        <%= will_paginate @videos, params: { controller: 'videos', action: 'index' } %>
+	    <%= will_paginate @videos, params: { controller: 'videos', action: 'index', tags: { name: get_search_key }} %>
     <% end %>
 
 </div>

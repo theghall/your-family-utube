@@ -1,18 +1,22 @@
 <% if review_mode? %>
   <% provide(:title, "Add/Review Videos") %>
-<% else %>
+<% elsif manage_mode? %>
   <% provide(:title, "Manage Videos") %>
+<% else %>
+  <% provide(:title, "View Videos") %>
 <% end %>
 <div class="row">
   <%= render 'profiles/profile_section' %>
-  <% if review_mode? %>
+  <% if !manage_mode? %>
     <div id="parent-middle" class='col-md-5'>
       <div id="video_frame">
         <%= render 'shared/video_frame', locals: { url: curr_vid_url } %>
       </div>
-      <div id="video-add-form">
-        <%= render 'videos/create' %>
-      </div>
+      <% if review_mode? %>
+        <div id="video-add-form">
+          <%= render 'videos/create' %>
+        </div>
+      <% end %>
     </div>
   <% end %>
   <%= render 'shared/video_select' %>

@@ -11,6 +11,11 @@ class StaticPagesController < ApplicationController
   before_action :load_videos, only: [:home]
   
   def home
+    if user_signed_in?
+      respond_to do |format|
+        format.html { render 'videos/index' }
+      end
+    end
   end
 
   def help
@@ -26,7 +31,7 @@ class StaticPagesController < ApplicationController
   end
   
   private
-  
+
     def set_missing_defaults
       set_all_profile_missing_defaults unless current_profile
     end
