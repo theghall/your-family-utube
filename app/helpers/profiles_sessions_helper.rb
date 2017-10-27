@@ -75,12 +75,12 @@ module ProfilesSessionsHelper
         
         if parent_mode?
           if review_mode?
-            @videos = get_videos(profile, tag, false, 8)
+            @videos = get_videos(profile, tag, false, 10)
           else
-            @videos = get_videos(profile, tag, true, 25)
+            @videos = get_videos(profile, tag, true, 20)
           end
         else
-            @videos = get_videos(profile, tag, true, 16)
+            @videos = get_videos(profile, tag, true, 20)
         end
         
         refresh_thumbnails(@videos)
