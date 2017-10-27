@@ -3,6 +3,10 @@ module ApplicationHelper
     "Your Family UTube"
   end
 
+  def support_email
+    "vastdawnsoftware@gmail.com"
+  end
+
   def full_title(page_title = '')
     base_title = app_name
     if page_title.empty?

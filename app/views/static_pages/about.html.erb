@@ -1,2 +1,17 @@
-<h1>StaticPages#about</h1>
-<p>Find me in app/views/static_pages/about.html.erb</p>
+<% provide(:title, "About") %>
+<div id="about-page">
+<p>Hello and welcome to <%= app_name %>!</p>
+<p>This application grew out of my frustration with YouTube to provide a safe environment for my special needs child.  We tried YouTube for Kids but that brought up videos that were often inappropiate, as well as one that just added to his aversion to going to one of his doctors.
+</p>
+<p>A little less than a year ago I started to get my software development skills upto date; many years ago I used to be a software developer.  And I finally got them there to a point where I could develop a usable app for my son. This appliation took me about three months to get it to this point it is in my spare time.  I have alot of features I would like to add, but hopefully you find the funtionality it currently provides as useful.</p>
+<p>One of the goals beside providing something for my child and learning web development, was to develop an application that is accessible.  It is one area of developemnt that is starting to get more and more traction in software development.  I have made some nods toward accesibility in this application but I am sure I can make more.  If you find an issue that hinders your accessibility to this application, drop me a bug report at <%= support_email %>. Yes, a bug report. Providing accessibility is not a feature, but a requirement for all software.</p>
+<p>I hope you find this application useful.</p>
+<p>I am running thus application on the lowest priced tier on my service provider, hopefully this is enough to meet demand.  If not I may have to start charging a fee.  Also, I have set the max videos at 500 per user; I may have to adjust this in the future, hopefully a bit higher; if lower you will not lose any videos over 500.</p>
+<p>Gary Hall</p>
+<p>You can contact me at: <%= support_email %>.</p>
+<p>Powered by:</p>
+<a href='http://rubyonrails.org'><%= image_tag 'rubyrails.jpeg', alt: 'Ruby on Rails website' %></a>
+<a href='https://www.heroku.com'><%= image_tag 'heroku.png', alt: 'Heroku Cloud Services' %></a>
+<a href='https://www.postgresql.org/'><%= image_tag 'postgres.png', alt: 'Postgres SQL' %></a>
+<a href='https://aws.amazon.com/'><%= image_tag 'aws.png', alt: 'Amazon Cloud Computing Services' %></a>
+</div>
