@@ -1,7 +1,7 @@
 ## This app is now called Your Family UTube, but I am keeping the repo name as is for now ##
 
 ## **Your Family UTube:**
- 1) A parent to create a list of YouTube&Trade; videos to vet and approve or delete them as desired.
+ 1) A parent to create a list of YouTube&trade; videos to vet and approve or delete them as desired.
  2) A parent or child to view videos that were approved for viewing.
  
  Try out [Your Family UTube](https://familyutube.herokuapp.com/)
