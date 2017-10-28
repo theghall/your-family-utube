@@ -1,12 +1,10 @@
-**This app is a WIP.**
-
 ## This app is now called Your Family UTube, but I am keeping the repo name as is for now ##
 
 ## **Your Family UTube:**
- 1) A parent to create a list of videos to vet and approve or delete them as desired.
+ 1) A parent to create a list of YouTube&Trade; videos to vet and approve or delete them as desired.
  2) A parent or child to view videos that were approved for viewing.
  
- You try out what's working so far at: [Your Family UTube](https://vast-dawn-24320.herokuapp.com/)
+ Try out [Your Family UTube](https://familyutube.herokuapp.com/)
  
 ## **Using the app:**
   * After creating your account and are logged in, you must create at least one profile to
@@ -16,7 +14,7 @@
  
   * Before adding a video you must select a profile by clicking on one.
 
-  * When you tab off the YouTube URL field or move focus to the tag field you will see the
+  * When you tab off the YouTube&trade; URL field or move focus to the tag field you will see the
  video in the viewer so you can see what you are entering tags for.
  
   * Each user has their own tag namespace, so other users' tags won't pollute yours. 
