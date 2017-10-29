@@ -2,10 +2,11 @@ Rails.application.routes.draw do
 
 root 'static_pages#home'
 
-get    '/help',     to: 'static_pages#help'
-get    '/faq',      to: 'static_pages#faq'
-get    '/about',    to: 'static_pages#about'
-get    '/contact',  to: 'static_pages#contact'
+get    '/help',      to: 'static_pages#help'
+get    '/faq',       to: 'static_pages#faq'
+get    '/parentfaq', to: 'static_pages#parentfaq'
+get    '/about',     to: 'static_pages#about'
+get    '/contact',   to: 'static_pages#contact'
 
 devise_for :users, :controllers => { registrations: 'registrations' }
 

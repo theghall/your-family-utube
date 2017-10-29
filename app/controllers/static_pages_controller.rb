@@ -1,9 +1,9 @@
 class StaticPagesController < ApplicationController
-  include ParentmodeSessionsHelper, ProfilesSessionsHelper, TagsHelper, 
+  include ApplicationHelper, ParentmodeSessionsHelper, ProfilesSessionsHelper, TagsHelper, 
           SettingsHelper
   
   before_action :set_missing_defaults, only: [:home], :if => :user_signed_in?
-
+  before_action :parent_user, only: [:parentfaq]
   # Make sure that the other actions are opened in a new tab, otherwise
   # people will have to re-enter parent mode after viewing help
   before_action :exit_parent_mode, only: [:home]
@@ -22,6 +22,9 @@ class StaticPagesController < ApplicationController
   end
 
   def faq
+  end
+
+  def parentfaq
   end
 
   def about

@@ -19,6 +19,7 @@
              <li class="navbar-right"><%= link_to "Cancel Account", user_registration_path, data: { confirm: "Cancel account: Are you sure?" }, method: :delete %></li>
               <li class="navbar-right divider"></li>
               <li class="navbar-right"><%= link_to "Application Settings", settings_path %></li>
+              <li class="navbar-right"><%= link_to "Parent FAQ", parentfaq_path %></li>
            <% end %>
            <li class="navbar-right divider"></li>
            <li class="navbar-right"> <%= link_to "Log out", destroy_user_session_path, method: :delete %></li>

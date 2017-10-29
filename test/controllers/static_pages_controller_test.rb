@@ -16,6 +16,11 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should be redirected unless parent_mode" do
+    get parentfaq_url
+    assert_redirected_to root_url
+  end
+
   test "should get about" do
     get about_url
     assert_response :success
