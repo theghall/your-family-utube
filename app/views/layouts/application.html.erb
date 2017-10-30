@@ -8,6 +8,26 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+<% if !user_signed_in? %>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "VideoObject",
+  "name": "Your Family UTube Demo",
+  "description": "Watch a brief demonstration of the basic funtions of the Your Family UTube application",
+  "thumbnailUrl": "http://i3.ytimg.com/vi/4jsnQgwb0Lo/maxresdefault.jpg",
+  "uploadDate": "2017-10-30T04:33:00-04:00",
+  "duration": "PT3M02S",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Vast Dawn Software",
+    "logo": "https://familyutube.herokuapp.com/favicon.ico"
+  },
+  "contentUrl": "https://youtu.be/4jsnQgwb0Lo",
+  "embedUrl": "<iframe width='560' height='315' src=;https://www.youtube.com/embed/4jsnQgwb0Lo' frameborder='0' allowfullscreen></iframe>"
+}
+</script>
+<% end %>
 <% if Rails.env.production? %>
 <!-- Global Site Tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108879313-1"></script>
