@@ -2,7 +2,7 @@
 <h1>Welcome to <%= app_name %></h1>
 <%= link_to "Sign up now!", new_user_registration_path, "data-no-turbolink" => true, class: "btn btn-lg btn-primary" %>
 </div>
-<div id="home-page-summary" class="col-md-9 col-md-offset-2">
+<div id="home-page-summary" class="col-md-7">
 	<p>Your family UTube allows your child to view YouTube&trade; videos safely because you preview them first.</p>
 	<p>It allows:</p>
 	<ul>
@@ -15,4 +15,7 @@
 	<li>A child from clicking out of the YouTube&trade; video player.</li>
 	<li>A child from seeing related videos once the video is over.</li>
 	</ul>
+</div>
+<div class="col-md-3 col-md-offset-0">
+	<%= content_tag(:iframe, '', width: 560, height: 315, src: "https://www.youtube.com/embed/4jsnQgwb0Lo?origin=#{request.host}&rel=0".html_safe, sandbox: "allow-scripts allow-same-origin") %>
 </div>
