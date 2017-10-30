@@ -4,6 +4,7 @@
  1) A parent to create a list of YouTube&trade; videos to vet and approve or delete them as desired.
  2) A parent or child to view videos that were approved for viewing.
  
+ View [demo video](https://youtu.be/4jsnQgwb0Lo)
  Try out [Your Family UTube](https://familyutube.herokuapp.com/)
  
 ## **Using the app:**
