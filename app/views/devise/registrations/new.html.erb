@@ -10,6 +10,12 @@
   
       <%= f.label :email, class: 'col-form-label col-form-label-lg' %>
       <%= f.email_field :email, class: 'form-control input-lg' %>
+      
+      <%= f.label :pin, class: 'col-form-label col-form-label-lg' %><em class='info'> (This is your parent pin for use in the application) </em>
+      <%= f.password_field :pin, autocomplete: "off", :maxlength => 4, class: 'form-control input-lg' %>
+      
+      <%= f.label :pin_confirmation, class: 'col-form-label col-form-label-lg' %>
+      <%= f.password_field :pin_confirmation, autocomplete: "off", :maxlength => 4, class: 'form-control input-lg' %>
 
       <%= f.label :password, class: 'col-form-label col-form-label-lg' %>
       <% if @minimum_password_length %>
@@ -19,12 +25,6 @@
 
       <%= f.label :password_confirmation, class: 'col-form-label col-form-label-lg' %>
       <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control input-lg' %>
-      
-      <%= f.label :pin, class: 'col-form-label col-form-label-lg' %><em class='info'> (This is your parent pin for use in the application) </em>
-      <%= f.password_field :pin, autocomplete: "off", :maxlength => 4, class: 'form-control input-lg' %>
-      
-      <%= f.label :pin_confirmation, class: 'col-form-label col-form-label-lg' %>
-      <%= f.password_field :pin_confirmation, autocomplete: "off", :maxlength => 4, class: 'form-control input-lg' %>
 
       <%= f.submit "Sign up", class: "btn-lg btn-primary" %>
     <% end %>

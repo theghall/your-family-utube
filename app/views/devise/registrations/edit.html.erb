@@ -33,7 +33,7 @@
       <%= f.label :current_password, class: 'col-form-label col-form-label-lg' %> <em class='info' %>(we need your current password to confirm your changes)</em>
       <%= f.password_field :current_password, autocomplete: "off", class: 'form-control input-lg' %>
 
-      <%= f.submit "Update", class: 'btn-lg btn-primary' %>
+      <%= f.submit "Update", class: 'btn-lg btn-primary' %><%= button_tag 'Reset', type: 'submit', name: 'reset', value: true, id: 'edit-user-reset', class: 'btn-lg btn-primary' %>
 
     <% end %>
   </div>
