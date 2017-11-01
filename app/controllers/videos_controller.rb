@@ -10,6 +10,8 @@ class VideosController < ApplicationController
     load_profiles
 
     set_curr_vid_url(get_video_url(@video))
+
+    set_curr_vid_title(@video.title)
     
     respond_to do |format|
       format.html {
@@ -29,6 +31,8 @@ class VideosController < ApplicationController
     if session[:profile_id]
       if valid_youtube_video?(parse_uri(params['youtube_id'])) 
        set_curr_vid_url(make_video_url(parse_uri(params['youtube_id'])))
+
+       set_curr_vid_title(get_video_title(parse_uri(params['youtube_id'])))
       end
     else
       flash[:alert] = "You must select a profile first"

@@ -41,4 +41,14 @@ module VideosHelper
 
       valid
     end
+
+    def get_video_title(youtube_id)
+      video = Yt::Video.new(id: youtube_id)
+
+      begin
+        video.title
+      rescue Yt::Errors::RequestError
+        ''
+      end
+    end
 end

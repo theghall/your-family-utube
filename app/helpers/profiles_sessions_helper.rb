@@ -16,8 +16,9 @@ module ProfilesSessionsHelper
     end
 
     def make_video_url(youtube_id)
-      # rel = 0: Do not show related videos after video plays is a fixed option
-      options = "?origin=#{request.host}&rel=0"
+      # rel = 0: Do not show related videos after video plays, fixed option
+      # showinfo = 0: No title or share button, fixed option
+      options = "?origin=#{request.host}&rel=0&showinfo=0"
 
       # controls=1 is API default
       options += '&controls=0' unless ProfileSetting.controls_allowed?(current_profile)
@@ -75,12 +76,12 @@ module ProfilesSessionsHelper
         
         if parent_mode?
           if review_mode?
-            @videos = get_videos(profile, tag, false, 10)
+            @videos = get_videos(profile, tag, false, 8)
           else
-            @videos = get_videos(profile, tag, true, 20)
+            @videos = get_videos(profile, tag, true, 16)
           end
         else
-            @videos = get_videos(profile, tag, true, 20)
+            @videos = get_videos(profile, tag, true, 16)
         end
         
         refresh_thumbnails(@videos)
@@ -99,5 +100,13 @@ module ProfilesSessionsHelper
         url = session[:curr_vid_url]
 
         url.nil? ? '' : url
+    end
+
+    def set_curr_vid_title(title)
+      session[:curr_vid_title] = title.truncate(50).titleize
+    end
+
+    def curr_vid_title
+      session[:curr_vid_title]
     end
 end
