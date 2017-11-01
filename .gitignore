@@ -21,6 +21,7 @@ secrets.sh
 
 .byebug_history
 
+/appbin
 /play
 /public/uploads
 
