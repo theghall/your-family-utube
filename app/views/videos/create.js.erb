@@ -2,6 +2,7 @@ $('#notice').html('<%= flash[:notice] %>');
 $('#alert').html('<%= flash[:alert] %>');
 $('#video-count').html('Videos: <%= video_count_display %>');
 $('#video_youtube_id').val('');
+$('#video_youtube_id').focus();
 $('#video_tag_list').val('');
 <% if @videos %>
 $('#video_list').html('<%= escape_javascript(render('profiles/video_list')) %>');

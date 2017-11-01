@@ -28,6 +28,28 @@ function encodeYoutubeVideoId(authToken, youtubeId) {
 function  setPreloadVideoHandler() {
    // Preload video when user loses focus of Youtube url field
    $('#video_youtube_id').focusout(function() {
+	
+	console.log('lost focus');
+	var utube_url = $(this).val();
+
+	// Don't preload unless focus is on tag input
+        setTimeout(function() {
+	  var elem = $(document.activeElement);
+
+	  var elem_id = elem.attr('id');
+
+	  console.log('id: ' + elem_id);
+
+	  if (elem.attr('id') != 'video_tag_list') {
+		  return 0;
+	  }
+	},1);	
+
+	// Don't preload if empty URL
+	if (utube_url.trim() === "") {
+		return 0;
+	}
+
 	var authToken = '';
 
         var $form = $(this).parent();
@@ -42,7 +64,7 @@ function  setPreloadVideoHandler() {
         $.ajax({
           type: 'post',
           dataType:'script',
-          data: encodeYoutubeVideoId(authToken, $(this).val()),
+          data: encodeYoutubeVideoId(authToken, utube_url),
           contentType: 'application/x-www-form-urlencoded;; charset=utf-8',
           url: postUrl
           })

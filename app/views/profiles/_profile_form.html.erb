@@ -2,7 +2,7 @@
   <p><strong>Add a Profile:</strong></p>
   <%= form_for(:profiles, url: profiles_path, remote: true) do |f| %>
     <%= f.label :name, class: 'col-form-label col-form-label-lg' %>
-    <%= f.text_field :name, value: "", autofocus: true, class: 'form-control input-lg' %>
+    <%= f.text_field :name, value: "", class: 'form-control input-lg' %>
     <%= f.submit "Submit", class: 'btn-lg btn-primary' %>
   <% end %>
 </div>
