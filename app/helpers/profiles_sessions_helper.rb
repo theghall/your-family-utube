@@ -87,8 +87,10 @@ module ProfilesSessionsHelper
         refresh_thumbnails(@videos)
  
         curr_vid_url = (@videos.empty? ? '' : get_video_url(@videos.first))
-        
+        curr_vid_title = (@videos.empty? ? '' : @videos.first.title)
+       
         set_curr_vid_url(curr_vid_url)
+        set_curr_vid_title(curr_vid_title)
       end
     end
     
