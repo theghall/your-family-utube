@@ -46,7 +46,6 @@ fbq('track', 'PageView');
 <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=139994663318298&ev=PageView&noscript=1" />
 </noscript>
 <!-- End Facebook Pixel Code -->
-</noscript></script>
 <!-- Global Site Tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108879313-1"></script>
 <script>
@@ -57,6 +56,9 @@ gtag('config', 'UA-108879313-1');
 </script>
 <% end %>
 </head>
+<% if Rails.env.production? %>
+<script>fbq('track', 'ViewContent');</script>
+<% end %>
 <body>
 <%= render 'layouts/header' %>
 <div id="app_notices">
