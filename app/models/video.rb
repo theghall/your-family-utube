@@ -54,7 +54,7 @@ class Video < ApplicationRecord
       begin 
         video.title
       rescue Yt::Errors::NoItems
-        errors[:base] << 'Thet YouTube Video cannot be found.'
+        errors[:base] << 'That YouTube Video cannot be found.'
       rescue Yt::Errors::RequestError
         errors[:base] << 'Unable to contact YouTube.  If problem persists contact us.'
       end
