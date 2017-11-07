@@ -49,15 +49,9 @@ class Video < ApplicationRecord
     end
 
     def valid_video_url
-      video = Yt::Video.new(id: self.youtube_id)
-      
-      begin 
-        video.title
-      rescue Yt::Errors::NoItems
-        errors[:base] << 'That YouTube Video cannot be found.'
-      rescue Yt::Errors::RequestError
-        errors[:base] << 'Unable to contact YouTube.  If problem persists contact us.'
-      end
+      status = video_status(self.youtube_id)
+
+      errors[:base] << status unless status.empty?
     end
     
     def set_thumbnail(utube_video)

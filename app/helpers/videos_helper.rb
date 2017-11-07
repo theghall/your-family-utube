@@ -24,19 +24,35 @@ module VideosHelper
       end
     end
 
-    def valid_youtube_video?(youtube_id)
+    def video_status(youtube_id)
       video = Yt::Video.new(id: youtube_id)
       
-      valid = true
+      status = ''
 
       begin 
         video.title
       rescue Yt::Errors::NoItems
-        valid = false;
-        flash.now[:alert] = 'That YouTube Video cannot be found.'
+        status = 'That YouTube Video cannot be found.'
       rescue Yt::Errors::RequestError
-        valid = false;
-        flash.now[:alert] = 'Unable to contact YouTube.  If problem persists contact us.'
+        status = 'Unable to contact YouTube.  If problem persists contact us.'
+      end
+
+      if status.empty? && !video.embeddable?
+        status = 'The video owner has disabled embedding of that video.'
+      end
+
+      status
+    end
+
+    def valid_youtube_video?(youtube_id)
+      valid = true
+
+      status = video_status(youtube_id)
+
+      if !status.empty?
+        flash.now[:alert] = status
+
+        valid = false
       end
 
       valid

@@ -456,4 +456,20 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
       follow_redirect!
       assert_select 'a[href=?]', video_path(v.id), 0
     end
+
+    test "should not save non-embeddable video" do
+      youtube_url = "https://www.youtube.com/watch?v=ovOc6qo3X5Q"
+      sign_in @user
+      get root_path
+      profile = profiles(:john_1)
+      post profiles_sessions_path(name: profile.name)
+      assert session[:profile_id], profile.id
+      post parentmode_sessions_path, params: { parentmode: { pin: "1234" }}
+      follow_redirect!
+      assert_no_difference 'Video.count' do
+        post videos_path params: { video: { youtube_id: youtube_url }}
+      end
+      assert_select 'div.alert', 1
+    end
+
 end

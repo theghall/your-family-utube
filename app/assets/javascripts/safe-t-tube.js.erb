@@ -29,7 +29,6 @@ function  setPreloadVideoHandler() {
    // Preload video when user loses focus of Youtube url field
    $('#video_youtube_id').focusout(function() {
 	
-	console.log('lost focus');
 	var utube_url = $(this).val();
 
 	// Don't preload unless focus is on tag input
@@ -37,8 +36,6 @@ function  setPreloadVideoHandler() {
 	  var elem = $(document.activeElement);
 
 	  var elem_id = elem.attr('id');
-
-	  console.log('id: ' + elem_id);
 
 	  if (elem.attr('id') != 'video_tag_list') {
 		  return 0;
@@ -132,8 +129,6 @@ function setSettingsSubmitHandler() {
 
     var userId = $('#user_id').val();
     var dataString = $(this).serializeJSON();
-
-    console.log('dataString: ' + dataString);
 
     var putUrl = "<%= Rails.application.routes.url_helpers.settings_path %>" + '/' + userId;
 
