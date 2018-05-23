@@ -32,6 +32,9 @@ class StaticPagesController < ApplicationController
 
   def contact
   end
+
+  def privacy
+  end
   
   private
 
