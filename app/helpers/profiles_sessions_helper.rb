@@ -83,6 +83,8 @@ module ProfilesSessionsHelper
         else
             @videos = get_videos(profile, tag, true, 16)
         end
+
+        @videos.load
         
         refresh_thumbnails(@videos)
  

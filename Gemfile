@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 
 # Framwork
-gem 'rails', '5.2.2'
+gem 'rails', '5.2.3'
 # Presentation
 gem 'sass-rails', '5.0.7'
-gem 'bootstrap-sass', '3.3.7'
+gem 'bootstrap-sass', '3.4.1'
 gem 'will_paginate', '3.1.5'
 gem 'bootstrap-will_paginate', '1.0.0'
 # Assest utilities
@@ -12,7 +12,7 @@ gem 'uglifier', '3.2.0'
 gem 'coffee-rails', '4.2.2'
 # Libraries
 # Devise: user authtentication
-gem 'devise', '4.5.0'
+gem 'devise', '4.6.0'
 gem 'jquery-rails', '4.3.3'
 gem 'jquery-ui-rails', '6.0.1'
 gem 'jquery-serialize-object-rails', '2.5.0.1'

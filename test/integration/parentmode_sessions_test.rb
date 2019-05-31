@@ -16,7 +16,7 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
     @user_no_videos = users(:novideos)
     @profile_no_videos = profiles(:novideos_1)
     @url1 = "https://www.youtube.com/watch?v=aT_3fHc0alA"
-    @url2 = "https://www.youtube.com/watch?v=EIG0CJxJsic"
+    @url2 = "https://youtu.be/4lA4rJztty8"
     @url3 = "https://www.youtube.com/watch?v=4CbmyFtICUU"
     @url4 = "https://www.youtube.com/watch?v=vzhqsWOTanw"
     @url5 = "https://www.youtube.com/watch?v=ABrIGGR8uRI"
@@ -223,8 +223,8 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
     end
     
     test "adds video to review list ajax way" do
-      youtube_url = "https://www.youtube.com/watch?v=YOI2r3Q-J3w"
-      youtube_id = "YOI2r3Q-J3w"
+      youtube_url = "https://youtu.be/TzD_YuLhKgo"
+      youtube_id = "TzD_YuLhKgo"
       sign_in @user
       get root_path
       profile = profiles(:john_1)
