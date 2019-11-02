@@ -12,7 +12,7 @@ gem 'uglifier', '3.2.0'
 gem 'coffee-rails', '4.2.2'
 # Libraries
 # Devise: user authtentication
-gem 'devise', '4.6.0'
+gem 'devise', '4.7.1'
 gem 'jquery-rails', '4.3.3'
 gem 'jquery-ui-rails', '6.0.1'
 gem 'jquery-serialize-object-rails', '2.5.0.1'
