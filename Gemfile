@@ -17,7 +17,7 @@ gem 'jquery-rails', '4.3.3'
 gem 'jquery-ui-rails', '6.0.1'
 gem 'jquery-serialize-object-rails', '2.5.0.1'
 # Yt: Youtube API
-gem 'yt', '0.28.5'
+gem 'yt', '0.32.0'
 gem 'turbolinks', '5.0.1'
 # For downloading video thumbnail
 gem 'fog', '1.42.0', require: 'fog/aws'
