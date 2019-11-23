@@ -463,5 +463,8 @@ DEPENDENCIES
   will_paginate (= 3.1.5)
   yt (= 0.32.0)
 
+RUBY VERSION
+   ruby 2.5.1p57
+
 BUNDLED WITH
    1.16.2

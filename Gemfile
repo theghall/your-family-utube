@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.5.1'
+
 # Framwork
 gem 'rails', '5.2.3'
 # Presentation
