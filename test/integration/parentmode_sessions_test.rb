@@ -17,7 +17,7 @@ class ParentmodeSessionsTest < ActionDispatch::IntegrationTest
     @profile_no_videos = profiles(:novideos_1)
     @url1 = "https://www.youtube.com/watch?v=aT_3fHc0alA"
     @url2 = "https://youtu.be/4lA4rJztty8"
-    @url3 = "https://www.youtube.com/watch?v=4CbmyFtICUU"
+    @url3 = "https://youtu.be/2zf_AMkxYl8"
     @url4 = "https://www.youtube.com/watch?v=vzhqsWOTanw"
     @url5 = "https://www.youtube.com/watch?v=ABrIGGR8uRI"
     @url6 = "https://www.youtube.com/watch?v=A9L8xdatwYY"
