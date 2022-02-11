@@ -26,7 +26,7 @@ gem 'fog', '1.42.0', require: 'fog/aws'
 gem 'carrierwave', '1.1.0'
 
 # Use Puma as the app server
-gem 'puma', '3.9.1'
+gem 'puma', '4.3.11'
 
 # Utilities
 gem 'faker',  '1.7.3'
